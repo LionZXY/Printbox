@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">PrintBox</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="print_twoside">Печать с двух сторон</string>
+    <string name="print_color">Цветная печать</string>
+    <string name="options_filled_perc">Среднее заполнение: 11.39%</string>
+    <string name="options_price">Стоимость печати: 4.99 * (x1) = 4.99 руб</string>
+    <string name="options_not_balance">Пополните баланс!</string>
+    <string name="options_balance"><![CDATA[>>]]></string>
+    <string name="options_balance_none">Недостаточно средств на счету!</string>
+    <string name="options_amount">Количество:</string>
+    <string name="menu_one">1</string>
+    <string name="menu_two">2</string>
+    <string name="menu_three">3</string>
+    <string name="menu_one_text">Выбери файл</string>
+    <string name="menu_two_text">Опции</string>
+    <string name="menu_three_text">Посмотреть историю</string>
+</resources>
