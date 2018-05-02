@@ -14,6 +14,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "MAPKIT_API", "\"a9d4c586-90c9-4980-aaf3-e024f7e30d27\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -21,6 +24,11 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url "http://maven.google.com/"
+    }
+}
 
 ext {
     betaDistributionEmails = "nikita@kulikof.ru"
@@ -41,6 +49,8 @@ dependencies {
     implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:support-vector-drawable:$supportVersion"
     implementation "com.android.support.constraint:constraint-layout:$constrainLayoutVersion"
+    implementation "com.android.support:cardview-v7:$supportVersion"
+
 
     implementation "com.arello-mobile:moxy:$moxyVersion"
     implementation "com.arello-mobile:moxy-app-compat:$moxyVersion"
@@ -60,4 +70,5 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.0'
 
     implementation 'com.shawnlin:number-picker:2.4.6'
+    implementation 'com.yandex.android:mapkit:+'
 }

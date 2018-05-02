@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="16dp">
+
+    <ImageView
+        android:id="@+id/icon_file"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_print_file" />
+
+    <TextView
+        android:id="@+id/file_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="Тестовый файл.odt"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/file_size"
+        app:layout_constraintStart_toEndOf="@id/icon_file"
+        app:layout_constraintTop_toTopOf="@id/icon_file" />
+
+    <TextView
+        android:id="@+id/file_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="01.02.2017 13:00"
+        app:layout_constraintBottom_toBottomOf="@id/icon_file"
+        app:layout_constraintStart_toEndOf="@id/icon_file"
+        app:layout_constraintStart_toStartOf="@id/file_name"
+        app:layout_constraintTop_toBottomOf="@id/file_name" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@id/icon_file" />
+</android.support.constraint.ConstraintLayout>
