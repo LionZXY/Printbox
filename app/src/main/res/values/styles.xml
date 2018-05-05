@@ -20,6 +20,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ToolbarTheme" parent="AppTheme"></style>
+    <style name="ToolbarTheme" parent="AppTheme" />
+
+    <style name="AppTheme.SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splashscreen</item>
+    </style>
 
 </resources>

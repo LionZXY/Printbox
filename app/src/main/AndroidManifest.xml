@@ -17,14 +17,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.print.ui.PrintActivity">
+        <activity android:name=".view.print.ui.PrintActivity" />
+        <activity android:name=".view.print_map.ui.PrintMapActivity" />
+        <activity
+            android:name=".view.auth.ui.AuthActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".view.splashscreen.ui.SplashScreenActivity"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.print_map.ui.PrintMapActivity" />
-        <activity android:name=".view.auth.ui.AuthActivity" />
+        <activity android:name=".view.intro.ui.IntroActivity" />
     </application>
 </manifest>

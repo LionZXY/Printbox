@@ -31,4 +31,7 @@
     <string name="intro_ready">Вперед!</string>
     <string name="intro_back">Назад</string>
     <string name="intro_skip">Пропустить</string>
+    <string name="intro_welcome">Добро пожаловать в PrintBox!</string>
+    <string name="intro_content_description">Изображение с описанием возможностей приложения</string>
+    <string name="intro_one_title">Зарегистрируйся</string>
 </resources>
