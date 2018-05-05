@@ -41,4 +41,6 @@
     <string name="intro_four">Выбери опции</string>
     <string name="intro_five">Забери документ</string>
     <string name="intro_six">Спрашивай!</string>
+    <string name="auth_register">Зарегистрироваться</string>
+    <string name="auth_vk">Войти через ВКонтакте</string>
 </resources>
