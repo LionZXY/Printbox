@@ -25,5 +25,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.print_map.ui.PrintMapActivity" />
+        <activity android:name=".view.auth.ui.AuthActivity" />
     </application>
 </manifest>

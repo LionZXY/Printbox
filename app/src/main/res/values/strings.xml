@@ -16,4 +16,19 @@
     <string name="menu_two_text">Опции</string>
     <string name="menu_three_text">Посмотреть историю</string>
     <string name="order_printed">Распечатано</string>
+
+
+    <!-- Auth Activity -->
+    <string name="auth_activity_title">Авторизация</string>
+    <string name="auth_activity_button">Войти</string>
+    <string name="auth_activity_login_empty">Логин не может быть пустым</string>
+    <string name="auth_activity_login_matcher">Логин должен содержать только буквы латинского алфавита и цифры</string>
+    <string name="auth_activity_password_empty">Пароль не может быть пустым</string>
+    <string name="auth_activity_password_matcher">Пароль должен иметь минимум 4 символа</string>
+
+    <!-- Intro Activity -->
+    <string name="intro_next">Далее</string>
+    <string name="intro_ready">Вперед!</string>
+    <string name="intro_back">Назад</string>
+    <string name="intro_skip">Пропустить</string>
 </resources>

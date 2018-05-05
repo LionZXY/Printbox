@@ -16,6 +16,7 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "MAPKIT_API", "\"a9d4c586-90c9-4980-aaf3-e024f7e30d27\""
+            buildConfigField "String", "API_URL", '"https://printbox.io/api/"'
         }
         release {
             minifyEnabled false
@@ -70,5 +71,5 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.0'
 
     implementation 'com.shawnlin:number-picker:2.4.6'
-    implementation 'com.yandex.android:mapkit:+'
+    implementation 'com.yandex.android:mapkit:3.0.0'
 }
