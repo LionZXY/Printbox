@@ -41,7 +41,7 @@ class AuthActivity : MvpAppCompatActivity(), IAuthView {
 
     override fun onLoading(isEnable: Boolean) {
         progressLogin.visibility = if (isEnable) View.VISIBLE else View.GONE
-        buttonLogin.visibility = if (isEnable) View.GONE else View.VISIBLE
+        auth_field.visibility = if (isEnable) View.GONE else View.VISIBLE
     }
 
     override fun onError(test: String) {
