@@ -1,9 +1,11 @@
 package ru.lionzxy.printbox.view.auth.ui
 
 import android.os.Bundle
+import android.support.v4.content.res.ResourcesCompat
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.jakewharton.rxbinding2.widget.RxTextView
 import kotlinx.android.synthetic.main.activity_auth.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.utils.toast
@@ -26,6 +28,14 @@ class AuthActivity : MvpAppCompatActivity(), IAuthView {
         buttonLogin.setOnClickListener {
             authPresenter.onClickLogin(editTextLogin.text.toString(),
                     editTextPassword.text.toString())
+        }
+        RxTextView.textChanges(editTextLogin).subscribe {
+            authPresenter.onChangeLoginOrPassword(it.toString(),
+                    editTextPassword.text.toString())
+        }
+        RxTextView.textChanges(editTextPassword).subscribe {
+            authPresenter.onChangeLoginOrPassword(editTextLogin.text.toString(),
+                    it.toString())
         }
     }
 
@@ -54,5 +64,10 @@ class AuthActivity : MvpAppCompatActivity(), IAuthView {
 
     override fun hidePasswordError() {
         errorPasswordText.visibility = View.GONE
+    }
+
+    override fun buttonActive(active: Boolean) {
+        buttonLogin.background = if (active) ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_active, theme)
+        else ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_disactive, theme)
     }
 }

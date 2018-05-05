@@ -7,5 +7,7 @@
     <color name="colorBackgroundDark">#242836</color>
 
     <color name="white">#FFF</color>
+    <color name="colorError">@android:color/holo_red_dark</color>
+
 
 </resources>

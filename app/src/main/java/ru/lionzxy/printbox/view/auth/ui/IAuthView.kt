@@ -21,5 +21,6 @@ interface IAuthView : MvpView {
     fun showPasswordError(resError: Int)
     fun hideLoginError()
     fun hidePasswordError()
+    fun buttonActive(active: Boolean)
 
 }

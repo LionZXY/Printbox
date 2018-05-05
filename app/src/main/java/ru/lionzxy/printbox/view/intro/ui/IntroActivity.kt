@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_splash_screen.*
+import kotlinx.android.synthetic.main.activity_intro.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.view.auth.ui.AuthActivity
 
@@ -13,7 +13,7 @@ class IntroActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash_screen)
+        setContentView(R.layout.activity_intro)
 
         splash_screen_view_pagerager.adapter = mAdapter
 

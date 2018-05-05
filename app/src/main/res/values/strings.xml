@@ -21,6 +21,8 @@
     <!-- Auth Activity -->
     <string name="auth_activity_title">Авторизация</string>
     <string name="auth_activity_button">Войти</string>
+    <string name="auth_activity_login">Логин</string>
+    <string name="auth_activity_password">Пароль</string>
     <string name="auth_activity_login_empty">Логин не может быть пустым</string>
     <string name="auth_activity_login_matcher">Логин должен содержать только буквы латинского алфавита и цифры</string>
     <string name="auth_activity_password_empty">Пароль не может быть пустым</string>
@@ -33,5 +35,10 @@
     <string name="intro_skip">Пропустить</string>
     <string name="intro_welcome">Добро пожаловать в PrintBox!</string>
     <string name="intro_content_description">Изображение с описанием возможностей приложения</string>
-    <string name="intro_one_title">Зарегистрируйся</string>
+    <string name="intro_one">Зарегистрируйся</string>
+    <string name="intro_two">Пополни счет</string>
+    <string name="intro_three">Загрузи документ</string>
+    <string name="intro_four">Выбери опции</string>
+    <string name="intro_five">Забери документ</string>
+    <string name="intro_six">Спрашивай!</string>
 </resources>

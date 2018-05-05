@@ -2,7 +2,6 @@ package ru.lionzxy.printbox.view.auth.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.R
@@ -11,6 +10,7 @@ import ru.lionzxy.printbox.interactor.auth.IAuthInteractor
 import ru.lionzxy.printbox.utils.Constants
 import ru.lionzxy.printbox.view.auth.ui.IAuthView
 import javax.inject.Inject
+import kotlin.math.log
 
 /**
  * @author Nikita Kulikov <nikita@kulikof.ru>
@@ -24,13 +24,15 @@ class AuthPresenter : MvpPresenter<IAuthView>() {
     @Inject
     lateinit var authInteractor: IAuthInteractor
     private val disposable = CompositeDisposable()
+    private var hasLoginError = false
+    private var hasPasswordError = false
 
     init {
         App.appComponent.plus(AuthModule()).inject(this)
     }
 
     fun onClickLogin(login: String, password: String) {
-        if (!validatePasswordAndLogin(login, password)) {
+        if (!validateLoginAndPassword(login, password)) {
             return
         }
         viewState.onLoading(true)
@@ -43,33 +45,80 @@ class AuthPresenter : MvpPresenter<IAuthView>() {
                 }))*/
     }
 
-    private fun validatePasswordAndLogin(login: String, password: String): Boolean {
-        var loginValid = true
-        var passwordValid = true
+    fun onChangeLoginOrPassword(login: String, password: String) {
+        onChangeLogin(login)
+        onChangePassword(password)
+        viewState.buttonActive(validateLoginAndPassword(login, password, true))
+    }
+
+    private fun onChangeLogin(login: String) {
+        if (!hasLoginError) {
+            return
+        }
+
+        validateLogin(login)
+    }
+
+    private fun onChangePassword(password: String) {
+        if (!hasPasswordError) {
+            return
+        }
+
+        validatePassword(password)
+    }
+
+    private fun validateLogin(login: String, silent: Boolean = false): Boolean {
+
         if (login.isEmpty()) {
-            viewState.showLoginError(R.string.auth_activity_login_empty)
-            loginValid = false
+            if (!silent) {
+                hasLoginError = true
+                viewState.showLoginError(R.string.auth_activity_login_empty)
+            }
+            return false
         }
         if (!Constants.LOGIN_PATTERN.matcher(login).matches()) {
-            viewState.showLoginError(R.string.auth_activity_login_matcher)
-            loginValid = false
+            if (!silent) {
+                hasLoginError = true
+                viewState.showLoginError(R.string.auth_activity_login_matcher)
+            }
+            return false
         }
-        if (loginValid) {
+
+        if (!silent) {
             viewState.hideLoginError()
         }
+
+        hasLoginError = false
+        return true
+    }
+
+    private fun validatePassword(password: String, silent: Boolean = false): Boolean {
         if (password.isEmpty()) {
-            viewState.showPasswordError(R.string.auth_activity_password_empty)
-            passwordValid = false
+            if (!silent) {
+                hasPasswordError = true
+                viewState.showPasswordError(R.string.auth_activity_password_empty)
+            }
+            return false
         }
-        if (password.length > Constants.PASSWORD_MIN_LENGHT) {
-            viewState.showPasswordError(R.string.auth_activity_password_matcher)
-            passwordValid = false
+        if (password.length < Constants.PASSWORD_MIN_LENGHT) {
+            if (!silent) {
+                hasPasswordError = true
+                viewState.showPasswordError(R.string.auth_activity_password_matcher)
+            }
+            return false
         }
-        if (passwordValid) {
+        if (!silent) {
             viewState.hidePasswordError()
         }
-        return passwordValid && loginValid
+        hasPasswordError = false
+        return true
     }
+
+    private fun validateLoginAndPassword(login: String, password: String, silent: Boolean = false): Boolean {
+        val valid = validateLogin(login, silent)
+        return validatePassword(password, silent) && valid
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

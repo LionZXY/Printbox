@@ -19,14 +19,12 @@
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/colorAccent" />
+        android:layout_height="0.5dp" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/bottomline"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btn_skip"
@@ -35,7 +33,7 @@
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:background="@null"
             android:text="@string/intro_skip"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@id/indicator"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent" />
