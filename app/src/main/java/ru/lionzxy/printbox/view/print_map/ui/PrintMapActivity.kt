@@ -19,7 +19,7 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MapKitFactory.setApiKey(BuildConfig.MAPKIT_API)
+        //MapKitFactory.setApiKey(BuildConfig.MAPKIT_API)
         MapKitFactory.initialize(this)
 
         setContentView(R.layout.activity_print_map)
