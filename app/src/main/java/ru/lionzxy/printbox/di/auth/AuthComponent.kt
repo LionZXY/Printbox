@@ -2,6 +2,7 @@ package ru.lionzxy.printbox.di.auth
 
 import dagger.Subcomponent
 import ru.lionzxy.printbox.view.auth.presenter.AuthPresenter
+import ru.lionzxy.printbox.view.register.presenter.RegisterPresenter
 import ru.lionzxy.printbox.view.vk.presenter.LoginVkPresenter
 
 @Subcomponent(
@@ -11,4 +12,5 @@ import ru.lionzxy.printbox.view.vk.presenter.LoginVkPresenter
 interface AuthComponent {
     fun inject(presenter: LoginVkPresenter)
     fun inject(presenter: AuthPresenter)
+    fun inject(presenter: RegisterPresenter)
 }

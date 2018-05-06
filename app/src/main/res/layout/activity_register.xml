@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/auth_activity_title"
+            android:text="@string/register_activity_title"
             android:textSize="32sp"
             android:theme="@style/AppTheme.Lobster" />
 
@@ -62,12 +62,40 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/auth_activity_email"
+                android:inputType="textEmailAddress"
+                tools:ignore="LabelFor" />
+
+            <TextView
+                android:id="@+id/errorEmailText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorError"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="Error" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <EditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="@string/auth_activity_password"
                 android:textColorHint="@color/white"
+                android:hint="@string/auth_activity_password"
                 android:inputType="textPassword"
                 tools:ignore="LabelFor" />
 
@@ -91,7 +119,7 @@
             android:visibility="gone" />
 
         <LinearLayout
-            android:id="@+id/auth_field"
+            android:id="@+id/register_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -105,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_button_disactive"
-                android:text="@string/auth_activity_button" />
+                android:text="@string/auth_register" />
 
             <include
                 android:id="@+id/vkauth"
@@ -115,12 +143,12 @@
                 android:layout_marginTop="16dp" />
 
             <TextView
-                android:id="@+id/registerbutton"
+                android:id="@+id/authbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="32dp"
-                android:text="@string/auth_register" />
+                android:layout_marginTop="16dp"
+                android:text="@string/auth_already_register" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

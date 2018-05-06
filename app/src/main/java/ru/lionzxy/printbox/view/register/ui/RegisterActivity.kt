@@ -1,4 +1,4 @@
-package ru.lionzxy.printbox.view.auth.ui
+package ru.lionzxy.printbox.view.register.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,11 +7,11 @@ import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.jakewharton.rxbinding2.widget.RxTextView
-import kotlinx.android.synthetic.main.activity_auth.*
+import kotlinx.android.synthetic.main.activity_register.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.utils.toast
-import ru.lionzxy.printbox.view.auth.presenter.AuthPresenter
-import ru.lionzxy.printbox.view.register.ui.RegisterActivity
+import ru.lionzxy.printbox.view.auth.ui.AuthActivity
+import ru.lionzxy.printbox.view.register.presenter.RegisterPresenter
 import ru.lionzxy.printbox.view.vk.view.LoginVkActivity
 
 /**
@@ -20,37 +20,45 @@ import ru.lionzxy.printbox.view.vk.view.LoginVkActivity
  * @date 06.03.18
  */
 
-class AuthActivity : MvpAppCompatActivity(), IAuthView {
+class RegisterActivity : MvpAppCompatActivity(), IRegisterView {
     @InjectPresenter
-    lateinit var authPresenter: AuthPresenter
+    lateinit var registerPresenter: RegisterPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.setContentView(R.layout.activity_auth)
+        this.setContentView(R.layout.activity_register)
 
         buttonLogin.setOnClickListener {
-            authPresenter.onClickLogin(editTextLogin.text.toString(),
-                    editTextPassword.text.toString())
+            registerPresenter.onClickRegister(editTextLogin.text.toString(),
+                    editTextPassword.text.toString(),
+                    editTextEmail.text.toString())
         }
         RxTextView.textChanges(editTextLogin).subscribe {
-            authPresenter.onChangeLoginOrPassword(it.toString(),
-                    editTextPassword.text.toString())
+            registerPresenter.onChangeLoginPasswordEmail(it.toString(),
+                    editTextPassword.text.toString(),
+                    editTextEmail.text.toString())
         }
         RxTextView.textChanges(editTextPassword).subscribe {
-            authPresenter.onChangeLoginOrPassword(editTextLogin.text.toString(),
+            registerPresenter.onChangeLoginPasswordEmail(editTextLogin.text.toString(),
+                    it.toString(),
+                    editTextEmail.text.toString())
+        }
+        RxTextView.textChanges(editTextEmail).subscribe {
+            registerPresenter.onChangeLoginPasswordEmail(editTextLogin.text.toString(),
+                    editTextPassword.text.toString(),
                     it.toString())
         }
-        registerbutton.setOnClickListener {
-            val intent = Intent(this@AuthActivity, RegisterActivity::class.java)
+        authbutton.setOnClickListener {
+            val intent = Intent(this@RegisterActivity, AuthActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
-        vkauth.setOnClickListener { startActivity(Intent(this@AuthActivity, LoginVkActivity::class.java)) }
+        vkauth.setOnClickListener { startActivity(Intent(this@RegisterActivity, LoginVkActivity::class.java)) }
     }
 
     override fun onLoading(isEnable: Boolean) {
         progressLogin.visibility = if (isEnable) View.VISIBLE else View.GONE
-        auth_field.visibility = if (isEnable) View.GONE else View.VISIBLE
+        register_field.visibility = if (isEnable) View.GONE else View.VISIBLE
     }
 
     override fun onError(test: String) {
@@ -65,6 +73,15 @@ class AuthActivity : MvpAppCompatActivity(), IAuthView {
     override fun showPasswordError(resError: Int) {
         errorPasswordText.visibility = View.VISIBLE
         errorPasswordText.text = getText(resError)
+    }
+
+    override fun showEmailError(resError: Int) {
+        errorEmailText.visibility = View.VISIBLE
+        errorEmailText.text = getText(resError)
+    }
+
+    override fun hideEmailError() {
+        errorEmailText.visibility = View.GONE
     }
 
     override fun hideLoginError() {
