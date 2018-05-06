@@ -49,9 +49,7 @@ class RegisterActivity : MvpAppCompatActivity(), IRegisterView {
                     it.toString())
         }
         authbutton.setOnClickListener {
-            val intent = Intent(this@RegisterActivity, AuthActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            startActivity(Intent(this@RegisterActivity, AuthActivity::class.java))
         }
         vkauth.setOnClickListener { startActivity(Intent(this@RegisterActivity, LoginVkActivity::class.java)) }
     }

@@ -11,6 +11,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.lionzxy.printbox.BuildConfig
 import ru.lionzxy.printbox.utils.auth.AddSessionCookieInterceptor
+import ru.lionzxy.printbox.utils.auth.Handle403Interceptor
 import ru.lionzxy.printbox.utils.auth.RecieveSessionCookieInterceptor
 import javax.inject.Singleton
 
@@ -28,10 +29,11 @@ class AppModule(private val context: Context) {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(preferences: SharedPreferences): OkHttpClient {
+    fun provideOkHttpClient(preferences: SharedPreferences, context: Context): OkHttpClient {
         val client = OkHttpClient()
         client.interceptors().add(AddSessionCookieInterceptor(preferences))
         client.interceptors().add(RecieveSessionCookieInterceptor(preferences))
+        client.interceptors().add(Handle403Interceptor(context))
         return client
     }
 
