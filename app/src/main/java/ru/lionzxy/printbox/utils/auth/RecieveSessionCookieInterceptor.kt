@@ -1,8 +1,7 @@
 package ru.lionzxy.printbox.utils.auth
 
-import okhttp3.Interceptor
-import android.R.id.edit
 import android.content.SharedPreferences
+import okhttp3.Interceptor
 import okhttp3.Response
 import ru.lionzxy.printbox.utils.Constants
 import java.io.IOException

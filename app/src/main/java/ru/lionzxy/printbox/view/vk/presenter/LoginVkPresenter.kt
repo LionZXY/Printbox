@@ -2,12 +2,10 @@ package ru.lionzxy.printbox.view.vk.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import io.reactivex.android.schedulers.AndroidSchedulers
 import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.di.auth.AuthModule
 import ru.lionzxy.printbox.interactor.auth.IAuthInteractor
 import ru.lionzxy.printbox.view.vk.view.LoginVkView
-import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState

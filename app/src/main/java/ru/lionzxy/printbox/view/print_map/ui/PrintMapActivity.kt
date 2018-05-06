@@ -3,8 +3,6 @@ package ru.lionzxy.printbox.view.print_map.ui
 import android.os.Bundle
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
-import kotlinx.android.synthetic.main.activity_print_map.*
-import ru.lionzxy.printbox.BuildConfig
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.view.print_map.presenter.PrintMapPresenter
 

@@ -11,7 +11,6 @@ import ru.lionzxy.printbox.interactor.auth.IAuthInteractor
 import ru.lionzxy.printbox.utils.Constants
 import ru.lionzxy.printbox.view.register.ui.IRegisterView
 import javax.inject.Inject
-import kotlin.math.log
 
 /**
  * @author Nikita Kulikov <nikita@kulikof.ru>

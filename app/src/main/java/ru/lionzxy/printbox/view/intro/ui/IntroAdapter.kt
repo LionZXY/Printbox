@@ -3,8 +3,6 @@ package ru.lionzxy.printbox.view.intro.ui
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import ru.lionzxy.printbox.view.intro.ui.IntroEnum
-import ru.lionzxy.printbox.view.intro.ui.IntroFragment
 
 class IntroAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     private val screenLists = Array(count, { i -> IntroFragment.newInstance(IntroEnum.values()[i]) })

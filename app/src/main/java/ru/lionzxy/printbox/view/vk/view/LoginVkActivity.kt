@@ -2,13 +2,11 @@ package ru.lionzxy.printbox.view.vk.view
 
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_vkauth.*
-import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.BuildConfig
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.utils.Constants
