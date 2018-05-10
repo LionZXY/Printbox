@@ -15,14 +15,17 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 interface IRegisterView : MvpView {
     fun onLoading(isEnable: Boolean)
     @StateStrategyType(SkipStrategy::class)
-    fun onError(test: String)
+    fun onError(resId: Int)
 
     fun showLoginError(resError: Int)
     fun showPasswordError(resError: Int)
+    fun showSecondPasswordError(resError: Int)
     fun showEmailError(resError: Int)
     fun hideLoginError()
     fun hidePasswordError()
     fun hideEmailError()
+    fun hideSecondPasswordError()
     fun buttonActive(active: Boolean)
 
+    fun onAuth()
 }

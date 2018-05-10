@@ -14,5 +14,5 @@ object Constants {
     const val HEADER_SETCOOKIE = "Set-Cookie"
 
     val LOGIN_PATTERN = Pattern.compile("([a-zA-Z0-9]+)")
-    const val PASSWORD_MIN_LENGHT = 4
+    const val PASSWORD_MIN_LENGHT = 8
 }

@@ -15,7 +15,7 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 interface IAuthView : MvpView {
     fun onLoading(isEnable: Boolean)
     @StateStrategyType(SkipStrategy::class)
-    fun onError(test: String)
+    fun onError(resId: Int)
 
     fun showLoginError(resError: Int)
     fun showPasswordError(resError: Int)
@@ -23,4 +23,5 @@ interface IAuthView : MvpView {
     fun hidePasswordError()
     fun buttonActive(active: Boolean)
 
+    fun onAuth()
 }

@@ -30,10 +30,11 @@ class AppModule(private val context: Context) {
     @Singleton
     @Provides
     fun provideOkHttpClient(preferences: SharedPreferences, context: Context): OkHttpClient {
-        val client = OkHttpClient()
-        client.interceptors().add(AddSessionCookieInterceptor(preferences))
-        client.interceptors().add(RecieveSessionCookieInterceptor(preferences))
-        client.interceptors().add(Handle403Interceptor(context))
+        val client = OkHttpClient.Builder()
+                .addInterceptor(AddSessionCookieInterceptor(preferences))
+                .addInterceptor(RecieveSessionCookieInterceptor(preferences))
+                .addInterceptor(Handle403Interceptor(context))
+                .build()
         return client
     }
 

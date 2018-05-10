@@ -2,6 +2,7 @@ package ru.lionzxy.printbox.view.auth.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.R
@@ -35,13 +36,15 @@ class AuthPresenter : MvpPresenter<IAuthView>() {
             return
         }
         viewState.onLoading(true)
-        /*disposable.addAll(authInteractor.login(login, password)
+        disposable.addAll(authInteractor.login(login, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    viewState.onAuth()
                     viewState.onLoading(false)
                 }, {
-                    viewState.onError("TODO ME")
-                }))*/
+                    viewState.onError(R.string.auth_activity_auth_error)
+                    viewState.onLoading(false)
+                }))
     }
 
     fun onChangeLoginOrPassword(login: String, password: String) {

@@ -3,6 +3,7 @@ package ru.lionzxy.printbox.view.register.presenter
 import android.util.Patterns
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.R
@@ -26,31 +27,35 @@ class RegisterPresenter : MvpPresenter<IRegisterView>() {
     private val disposable = CompositeDisposable()
     private var hasLoginError = false
     private var hasPasswordError = false
+    private var hasSecondPasswordError = false
     private var hasEmailError = false
 
     init {
         App.appComponent.plus(AuthModule()).inject(this)
     }
 
-    fun onClickRegister(login: String, password: String, email: String) {
-        if (!validateLoginAndPassword(login, password, email)) {
+    fun onClickRegister(login: String, password: String, email: String, passwordRepeat: String) {
+        if (!validateLoginAndPassword(login, password, email, passwordRepeat)) {
             return
         }
         viewState.onLoading(true)
-        /*disposable.addAll(registerInteractor.login(login, password)
+        disposable.addAll(authInteractor.register(login, email, password, passwordRepeat)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    viewState.onAuth()
                     viewState.onLoading(false)
                 }, {
-                    viewState.onError("TODO ME")
-                }))*/
+                    viewState.onError(R.string.auth_activity_register_error)
+                    viewState.onLoading(false)
+                }))
     }
 
-    fun onChangeLoginPasswordEmail(login: String, password: String, email: String) {
+    fun onChangeLoginPasswordEmail(login: String, password: String, email: String, passwordRepeat: String) {
         onChangeLogin(login)
         onChangePassword(password)
         onChangeEmail(email)
-        viewState.buttonActive(validateLoginAndPassword(login, password, email, true))
+        onChangeRepeatePassword(password, passwordRepeat)
+        viewState.buttonActive(validateLoginAndPassword(login, password, email, passwordRepeat, true))
     }
 
     private fun onChangeLogin(login: String) {
@@ -75,6 +80,35 @@ class RegisterPresenter : MvpPresenter<IRegisterView>() {
         }
 
         validateEmail(email)
+    }
+
+    private fun onChangeRepeatePassword(password: String, passwordRepeat: String) {
+        if (!hasSecondPasswordError) {
+            return
+        }
+
+        validateRepeatPassword(password, passwordRepeat)
+    }
+
+    private fun validateRepeatPassword(password: String, passwordRepeat: String, silent: Boolean = false): Boolean {
+        if (passwordRepeat.isEmpty()) {
+            if (!silent) {
+                hasSecondPasswordError = true
+                viewState.showSecondPasswordError(R.string.auth_activity_password_empty)
+            }
+            return false
+        }
+        if (password != passwordRepeat) {
+            if (!silent) {
+                hasSecondPasswordError = true
+                viewState.showSecondPasswordError(R.string.auth_activity_password_match_repeat)
+            }
+            return false
+        }
+        if (!silent) {
+            viewState.hideSecondPasswordError()
+        }
+        return true
     }
 
     private fun validateLogin(login: String, silent: Boolean = false): Boolean {
@@ -146,9 +180,10 @@ class RegisterPresenter : MvpPresenter<IRegisterView>() {
         return true
     }
 
-    private fun validateLoginAndPassword(login: String, password: String, email: String, silent: Boolean = false): Boolean {
+    private fun validateLoginAndPassword(login: String, password: String, email: String, passwordRepeat: String, silent: Boolean = false): Boolean {
         var valid = validateLogin(login, silent)
         valid = validatePassword(password, silent) && valid
+        valid = validateRepeatPassword(password, passwordRepeat, silent) && valid
         return validateEmail(email, silent) && valid
     }
 

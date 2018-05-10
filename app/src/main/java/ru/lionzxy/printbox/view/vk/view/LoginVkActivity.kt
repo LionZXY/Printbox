@@ -32,7 +32,8 @@ class LoginVkActivity : MvpAppCompatActivity(), LoginVkView {
                     return false
                 }
                 if (url.startsWith("${BuildConfig.API_URL}auth?code=")) {
-                    val code = URL(url).splitQuery()["code"]!!
+                    val params = URL(url).splitQuery()
+                    val code = params["code"]!!
                     presenter.onCodeRecieve(code)
                 } else {
                     view.loadUrl(url)

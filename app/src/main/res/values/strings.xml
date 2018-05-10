@@ -23,11 +23,15 @@
     <string name="auth_activity_button">Войти</string>
     <string name="auth_activity_login">Логин</string>
     <string name="auth_activity_password">Пароль</string>
+    <string name="auth_activity_password_repeat">Повторите пароль</string>
+    <string name="auth_activity_auth_error">Ошибка авторизации</string>
+    <string name="auth_activity_register_error">Ошибка регистрации</string>
     <string name="auth_activity_email">E-Mail</string>
     <string name="auth_activity_login_empty">Логин не может быть пустым</string>
     <string name="auth_activity_login_matcher">Логин должен содержать только буквы латинского алфавита и цифры</string>
     <string name="auth_activity_password_empty">Пароль не может быть пустым</string>
-    <string name="auth_activity_password_matcher">Пароль должен иметь минимум 4 символа</string>
+    <string name="auth_activity_password_matcher">Пароль должен иметь минимум 8 символа и иметь хотя бы одну букву</string>
+    <string name="auth_activity_password_match_repeat">Пароли не совпадают</string>
     <string name="auth_activity_email_empty">Почта не может быть пустой</string>
     <string name="auth_activity_email_matcher">Введите валидный адрес (например example@printbox.io)</string>
     <string name="auth_register">Зарегистрироваться</string>
