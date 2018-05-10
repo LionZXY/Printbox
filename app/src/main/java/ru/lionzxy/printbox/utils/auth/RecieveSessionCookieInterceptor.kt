@@ -16,14 +16,18 @@ class RecieveSessionCookieInterceptor(private val preference: SharedPreferences)
             val cookies = HashMap<String, String>()
 
             for (header in originalResponse.headers(Constants.HEADER_SETCOOKIE)) {
-                val headers = header.split(";").map { it.trim() }
+                val headers = header.split(";")
+                        .map { it.trim().replace("\"", "") }
                 headers.map { it.split("=") }.forEach { cookies[it[0]] = it[1] }
             }
             if (cookies.containsKey(Constants.COOKIE_SESSIONID)) {
-                preference.edit()
-                        .putString(Constants.PREFERENCE_SESSIONID,
-                                cookies[Constants.COOKIE_SESSIONID])
-                        .apply()
+                val session = cookies[Constants.COOKIE_SESSIONID]!!
+                if (session.isNotEmpty()) {
+                    preference.edit()
+                            .putString(Constants.PREFERENCE_SESSIONID,
+                                    session)
+                            .apply()
+                }
             }
         }
 

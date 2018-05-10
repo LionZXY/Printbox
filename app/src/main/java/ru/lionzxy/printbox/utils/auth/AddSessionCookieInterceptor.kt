@@ -11,7 +11,9 @@ class AddSessionCookieInterceptor(private val preferences: SharedPreferences) : 
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         val sessionid = preferences.getString(Constants.PREFERENCE_SESSIONID, "")
-        builder.addHeader(Constants.HEADER_COOKIE, "${Constants.COOKIE_SESSIONID}=$sessionid")
+        if (sessionid.isNotEmpty()) {
+            builder.addHeader(Constants.HEADER_COOKIE, "${Constants.COOKIE_SESSIONID}=$sessionid")
+        }
         return chain.proceed(builder.build())
     }
 }
