@@ -5,8 +5,8 @@ import java.net.URLEncoder
 import java.util.regex.Pattern
 
 object Constants {
-    val VKFLOW_URL = "https://oauth.vk.com/authorize?scope=email&client_id=5571444&" +
-            "redirect_uri=${URLEncoder.encode(BuildConfig.API_URL, "UTF-8")}auth&response_type=code"
+    const val VKFLOW_URL = "https://printbox.io/login/vk-oauth2/"
+    const val REDIR_URL = "https://printbox.io/complete/vk-oauth2/"
     const val PREFERENCE_SESSIONID = "sessionid"
     const val PREFERENCE_FIRSTRUN = "firstrun"
     const val COOKIE_SESSIONID = "sessionid"

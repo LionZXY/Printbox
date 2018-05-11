@@ -8,4 +8,6 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 interface LoginVkView : MvpView {
     fun hideWebview()
     fun showWebview(url: String)
+    fun onSucsLogin()
+    fun onError()
 }

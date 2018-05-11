@@ -17,4 +17,9 @@ class AuthRepository(retrofit: Retrofit) : IAuthRepository {
         return authApi.register(login, email, password, passwordRepeat)
                 .subscribeOn(Schedulers.io())
     }
+
+    override fun vklogin(params: Map<String, String>): Completable {
+        return authApi.vkLogin(params)
+                .subscribeOn(Schedulers.io())
+    }
 }

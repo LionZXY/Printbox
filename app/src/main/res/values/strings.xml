@@ -37,7 +37,7 @@
     <string name="auth_register">Зарегистрироваться</string>
     <string name="auth_already_register">Я уже зарегистрировался</string>
     <string name="auth_vk">Войти через ВКонтакте</string>
-
+    <string name="auth_vk_fail">Ошибка</string>
     <string name="register_activity_title">Регистрация</string>
 
     <!-- Intro Activity -->

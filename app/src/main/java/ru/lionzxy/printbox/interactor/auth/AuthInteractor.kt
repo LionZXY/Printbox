@@ -14,4 +14,7 @@ class AuthInteractor(
         return authRepository.register(login, email, password, passwordRepeat)
     }
 
+    override fun vklogin(params: Map<String, String>): Completable {
+        return authRepository.vklogin(params)
+    }
 }

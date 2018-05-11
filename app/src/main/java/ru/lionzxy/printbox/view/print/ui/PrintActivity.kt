@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.yandex.mapkit.MapKitFactory
 import kotlinx.android.synthetic.main.toolbar.*
+import ru.lionzxy.printbox.BuildConfig
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.view.print.presenter.PrintPresenter
 import ru.lionzxy.printbox.view.print_map.ui.PrintMapActivity
@@ -21,7 +23,7 @@ class PrintActivity : MvpAppCompatActivity(), IPrintView {
         setSupportActionBar(toolbar)
 
         supportFragmentManager.beginTransaction().replace(R.id.container, PrintSelectFragment()).commit()
-        //openPrintMapSelect()
+        openPrintMapSelect()
     }
 
     override fun openPrintMapSelect() {
