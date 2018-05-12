@@ -1,5 +1,8 @@
 package ru.lionzxy.printbox.di.auth
 
+import android.content.SharedPreferences
+import com.franmontiel.persistentcookiejar.ClearableCookieJar
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -13,8 +16,10 @@ class AuthModule() {
 
     @AuthScope
     @Provides
-    fun provideRepository(retrofit: Retrofit): IAuthRepository {
-        return AuthRepository(retrofit)
+    fun provideRepository(retrofit: Retrofit,
+                          preferences: SharedPreferences, gson: Gson,
+                          cookieJar: ClearableCookieJar): IAuthRepository {
+        return AuthRepository(retrofit, preferences, gson, cookieJar)
     }
 
     @AuthScope

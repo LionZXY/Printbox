@@ -1,6 +1,7 @@
 package ru.lionzxy.printbox.interactor.auth
 
 import io.reactivex.Completable
+import ru.lionzxy.printbox.data.model.User
 import ru.lionzxy.printbox.repository.auth.IAuthRepository
 
 class AuthInteractor(
@@ -16,5 +17,13 @@ class AuthInteractor(
 
     override fun vklogin(params: Map<String, String>): Completable {
         return authRepository.vklogin(params)
+    }
+
+    override fun getUser(): User {
+        return authRepository.getUser()
+    }
+
+    override fun logout(): Completable {
+        return authRepository.logout()
     }
 }

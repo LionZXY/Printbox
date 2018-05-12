@@ -86,7 +86,7 @@ class AuthActivity : MvpAppCompatActivity(), IAuthView {
         pref.edit().putBoolean(Constants.PREFERENCE_FIRSTRUN, false).apply()
 
         val intent = Intent(this, PrintActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 }

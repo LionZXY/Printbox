@@ -10,6 +10,7 @@ import ru.lionzxy.printbox.di.auth.AuthModule
 import ru.lionzxy.printbox.interactor.auth.IAuthInteractor
 import ru.lionzxy.printbox.utils.Constants
 import ru.lionzxy.printbox.view.auth.ui.IAuthView
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -18,7 +19,6 @@ import javax.inject.Inject
  * @date 06.03.18
  */
 
-//TODO save login and password here
 @InjectViewState
 class AuthPresenter : MvpPresenter<IAuthView>() {
     @Inject
@@ -44,6 +44,7 @@ class AuthPresenter : MvpPresenter<IAuthView>() {
                 }, {
                     viewState.onError(R.string.auth_activity_auth_error)
                     viewState.onLoading(false)
+                    Timber.i(it)
                 }))
     }
 

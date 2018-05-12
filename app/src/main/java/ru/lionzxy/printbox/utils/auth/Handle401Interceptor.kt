@@ -9,7 +9,7 @@ import ru.lionzxy.printbox.utils.Constants
 import ru.lionzxy.printbox.view.auth.ui.AuthActivity
 import java.net.HttpURLConnection
 
-class Handle403Interceptor(private val context: Context) : Interceptor {
+class Handle401Interceptor(private val context: Context) : Interceptor {
     val pref = PreferenceManager.getDefaultSharedPreferences(context)!!
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -19,11 +19,11 @@ class Handle403Interceptor(private val context: Context) : Interceptor {
             return originalResponse
         }
 
-        if (originalResponse.code() == HttpURLConnection.HTTP_FORBIDDEN) {
+        if (originalResponse.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
             pref.edit().putBoolean(Constants.PREFERENCE_FIRSTRUN, true).apply()
 
             val intent = Intent(context, AuthActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             context.startActivity(intent)
         }
         return originalResponse

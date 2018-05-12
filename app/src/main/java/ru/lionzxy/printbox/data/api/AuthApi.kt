@@ -1,7 +1,9 @@
 package ru.lionzxy.printbox.data.api
 
 import io.reactivex.Completable
+import io.reactivex.Single
 import retrofit2.http.*
+import ru.lionzxy.printbox.data.model.User
 
 interface AuthApi {
 
@@ -16,4 +18,7 @@ interface AuthApi {
 
     @GET("/complete/vk-oauth2/")
     fun vkLogin(@QueryMap params: Map<String, String>): Completable
+
+    @GET("user/")
+    fun currentUser(): Single<List<User>>
 }

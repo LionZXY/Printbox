@@ -21,6 +21,19 @@
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:buttonStyle">@style/AppTheme.Button</item>
         <item name="android:textViewStyle">@style/TextViewStyle</item>
+
+        <!-- MaterialDrawer specific values -->
+        <item name="material_drawer_background">@color/colorBackground</item>
+        <item name="material_drawer_primary_text">@color/colorPrimary</item>
+        <item name="material_drawer_secondary_text">@color/colorPrimary</item>
+        <item name="material_drawer_hint_text">@color/material_drawer_dark_hint_text</item>
+        <item name="material_drawer_divider">@color/gray</item>
+        <item name="material_drawer_selected">@color/colorBackgroundDark</item>
+        <item name="material_drawer_selected_text">@color/colorPrimaryDark</item>
+        <item name="material_drawer_header_selection_text">
+            @color/material_drawer_dark_primary_text
+        </item>
+
     </style>
 
     <style name="TextViewStyle" parent="android:Widget.TextView">
