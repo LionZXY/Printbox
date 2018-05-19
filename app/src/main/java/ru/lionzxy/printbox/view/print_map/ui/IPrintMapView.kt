@@ -16,11 +16,14 @@ interface IPrintMapView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun setCurrentPosition(position: CameraPosition)
+    @StateStrategyType(SkipStrategy::class)
+    fun finishWithPrinter(printPlace: PrintPlace)
 
     fun setPrinters(list: List<PrintPlace>)
     fun onError(resId: Int)
     fun showPrinterLoading(visible: Boolean)
     fun invalidate()
     fun selectPrintPlace(printPlace: PrintPlace)
-
+    fun setActiveNext(visible: Boolean)
+    fun showProgressBarNext(visible: Boolean)
 }

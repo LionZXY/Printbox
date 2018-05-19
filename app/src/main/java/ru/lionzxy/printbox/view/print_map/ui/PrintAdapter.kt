@@ -56,7 +56,7 @@ class PrintAdapter(private var printers: List<PrintPlace>) : RecyclerView.Adapte
 
     fun setCurrentPrint(currentPrinter: PrintPlace) {
         this.currentPrinter = currentPrinter
-        notifyItemChanged(printers.indexOf(currentPrinter))
+        notifyDataSetChanged()
     }
 }
 

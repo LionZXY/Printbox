@@ -2,7 +2,11 @@ package ru.lionzxy.printbox.view.print_map.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -23,6 +27,7 @@ import com.yandex.runtime.image.ImageProvider
 import kotlinx.android.synthetic.main.activity_print_map.*
 import ru.lionzxy.printbox.BuildConfig
 import ru.lionzxy.printbox.R
+import ru.lionzxy.printbox.data.model.EXTRA_PRINT
 import ru.lionzxy.printbox.data.model.PrintPlace
 import ru.lionzxy.printbox.utils.toast
 import ru.lionzxy.printbox.view.print_map.presenter.PrintMapPresenter
@@ -73,6 +78,10 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
                 ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_black_36)
             })
         }
+
+        if (printToMark.containsKey(currPrinter)) {
+            setActiveNext(true)
+        }
     }
 
     override fun selectPrintPlace(printPlace: PrintPlace) {
@@ -99,10 +108,32 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
         invalidate()
     }
 
+    override fun setActiveNext(visible: Boolean) {
+        next.isClickable = visible
+        next.isFocusable = visible
+
+        val color = ContextCompat.getColor(this,
+                if (visible) R.color.white else R.color.gray)
+        next_text.setTextColor(color)
+        next_icon.setColorFilter(color, PorterDuff.Mode.MULTIPLY)
+
+        if (visible) {
+            next.setOnClickListener { printMapPresenter.onNext(selectedPrinter) }
+        } else {
+            next.setOnClickListener(null)
+        }
+    }
+
     override fun setPosition(position: CameraPosition) {
         mapview.map.move(position,
                 Animation(Animation.Type.SMOOTH, 0.5f),
                 null)
+    }
+
+    override fun showProgressBarNext(visible: Boolean) {
+        next_progressbar.visibility = if (visible) View.VISIBLE else View.GONE
+        next_icon.visibility = if (visible) View.GONE else View.VISIBLE
+        next_text.visibility = if (visible) View.GONE else View.VISIBLE
     }
 
     override fun setCurrentPosition(position: CameraPosition) {
@@ -125,6 +156,15 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
     @SuppressLint("MissingPermission")
     private fun focusCurrentLocation() {
         googleApi.lastLocation.addOnCompleteListener { printMapPresenter.onLastLocation(it.result) }
+    }
+
+    override fun finishWithPrinter(printPlace: PrintPlace) {
+        val bundle = Bundle()
+        bundle.putParcelable(EXTRA_PRINT, printPlace)
+        val intent = Intent()
+        intent.putExtras(bundle)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
     override fun onStop() {

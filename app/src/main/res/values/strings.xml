@@ -44,6 +44,7 @@
     <!-- Map -->
     <string name="map_location_access_fail">Мы не сможем получить доступ к локации без разрешения</string>
     <string name="map_printer_error">Ошибка получения списка принтеров</string>
+    <string name="map_draft_error">Ошибка сохранения</string>
 
     <!-- Intro Activity -->
     <string name="intro_next">Далее</string>
