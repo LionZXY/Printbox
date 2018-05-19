@@ -8,9 +8,6 @@ import ru.lionzxy.printbox.data.model.User
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface IPrintView : MvpView {
-    @StateStrategyType(SkipStrategy::class)
-    fun openPrintMapSelect()
-
     fun showProgressBar(visible: Boolean)
     fun initDrawer(user: User)
 }

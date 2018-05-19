@@ -3,6 +3,7 @@ package ru.lionzxy.printbox.di.app
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.fatboyindustrial.gsonjodatime.Converters
 import com.franmontiel.persistentcookiejar.ClearableCookieJar
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
@@ -35,7 +36,7 @@ class AppModule(private val context: Context) {
     @Singleton
     @Provides
     fun provideGson(): Gson {
-        return GsonBuilder().create()
+        return Converters.registerDateTime(GsonBuilder()).create()
     }
 
     @Singleton

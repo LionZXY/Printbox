@@ -1,12 +1,12 @@
 package ru.lionzxy.printbox
 
-import android.app.Application
+import android.support.multidex.MultiDexApplication
 import ru.lionzxy.printbox.di.app.AppComponent
 import ru.lionzxy.printbox.di.app.AppModule
 import ru.lionzxy.printbox.di.app.DaggerAppComponent
 
 
-class App : Application() {
+class App : MultiDexApplication() {
     companion object {
         @JvmStatic
         lateinit var appComponent: AppComponent

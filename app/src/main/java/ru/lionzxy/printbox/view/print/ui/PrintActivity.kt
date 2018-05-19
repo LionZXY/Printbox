@@ -31,7 +31,6 @@ class PrintActivity : MvpAppCompatActivity(), IPrintView {
         setSupportActionBar(toolbar)
 
         supportFragmentManager.beginTransaction().replace(R.id.container, PrintSelectFragment()).commit()
-        //openPrintMapSelect()
     }
 
     override fun initDrawer(user: User) {
@@ -74,10 +73,5 @@ class PrintActivity : MvpAppCompatActivity(), IPrintView {
             100L -> printPresenter.logout()
         }
         return true
-    }
-
-    override fun openPrintMapSelect() {
-        val intent = Intent(this, PrintMapActivity::class.java)
-        startActivity(intent)
     }
 }

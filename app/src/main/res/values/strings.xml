@@ -41,6 +41,10 @@
     <string name="auth_logout">Выйти</string>
     <string name="register_activity_title">Регистрация</string>
 
+    <!-- Map -->
+    <string name="map_location_access_fail">Мы не сможем получить доступ к локации без разрешения</string>
+    <string name="map_printer_error">Ошибка получения списка принтеров</string>
+
     <!-- Intro Activity -->
     <string name="intro_next">Далее</string>
     <string name="intro_ready">Вперед!</string>

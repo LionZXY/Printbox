@@ -1,5 +1,8 @@
 package ru.lionzxy.printbox.repository.print
 
-interface IPrintRepository {
+import io.reactivex.Observable
+import ru.lionzxy.printbox.data.model.PrintPlace
 
+interface IPrintRepository {
+    fun getPrinters(): Observable<List<PrintPlace>>
 }

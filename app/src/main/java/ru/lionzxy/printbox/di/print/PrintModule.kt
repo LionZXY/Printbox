@@ -2,6 +2,7 @@ package ru.lionzxy.printbox.di.print
 
 import dagger.Module
 import dagger.Provides
+import retrofit2.Retrofit
 import ru.lionzxy.printbox.interactor.print.IPrintInteractor
 import ru.lionzxy.printbox.interactor.print.PrintInteractor
 import ru.lionzxy.printbox.repository.print.IPrintRepository
@@ -12,8 +13,8 @@ class PrintModule() {
 
     @PrintScope
     @Provides
-    fun provideRepository(): IPrintRepository {
-        return PrintRepository()
+    fun provideRepository(retrofit: Retrofit): IPrintRepository {
+        return PrintRepository(retrofit)
     }
 
     @PrintScope
