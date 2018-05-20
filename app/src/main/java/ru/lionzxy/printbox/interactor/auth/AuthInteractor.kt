@@ -15,8 +15,8 @@ class AuthInteractor(
         return authRepository.register(login, email, password, passwordRepeat)
     }
 
-    override fun vklogin(params: Map<String, String>): Completable {
-        return authRepository.vklogin(params)
+    override fun setAuthCookie(sessionid: String) {
+        return authRepository.setAuthCookie(sessionid)
     }
 
     override fun getUser(): User {

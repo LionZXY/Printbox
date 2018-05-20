@@ -70,7 +70,8 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
     override fun invalidate() {
         val currPrinter = selectedPrinter ?: return
 
-        printerAdapter.setCurrentPrint(currPrinter)
+        val position = printerAdapter.setCurrentPrint(currPrinter)
+        printers.scrollToPosition(position)
         printToMark.forEach { t, u ->
             u.setIcon(if (t == currPrinter) {
                 ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_red_48dp)

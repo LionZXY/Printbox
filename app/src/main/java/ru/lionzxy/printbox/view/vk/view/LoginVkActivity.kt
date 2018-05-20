@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
 import android.webkit.CookieManager
+import android.webkit.CookieSyncManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -12,14 +13,9 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_vkauth.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.utils.Constants
-import ru.lionzxy.printbox.utils.splitQuery
 import ru.lionzxy.printbox.utils.toast
 import ru.lionzxy.printbox.view.print.ui.PrintActivity
 import ru.lionzxy.printbox.view.vk.presenter.LoginVkPresenter
-import timber.log.Timber
-import java.net.URL
-import android.webkit.CookieSyncManager
-
 
 
 class LoginVkActivity : MvpAppCompatActivity(), LoginVkView {
@@ -31,28 +27,28 @@ class LoginVkActivity : MvpAppCompatActivity(), LoginVkView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vkauth)
 
+        clearAll()
         webView.loadUrl(Constants.VKFLOW_URL)
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                if (url == null) {
+                    return
+                }
+
+                if (url.startsWith(Constants.BASE_URL)) {
+                    presenter.onUrlFetch()
+                }
+            }
+        }
+    }
+
+    private fun clearAll() {
         webView.clearCache(true)
         deleteDatabase("webview.db")
         deleteDatabase("webviewCache.db")
         CookieSyncManager.createInstance(this)
         val cookieManager = CookieManager.getInstance()
         cookieManager.removeAllCookie()
-        webView.webViewClient = object : WebViewClient() {
-            @Suppress("OverridingDeprecatedMember")
-            override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
-                if (url == null) {
-                    return false
-                }
-                if (url.startsWith(Constants.REDIR_URL)) {
-                    val params = URL(url).splitQuery()
-                    presenter.onVkLogin(params)
-                } else {
-                    view.loadUrl(url)
-                }
-                return true
-            }
-        }
     }
 
     override fun onSucsLogin() {

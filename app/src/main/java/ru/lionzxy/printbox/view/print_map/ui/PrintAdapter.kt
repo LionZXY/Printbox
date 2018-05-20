@@ -3,8 +3,8 @@ package ru.lionzxy.printbox.view.print_map.ui
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.CardView
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,9 +54,11 @@ class PrintAdapter(private var printers: List<PrintPlace>) : RecyclerView.Adapte
         this.clickListener = listener
     }
 
-    fun setCurrentPrint(currentPrinter: PrintPlace) {
+    fun setCurrentPrint(currentPrinter: PrintPlace): Int {
         this.currentPrinter = currentPrinter
-        notifyDataSetChanged()
+        val position = printers.indexOf(currentPrinter)
+        notifyItemChanged(position)
+        return position
     }
 }
 

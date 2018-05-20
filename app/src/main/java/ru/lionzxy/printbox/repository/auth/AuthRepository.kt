@@ -5,7 +5,8 @@ import com.franmontiel.persistentcookiejar.ClearableCookieJar
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
-import okhttp3.CookieJar
+import okhttp3.Cookie
+import okhttp3.HttpUrl
 import retrofit2.Retrofit
 import ru.lionzxy.printbox.data.api.AuthApi
 import ru.lionzxy.printbox.data.model.User
@@ -31,10 +32,14 @@ class AuthRepository(retrofit: Retrofit,
                 .subscribeOn(Schedulers.io())
     }
 
-    override fun vklogin(params: Map<String, String>): Completable {
-        return authApi.vkLogin(params)
-                .andThen(updateFromServerUser())
-                .subscribeOn(Schedulers.io())
+    override fun setAuthCookie(sessionid: String) {
+        val url = HttpUrl.parse(Constants.BASE_URL)!!
+        val cookie = Cookie.Builder().domain("printbox.io")
+                .name(Constants.COOKIE_SESSION)
+                .path("/")
+                .value(sessionid)
+                .build()
+        cookieJar.saveFromResponse(url, listOf(cookie))
     }
 
     override fun setUser(user: User): Completable {
