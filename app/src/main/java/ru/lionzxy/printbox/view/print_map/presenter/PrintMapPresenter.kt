@@ -9,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.R
+import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintPlace
 import ru.lionzxy.printbox.di.print.PrintModule
 import ru.lionzxy.printbox.interactor.print.IPrintInteractor
@@ -22,6 +23,7 @@ class PrintMapPresenter : MvpPresenter<IPrintMapView>() {
     private val disposable = CompositeDisposable()
     @Inject
     lateinit var interactor: IPrintInteractor
+    private lateinit var cartModel: PrintCartModel
     private var printPlaceAlreadySelect = false
 
     init {
@@ -56,6 +58,10 @@ class PrintMapPresenter : MvpPresenter<IPrintMapView>() {
                     }
                     printPlaceAlreadySelect = true
                 }, Timber::e))
+        disposable.addAll(interactor
+                .getObservableCart()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { cartModel = it })
     }
 
     fun onNext(printer: PrintPlace?) {
@@ -68,6 +74,8 @@ class PrintMapPresenter : MvpPresenter<IPrintMapView>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.finishWithPrinter(printer)
+                    cartModel.printPlace = printer
+                    interactor.setCart(cartModel)
                     viewState.showProgressBarNext(false)
                 }, {
                     Timber.e(it)

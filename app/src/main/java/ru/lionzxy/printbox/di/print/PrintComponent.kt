@@ -1,6 +1,7 @@
 package ru.lionzxy.printbox.di.print
 
 import dagger.Subcomponent
+import ru.lionzxy.printbox.view.print.presenter.PrintPresenter
 import ru.lionzxy.printbox.view.print_map.presenter.PrintMapPresenter
 
 @Subcomponent(
@@ -9,4 +10,5 @@ import ru.lionzxy.printbox.view.print_map.presenter.PrintMapPresenter
 @PrintScope
 interface PrintComponent {
     fun inject(presenter: PrintMapPresenter)
+    fun inject(presenter: PrintPresenter)
 }

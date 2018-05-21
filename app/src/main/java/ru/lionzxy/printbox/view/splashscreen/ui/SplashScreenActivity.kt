@@ -6,7 +6,8 @@ import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import ru.lionzxy.printbox.utils.Constants
 import ru.lionzxy.printbox.view.intro.ui.IntroActivity
-import ru.lionzxy.printbox.view.print.ui.PrintActivity
+import ru.lionzxy.printbox.view.main.ui.MainActivity
+import ru.lionzxy.printbox.view.print.ui.PrintFragment
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +18,7 @@ class SplashScreenActivity : AppCompatActivity() {
             val intent = Intent(this, IntroActivity::class.java)
             startActivity(intent)
         } else {
-            val intent = Intent(this, PrintActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }

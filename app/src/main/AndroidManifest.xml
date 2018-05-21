@@ -14,7 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.print.ui.PrintActivity" />
         <activity android:name=".view.print_map.ui.PrintMapActivity" />
         <activity
             android:name=".view.splashscreen.ui.SplashScreenActivity"
@@ -30,5 +29,6 @@
         <activity android:name=".view.auth.ui.AuthActivity" />
         <activity android:name=".view.register.ui.RegisterActivity" />
         <activity android:name=".view.vk.view.LoginVkActivity" />
+        <activity android:name=".view.main.ui.MainActivity" />
     </application>
 </manifest>

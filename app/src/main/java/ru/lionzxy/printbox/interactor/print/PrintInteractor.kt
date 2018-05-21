@@ -3,6 +3,7 @@ package ru.lionzxy.printbox.interactor.print
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintPlace
 import ru.lionzxy.printbox.repository.print.IPrintRepository
 
@@ -19,5 +20,13 @@ class PrintInteractor(
 
     override fun savePrinter(printPlace: PrintPlace): Completable {
         return printRepository.savePrinter(printPlace)
+    }
+
+    override fun getObservableCart(): Observable<PrintCartModel> {
+        return printRepository.getObservableCart()
+    }
+
+    override fun setCart(printCartModel: PrintCartModel) {
+        printRepository.setCart(printCartModel)
     }
 }

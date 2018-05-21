@@ -8,13 +8,16 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import ru.lionzxy.printbox.data.api.PrintApi
+import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintPlace
+import ru.lionzxy.printbox.data.stores.IPrintCartStore
 
 const val PREF_LASTPRINT = "lastprint"
 
 class PrintRepository(retrofit: Retrofit,
                       private var gson: Gson,
-                      private var preferences: SharedPreferences) : IPrintRepository {
+                      private var preferences: SharedPreferences,
+                      private val cartStore: IPrintCartStore) : IPrintRepository {
     private val printApi = retrofit.create(PrintApi::class.java)
 
     override fun getPrinters(): Observable<List<PrintPlace>> {
@@ -33,5 +36,13 @@ class PrintRepository(retrofit: Retrofit,
             val json = gson.toJson(printPlace)
             preferences.edit().putString(PREF_LASTPRINT, json).apply()
         }
+    }
+
+    override fun getObservableCart(): Observable<PrintCartModel> {
+        return cartStore.getObservableCart()
+    }
+
+    override fun setCart(printCartModel: PrintCartModel) {
+        cartStore.setCart(printCartModel)
     }
 }

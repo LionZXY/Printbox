@@ -13,7 +13,7 @@ import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.utils.Constants
 import ru.lionzxy.printbox.utils.toast
 import ru.lionzxy.printbox.view.auth.presenter.AuthPresenter
-import ru.lionzxy.printbox.view.print.ui.PrintActivity
+import ru.lionzxy.printbox.view.main.ui.MainActivity
 import ru.lionzxy.printbox.view.register.ui.RegisterActivity
 import ru.lionzxy.printbox.view.vk.view.LoginVkActivity
 
@@ -85,7 +85,7 @@ class AuthActivity : MvpAppCompatActivity(), IAuthView {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         pref.edit().putBoolean(Constants.PREFERENCE_FIRSTRUN, false).apply()
 
-        val intent = Intent(this, PrintActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }

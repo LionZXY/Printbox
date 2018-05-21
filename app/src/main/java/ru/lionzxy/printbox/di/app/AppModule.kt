@@ -17,6 +17,8 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.lionzxy.printbox.BuildConfig
+import ru.lionzxy.printbox.data.stores.IPrintCartStore
+import ru.lionzxy.printbox.data.stores.PrintCartStore
 import ru.lionzxy.printbox.utils.auth.Handle401Interceptor
 import javax.inject.Singleton
 
@@ -63,5 +65,11 @@ class AppModule(private val context: Context) {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
+    }
+
+    @Singleton
+    @Provides
+    fun providePrintCart(): IPrintCartStore {
+        return PrintCartStore()
     }
 }
