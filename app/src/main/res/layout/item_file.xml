@@ -1,47 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="6dp"
-    android:layout_marginEnd="16dp">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/icon_file"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_print_file" />
-
-    <TextView
-        android:id="@+id/file_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:text="Тестовый файл.odt"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/file_size"
-        app:layout_constraintStart_toEndOf="@id/icon_file"
-        app:layout_constraintTop_toTopOf="@id/icon_file" />
-
-    <TextView
-        android:id="@+id/file_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="01.02.2017 13:00"
-        app:layout_constraintBottom_toBottomOf="@id/icon_file"
-        app:layout_constraintStart_toEndOf="@id/icon_file"
-        app:layout_constraintStart_toStartOf="@id/file_name"
-        app:layout_constraintTop_toBottomOf="@id/file_name" />
-
-    <View
+    <android.support.v7.widget.CardView
+        android:id="@+id/content_card"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white"
-        android:layout_marginTop="6dp"
-        app:layout_constraintTop_toBottomOf="@id/icon_file" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/colorBackground"
+        tools:layout_width="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp">
+
+            <ImageView
+                android:id="@+id/icon_file"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_print_file" />
+
+            <TextView
+                android:id="@+id/file_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/file_size"
+                app:layout_constraintStart_toEndOf="@id/icon_file"
+                app:layout_constraintTop_toTopOf="@id/icon_file"
+                tools:text="Тестовый файл.odt" />
+
+            <TextView
+                android:id="@+id/file_createdat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/icon_file"
+                app:layout_constraintStart_toEndOf="@id/icon_file"
+                app:layout_constraintStart_toStartOf="@id/file_name"
+                app:layout_constraintTop_toBottomOf="@id/file_name"
+                tools:text="01.02.2017 13:00" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+    <!--
+    <ru.lionzxy.printbox.utils.view.SquareFrameLayout
+        android:id="@+id/delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:clickable="true"
+            android:focusable="true"
+
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/colorPrimaryDark">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_trash" />
+
+        </android.support.v7.widget.CardView>
+    </ru.lionzxy.printbox.utils.view.SquareFrameLayout> -->
+</FrameLayout>

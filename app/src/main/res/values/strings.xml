@@ -41,6 +41,11 @@
     <string name="auth_logout">Выйти</string>
     <string name="register_activity_title">Регистрация</string>
 
+    <!-- Files -->
+    <string name="files_update_error">Ошибка получения файлов</string>
+    <string name="files_title">Мои файлы</string>
+    <string name="files_select_button">Выберите файл</string>
+
     <!-- Map -->
     <string name="map_location_access_fail">Мы не сможем получить доступ к локации без разрешения</string>
     <string name="map_printer_error">Ошибка получения списка принтеров</string>
