@@ -1,5 +1,6 @@
 package ru.lionzxy.printbox.di.files
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -13,8 +14,8 @@ class FilesModule() {
 
     @FilesScope
     @Provides
-    fun provideRepository(retrofit: Retrofit): IFilesRepository {
-        return FilesRepository(retrofit)
+    fun provideRepository(retrofit: Retrofit, context: Context): IFilesRepository {
+        return FilesRepository(retrofit, context)
     }
 
     @FilesScope

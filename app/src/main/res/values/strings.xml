@@ -45,6 +45,10 @@
     <string name="files_update_error">Ошибка получения файлов</string>
     <string name="files_title">Мои файлы</string>
     <string name="files_select_button">Выберите файл</string>
+    <string name="files_select_notfound">Мы не нашли у вас файловый менеджер. Пожалуйста, установите файловый менеджер, который поддерживает выбор файлов для продолжения</string>
+    <string name="files_upload_progress">Загрузка файла</string>
+    <string name="files_upload_progress_details">Пожалуйста, подождите</string>
+    <string name="files_upload_failed">Ошибка загрузки файла</string>
 
     <!-- Map -->
     <string name="map_location_access_fail">Мы не сможем получить доступ к локации без разрешения</string>

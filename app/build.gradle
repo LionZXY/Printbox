@@ -48,6 +48,8 @@ ext {
     crashalyticsVersion = '2.9.1'
     constrainLayoutVersion = '1.1.0'
     retrofitVersion = '2.4.0'
+    uploadServiceVersion = "3.4.2"
+    apacheConfig = "1.11"
 }
 
 dependencies {
@@ -61,6 +63,8 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$constrainLayoutVersion"
     implementation "com.android.support:cardview-v7:$supportVersion"
     implementation 'com.github.alex-townsend:SwipeOpenItemTouchHelper:1.4.0'
+    implementation "net.gotev:uploadservice:$uploadServiceVersion"
+    implementation "net.gotev:uploadservice-okhttp:$uploadServiceVersion"
 
     implementation 'me.relex:circleindicator:1.2.2@aar'
 
@@ -94,4 +98,8 @@ dependencies {
     implementation 'com.yandex.android:mapkit:3.0.0'
     implementation "com.google.android.gms:play-services-location:15.0.1"
     implementation 'com.android.support:multidex:1.0.3'
+
+    // For base64
+    //implementation "commons-codec:commons-codec:$apacheConfig"
+
 }

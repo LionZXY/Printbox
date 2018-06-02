@@ -35,6 +35,6 @@ class DocumentAdapter(var files: List<PrintDocument>) : RecyclerView.Adapter<Doc
 
 class DocumentViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
     val nameText = rootView.findViewById<TextView>(R.id.file_name)
-    val createdAt = rootView.findViewById<TextView>(R.id.file_createdat)
+    val createdAt = rootView.findViewById<TextView>(R.id.file_createdat)                                                                                        
     val contentCard = rootView.findViewById<CardView>(R.id.content_card)
 }

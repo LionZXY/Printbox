@@ -12,6 +12,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import net.gotev.uploadservice.UploadService
+import net.gotev.uploadservice.okhttp.OkHttpStack
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -50,10 +52,12 @@ class AppModule(private val context: Context) {
     @Singleton
     @Provides
     fun provideOkHttpClient(cookieJar: ClearableCookieJar, context: Context): OkHttpClient {
-        return OkHttpClient.Builder()
+        val client = OkHttpClient.Builder()
                 .cookieJar(cookieJar)
                 .addInterceptor(Handle401Interceptor(context))
                 .build()
+        UploadService.HTTP_STACK = OkHttpStack(client)
+        return client
     }
 
     @Singleton

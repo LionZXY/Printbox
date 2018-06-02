@@ -11,4 +11,5 @@ interface IPrintFilesView : MvpView {
     fun setFiles(docs: List<PrintDocument>)
     fun showLoading(visible: Boolean)
     fun onError(@StringRes resId: Int)
+    fun showProgres(visible: Boolean, current: Int = 0, total: Int = 0)
 }

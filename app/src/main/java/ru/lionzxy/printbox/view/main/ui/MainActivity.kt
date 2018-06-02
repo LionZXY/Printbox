@@ -1,5 +1,6 @@
 package ru.lionzxy.printbox.view.main.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.User
+import ru.lionzxy.printbox.utils.IActivityResultReciever
 import ru.lionzxy.printbox.view.main.presenter.MainPresenter
 import ru.lionzxy.printbox.view.print.ui.PrintFragment
 
@@ -22,6 +24,11 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
     lateinit var mainPresenter: MainPresenter
     lateinit var fragment: PrintFragment
     lateinit var drawer: Drawer
+
+    companion object {
+        const val REQUEST_MAP_CODE = 1
+        const val REQUEST_FILE_CHOOSE = 2
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +45,16 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
                     .commit()
         }
         fragment = tmpFragment as PrintFragment
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        supportFragmentManager.fragments.forEach {
+            if (it is IActivityResultReciever) {
+                it.onActivityResult(requestCode, resultCode, data)
+            }
+        }
     }
 
     override fun initDrawer(user: User) {
