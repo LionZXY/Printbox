@@ -1,0 +1,50 @@
+image: openjdk:8-jdk
+
+variables:
+  ANDROID_COMPILE_SDK: "27"
+  ANDROID_BUILD_TOOLS: "27.0.3"
+  ANDROID_SDK_TOOLS: "4333796"
+  TELEGRAM_CHAT_ID: "-282233515"
+
+before_script:
+  - apt-get --quiet update --yes
+  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
+  - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip
+  - unzip -qq android-sdk.zip -d android-sdk-linux
+  - echo y | android-sdk-linux/tools/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" > /dev/nullx
+  - export ANDROID_HOME=$PWD/android-sdk-linux
+  - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
+  - chmod +x ./gradlew
+
+stages:
+  - build
+  - deploy
+
+.package_template: &package_template_def
+  before_script:
+    - export VERSION_NAME=`egrep '^[[:blank:]]+versionName[[:blank:]]'  app/build.gradle | awk '{print $2}' | sed s/\"//g`
+    - export VERSION_CODE=`egrep '^[[:blank:]]+versionCode[[:blank:]]'  app/build.gradle | awk '{print $2}'`
+    - mkdir -p deliverables
+
+    # Store some information about the build
+    - touch ./deliverables/info.txt
+    - echo "Build date $(date)"                >> ./deliverables/info.txt
+    - echo "Git branch ${CI_COMMIT_REF_NAME}"  >> ./deliverables/info.txt
+    - echo "Git commit ${CI_COMMIT_MESSAGE}"   >> ./deliverables/info.txt
+    - echo "Gitlab pipeline ${CI_PIPELINE_ID}"      >> ./deliverables/info.txt
+    - echo ./deliverables/info.txt
+
+build:
+  stage: build
+  script:
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+    - app/build/outputs/
+
+telegramDeploy:
+  <<: *package_template_def
+  stage: deploy
+  script:
+    - mv app/build/outputs/apk/debug/app-debug.apk PrintBox-${VERSION_CODE}-debug.apk
+    - curl -F chat_id="${TELEGRAM_CHAT_ID}" -F document=@"PrintBox-${VERSION_CODE}-debug.apk" -F caption="$(cat deliverables/info.txt | sed "s/\"/'/g")" https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument
