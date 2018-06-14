@@ -6,84 +6,105 @@
     android:layout_centerInParent="true"
     android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/print_preview"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginBottom="16dp"
-        android:background="@android:color/darker_gray"
-        android:scaleType="center"
-        android:src="@drawable/ic_location_point"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/print_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <ImageView
-        android:id="@+id/icon_location"
+        <ImageView
+            android:id="@+id/print_preview"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/darker_gray"
+            android:scaleType="center"
+            android:src="@drawable/ic_location_point"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/icon_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_location_point"
+            app:layout_constraintEnd_toStartOf="@+id/print_name"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/print_preview" />
+
+
+        <TextView
+            android:id="@+id/print_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="МГТУ - Технопарк"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:layout_constraintBottom_toBottomOf="@+id/icon_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/icon_location"
+            app:layout_constraintTop_toBottomOf="@id/print_preview"
+            app:layout_constraintTop_toTopOf="@id/icon_location" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_location_point"
-        app:layout_constraintEnd_toStartOf="@+id/print_name"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/print_preview" />
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/print_map">
+
+        <ImageView
+            android:id="@+id/icon_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_print_file"
+            app:layout_constraintBottom_toBottomOf="@id/file_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/file_name" />
+
+        <TextView
+            android:id="@+id/file_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:text="Тестовый файл.odt"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/icon_file" />
+
+        <TextView
+            android:id="@+id/file_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="46,3kb"
+            app:layout_constraintStart_toEndOf="@id/icon_file"
+            app:layout_constraintStart_toStartOf="@id/file_name"
+            app:layout_constraintTop_toBottomOf="@id/file_name" />
+    </android.support.constraint.ConstraintLayout>
 
     <TextView
-        android:id="@+id/print_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="МГТУ - Технопарк"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintBottom_toBottomOf="@+id/icon_location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/icon_location"
-        app:layout_constraintTop_toBottomOf="@id/print_preview"
-        app:layout_constraintTop_toTopOf="@id/icon_location" />
-
-    <ImageView
-        android:id="@+id/icon_file"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_print_file"
-        app:layout_constraintBottom_toBottomOf="@id/file_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/file_name" />
-
-    <TextView
-        android:id="@+id/file_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="16dp"
-        android:text="Тестовый файл.odt"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/icon_file"
-        app:layout_constraintTop_toBottomOf="@id/icon_location" />
-
-    <TextView
-        android:id="@+id/file_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="46,3kb"
-        app:layout_constraintStart_toEndOf="@id/icon_file"
-        app:layout_constraintStart_toStartOf="@id/file_name"
-        app:layout_constraintTop_toBottomOf="@id/file_name" />
-
-    <Switch
         android:id="@+id/select_twoside"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="16dp"
-        android:text="@string/print_twoside"
+        android:background="@color/colorBackgroundDark"
+        android:padding="15dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/file_size" />
-
+        app:layout_constraintTop_toBottomOf="@id/file" />
 
     <Switch
         android:id="@+id/select_color"

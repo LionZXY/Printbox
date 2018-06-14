@@ -109,7 +109,7 @@ class JSONUploadTask : UploadTask(), HttpConnection.RequestBodyDelegate, BodyWri
 
     private fun getMimeType(fileName: String): String {
         val extension = MimeTypeMap.getFileExtensionFromUrl(fileName) ?: ".doc"
-        return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+        return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: "application/octet-stream"
     }
 
     private fun getFileSize(): Long {

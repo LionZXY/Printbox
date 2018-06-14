@@ -68,4 +68,7 @@
     <string name="intro_four">Выбери опции</string>
     <string name="intro_five">Забери документ</string>
     <string name="intro_six">Спрашивай!</string>
+
+    <!-- Options -->
+    <string name="option_file_size_template" formatted="false">%d стр.</string>
 </resources>

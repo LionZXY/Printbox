@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="select_side">
+        <item>Не печатать с двух сторон</item>
+        <item>Печатать с двух сторон</item>
+        <item>Печатать с двух сторон (Переплет сверху)</item>
+    </string-array>
+</resources>

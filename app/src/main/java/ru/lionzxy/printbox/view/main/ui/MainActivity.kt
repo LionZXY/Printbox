@@ -86,7 +86,6 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
                 .build()
     }
 
-
     override fun showProgressBar(visible: Boolean) {
         progress_bar.visibility = if (visible) View.VISIBLE else View.GONE
         menu_container.visibility = if (visible) View.GONE else View.VISIBLE

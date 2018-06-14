@@ -99,7 +99,4 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:15.0.1"
     implementation 'com.android.support:multidex:1.0.3'
 
-    // For base64
-    //implementation "commons-codec:commons-codec:$apacheConfig"
-
 }

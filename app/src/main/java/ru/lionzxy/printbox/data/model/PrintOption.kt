@@ -17,8 +17,7 @@ data class PrintOption(
             parcel.readInt(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readString()) {
-    }
+            parcel.readString())
 
     constructor() : this(0, "", "", "")
 

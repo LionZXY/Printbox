@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.R
+import ru.lionzxy.printbox.data.model.PrintDocument
 import ru.lionzxy.printbox.di.files.FilesModule
 import ru.lionzxy.printbox.interactor.files.IFilesInteractor
 import ru.lionzxy.printbox.view.print_files.ui.IPrintFilesView
@@ -37,6 +38,18 @@ class PrintFilesPresenter : MvpPresenter<IPrintFilesView>() {
                     viewState.onError(R.string.files_update_error)
                     viewState.showLoading(false)
                 }))
+    }
+
+    fun onFileClick(printDocument: PrintDocument) {
+        viewState.showProgres(true)
+        disposable.addAll(interactor.onFileSelect(printDocument)
+                .subscribe({
+                    viewState.showProgres(false)
+                }, {
+                    viewState.showProgres(false)
+                    Timber.e(it)
+                }))
+
     }
 
     fun onFileUpload(file: Uri) {

@@ -21,6 +21,7 @@ class PrintFragment : MvpAppCompatFragment(), IPrintView {
     var fileFragment: PrintFilesFragment? = null
     var optionFragment: PrintSelectFragment? = null
     var historyFragment: PrintHistoryFragment? = null
+    var openedFragment: Fragment? = null
 
     companion object {
         val TAG = "printfragment"
@@ -70,6 +71,12 @@ class PrintFragment : MvpAppCompatFragment(), IPrintView {
                 currentFragment = historyFragment
             }
         }
+
+        if (currentFragment == openedFragment) {
+            return
+        }
+
+        openedFragment = currentFragment
 
         currentFragment?.let {
             fragmentManager?.beginTransaction()

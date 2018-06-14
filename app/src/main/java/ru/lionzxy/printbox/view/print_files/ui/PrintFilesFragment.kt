@@ -26,7 +26,7 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
     @InjectPresenter
     lateinit var printFilesPresenter: PrintFilesPresenter
     lateinit var rxPermission: RxPermissions
-    val adapter by lazy { DocumentAdapter(emptyList()) }
+    val adapter by lazy { DocumentAdapter(emptyList(), { printFilesPresenter.onFileClick(it) }) }
     private lateinit var swipeHelper: SwipeOpenItemTouchHelper
     lateinit var progressDialog: ProgressDialog
 
@@ -69,7 +69,7 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
     }
 
     override fun showProgres(visible: Boolean, current: Int, total: Int) {
-        if(visible) {
+        if (visible) {
             progressDialog.show()
         } else {
             progressDialog.hide()
