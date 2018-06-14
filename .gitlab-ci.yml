@@ -37,7 +37,7 @@ stages:
 build:
   stage: build
   script:
-    - ./gradlew assembleDebug
+    - ./gradlew -Pandroid.enableD8=true assembleDebug
   artifacts:
     paths:
     - app/build/outputs/
