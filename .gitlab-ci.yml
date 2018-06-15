@@ -2,7 +2,7 @@ image: openjdk:8-jdk
 
 variables:
   ANDROID_COMPILE_SDK: "27"
-  ANDROID_BUILD_TOOLS: "27.0.3"
+  ANDROID_BUILD_TOOLS: "26.1.2"
   ANDROID_SDK_TOOLS: "4333796"
   TELEGRAM_CHAT_ID: "-282233515"
 
@@ -38,7 +38,7 @@ stages:
 build:
   stage: build
   script:
-    - ./gradlew -Pandroid.enableD8=true assembleDebug
+    - ./gradlew assembleDebug
   artifacts:
     paths:
     - app/build/outputs/
