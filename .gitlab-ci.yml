@@ -2,9 +2,9 @@ image: openjdk:8-jdk
 
 variables:
   ANDROID_COMPILE_SDK: "27"
-  ANDROID_BUILD_TOOLS: "26.1.2"
+  ANDROID_BUILD_TOOLS: "27.0.3"
   ANDROID_SDK_TOOLS: "4333796"
-  TELEGRAM_CHAT_ID: "-282233515"
+  TELEGRAM_CHAT_ID: "-279770113"
 
 before_script:
   - apt-get --quiet update --yes
