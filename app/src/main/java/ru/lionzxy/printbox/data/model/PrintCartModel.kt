@@ -4,7 +4,7 @@ data class PrintCartModel(
         var stage: PrintCartStage,
         var printPlace: PrintPlace?,
         var printDocument: PrintDocument?,
-        var printOption: PrintOption) {
+        var printOption: PrintOption?) {
     constructor() : this(PrintCartStage.SELECTION_FILE, null, null,
-            PrintOption())
+            null)
 }

@@ -10,12 +10,14 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_print_select.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.PrintCartModel
+import ru.lionzxy.printbox.data.model.PrintOption
 import ru.lionzxy.printbox.view.print_map.ui.PrintMapActivity
 import ru.lionzxy.printbox.view.print_select.presenter.PrintSelectPresenter
 
 class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView {
     @InjectPresenter
     lateinit var printSelectPresenter: PrintSelectPresenter
+    var selectionDialog: OptionSelectionDialog? = null
 
     companion object {
         val TAG = "printselect"
@@ -29,12 +31,30 @@ class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView {
         super.onViewCreated(view, savedInstanceState)
         print_map.setOnClickListener { openPrintMapSelect() }
         file.setOnClickListener { printSelectPresenter.openFileChange() }
+        select_twoside.setOnClickListener { printSelectPresenter.onClickSelectOption() }
     }
 
     override fun onUpdateCartModel(cartModel: PrintCartModel) {
         cartModel.printPlace?.let { print_name.text = it.name }
         file_name.text = cartModel.printDocument?.name
         file_size.text = getString(R.string.option_file_size_template, cartModel.printDocument?.pagesCount)
+        cartModel.printPlace?.optionDoublePage?.firstOrNull()?.let { select_twoside.text = it.name }
+        cartModel.printOption?.let { select_twoside.text = it.name }
+        select_color.isEnabled = cartModel.printPlace?.optionColor?.size ?: 0 > 1
+    }
+
+    override fun openDialog(visible: Boolean, items: List<PrintOption>) {
+        if (!visible) {
+            selectionDialog?.dismiss()
+            selectionDialog = null
+            return
+        }
+
+        val dialog = OptionSelectionDialog.createOptionDialog(items, {
+            printSelectPresenter.onSelectPrintOption(it)
+        })
+        dialog.show(fragmentManager, OptionSelectionDialog.TAG)
+        selectionDialog = dialog
     }
 
     override fun openPrintMapSelect() {

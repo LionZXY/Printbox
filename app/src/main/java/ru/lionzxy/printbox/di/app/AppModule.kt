@@ -70,10 +70,4 @@ class AppModule(private val context: Context) {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
     }
-
-    @Singleton
-    @Provides
-    fun providePrintCart(): IPrintCartStore {
-        return PrintCartStore()
-    }
 }

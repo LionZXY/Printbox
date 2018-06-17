@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
@@ -34,6 +34,24 @@
             @color/material_drawer_dark_primary_text
         </item>
 
+        <item name="android:alertDialogTheme">@style/AppTheme.Dialog</item>
+        <item name="android:alertDialogStyle">@style/AppTheme.Dialog</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:titleTextColor" tools:targetApi="m">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
     </style>
 
     <style name="TextViewStyle" parent="android:Widget.TextView">

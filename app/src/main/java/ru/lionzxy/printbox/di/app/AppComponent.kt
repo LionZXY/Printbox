@@ -9,7 +9,7 @@ import ru.lionzxy.printbox.di.print.PrintComponent
 import ru.lionzxy.printbox.di.print.PrintModule
 import javax.inject.Singleton
 
-@Component(modules = [AppModule::class])
+@Component(modules = [AppModule::class, CartModule::class])
 @Singleton
 interface AppComponent {
     fun plus(module: AuthModule): AuthComponent

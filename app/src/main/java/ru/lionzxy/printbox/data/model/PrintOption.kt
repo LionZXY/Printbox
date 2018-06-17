@@ -4,6 +4,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
+const val EXTRA_PRINTOPTION = "print_option"
+const val EXTRA_PRINTOPTION_LIST = "print_options"
+
 data class PrintOption(
         @SerializedName("pk")
         var id: Int,

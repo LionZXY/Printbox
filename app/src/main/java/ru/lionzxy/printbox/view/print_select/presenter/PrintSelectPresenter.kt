@@ -7,6 +7,7 @@ import io.reactivex.disposables.CompositeDisposable
 import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintCartStage
+import ru.lionzxy.printbox.data.model.PrintOption
 import ru.lionzxy.printbox.di.print.PrintModule
 import ru.lionzxy.printbox.interactor.print.IPrintInteractor
 import ru.lionzxy.printbox.view.print_select.ui.IPrintSelectView
@@ -34,6 +35,18 @@ class PrintSelectPresenter : MvpPresenter<IPrintSelectView>() {
                         viewState.openPrintMapSelect()
                     }
                 })
+    }
+
+    fun onSelectPrintOption(option: PrintOption) {
+        printCartModel.printOption = option
+        interactor.setCart(printCartModel)
+        viewState.openDialog(false)
+    }
+
+    fun onClickSelectOption() {
+        printCartModel.printPlace?.optionDoublePage?.let {
+            viewState.openDialog(true, it)
+        }
     }
 
     fun openFileChange() {
