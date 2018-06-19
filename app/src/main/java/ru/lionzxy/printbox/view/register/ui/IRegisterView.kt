@@ -17,11 +17,9 @@ interface IRegisterView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun onError(resId: Int)
 
-    fun showLoginError(resError: Int)
     fun showPasswordError(resError: Int)
     fun showSecondPasswordError(resError: Int)
     fun showEmailError(resError: Int)
-    fun hideLoginError()
     fun hidePasswordError()
     fun hideEmailError()
     fun hideSecondPasswordError()

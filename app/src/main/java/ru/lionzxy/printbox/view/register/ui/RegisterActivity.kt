@@ -33,32 +33,22 @@ class RegisterActivity : MvpAppCompatActivity(), IRegisterView {
         this.setContentView(R.layout.activity_register)
 
         buttonLogin.setOnClickListener {
-            registerPresenter.onClickRegister(editTextLogin.text.toString(),
-                    editTextPassword.text.toString(),
-                    editTextEmail.text.toString(),
-                    editTextPasswordRepeat.text.toString())
-        }
-        RxTextView.textChanges(editTextLogin).subscribe {
-            registerPresenter.onChangeLoginPasswordEmail(it.toString(),
-                    editTextPassword.text.toString(),
+            registerPresenter.onClickRegister(editTextPassword.text.toString(),
                     editTextEmail.text.toString(),
                     editTextPasswordRepeat.text.toString())
         }
         RxTextView.textChanges(editTextPassword).subscribe {
-            registerPresenter.onChangeLoginPasswordEmail(editTextLogin.text.toString(),
-                    it.toString(),
+            registerPresenter.onChangeLoginPasswordEmail(it.toString(),
                     editTextEmail.text.toString(),
                     editTextPasswordRepeat.text.toString())
         }
         RxTextView.textChanges(editTextEmail).subscribe {
-            registerPresenter.onChangeLoginPasswordEmail(editTextLogin.text.toString(),
-                    editTextPassword.text.toString(),
+            registerPresenter.onChangeLoginPasswordEmail(editTextPassword.text.toString(),
                     it.toString(),
                     editTextPasswordRepeat.text.toString())
         }
         RxTextView.textChanges(editTextPasswordRepeat).subscribe {
-            registerPresenter.onChangeLoginPasswordEmail(editTextLogin.text.toString(),
-                    editTextPassword.text.toString(),
+            registerPresenter.onChangeLoginPasswordEmail(editTextPassword.text.toString(),
                     editTextEmail.text.toString(),
                     it.toString())
         }
@@ -77,11 +67,6 @@ class RegisterActivity : MvpAppCompatActivity(), IRegisterView {
         toast(resId)
     }
 
-    override fun showLoginError(resError: Int) {
-        errorLoginText.visibility = View.VISIBLE
-        errorLoginText.text = getString(resError)
-    }
-
     override fun showPasswordError(resError: Int) {
         errorPasswordText.visibility = View.VISIBLE
         errorPasswordText.text = getText(resError)
@@ -94,10 +79,6 @@ class RegisterActivity : MvpAppCompatActivity(), IRegisterView {
 
     override fun hideEmailError() {
         errorEmailText.visibility = View.GONE
-    }
-
-    override fun hideLoginError() {
-        errorLoginText.visibility = View.GONE
     }
 
     override fun hidePasswordError() {

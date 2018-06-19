@@ -7,14 +7,13 @@ import ru.lionzxy.printbox.data.model.User
 
 interface AuthApi {
 
-    @POST("/login/?next=/printing/")
+    @POST("v1/user/login/")
     @FormUrlEncoded
-    fun login(@Field("username") login: String, @Field("password") password: String): Completable
+    fun login(@Field("login") login: String, @Field("password") password: String): Completable
 
-    @POST("/login/?next=/printing/")
+    @POST("v1/user/register/")
     @FormUrlEncoded
-    fun register(@Field("username") login: String, @Field("email") email: String,
-                 @Field("password1") password: String, @Field("password2") repeatPassword: String): Completable
+    fun register(@Field("login") login: String, @Field("password") password: String): Completable
 
     @GET("user/")
     fun currentUser(): Single<List<User>>

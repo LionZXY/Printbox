@@ -34,6 +34,7 @@
     <string name="auth_activity_password_match_repeat">Пароли не совпадают</string>
     <string name="auth_activity_email_empty">Почта не может быть пустой</string>
     <string name="auth_activity_email_matcher">Введите валидный адрес (например example@printbox.io)</string>
+    <string name="auth_register_password_repeat_login">Пароль не должен повторять логин</string>
     <string name="auth_register">Зарегистрироваться</string>
     <string name="auth_already_register">Я уже зарегистрировался</string>
     <string name="auth_vk">Войти через ВКонтакте</string>
