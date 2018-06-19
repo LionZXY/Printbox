@@ -63,8 +63,9 @@ class PrintFilesPresenter : MvpPresenter<IPrintFilesView>() {
                                         it.uploadInfo.totalBytes.toInt())
                             }
                             if (it.serverResponse != null &&
-                                    it.serverResponse.httpCode == HttpURLConnection.HTTP_OK) {
+                                    it.serverResponse.httpCode == HttpURLConnection.HTTP_CREATED) {
                                 viewState.showProgres(false)
+                                loadList()
                             }
                         }, {
                             viewState.onError(R.string.files_upload_failed)

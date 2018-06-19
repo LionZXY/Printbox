@@ -5,6 +5,7 @@ import android.net.Uri
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import net.gotev.uploadservice.UploadNotificationConfig
 import retrofit2.Retrofit
 import ru.lionzxy.printbox.data.api.FileApi
 import ru.lionzxy.printbox.data.model.PrintDocument
@@ -31,6 +32,7 @@ class FilesRepository(retrofit: Retrofit, private val context: Context) : IFiles
         val observable = RxServiceUploadMonitoring()
         val uploadId = JSONUploadRequest(context, Constants.UPLOAD_FILE_URL)
                 .setUri(uri)
+                .setNotificationConfig(UploadNotificationConfig())
                 .setDelegate(observable)
                 .startUpload()
         return observable.getObservable()

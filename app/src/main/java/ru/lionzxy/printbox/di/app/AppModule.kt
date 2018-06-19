@@ -14,14 +14,15 @@ import dagger.Module
 import dagger.Provides
 import net.gotev.uploadservice.UploadService
 import net.gotev.uploadservice.okhttp.OkHttpStack
+import okhttp3.Cookie
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.lionzxy.printbox.BuildConfig
-import ru.lionzxy.printbox.data.stores.IPrintCartStore
-import ru.lionzxy.printbox.data.stores.PrintCartStore
+import ru.lionzxy.printbox.utils.Constants
 import ru.lionzxy.printbox.utils.auth.Handle401Interceptor
+import ru.lionzxy.printbox.utils.govnofix.FuckBackEndInterceptor
 import javax.inject.Singleton
 
 
@@ -46,7 +47,11 @@ class AppModule(private val context: Context) {
     @Singleton
     @Provides
     fun provideCookieJar(): ClearableCookieJar {
-        return PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(context))
+        val cookiePersistor = SharedPrefsCookiePersistor(context)
+        val jar = PersistentCookieJar(SetCookieCache(), cookiePersistor)
+        val cookie = Cookie.Builder().name("csrftoken").value("FUCKBACKEND").domain("printbox.io").build()
+        cookiePersistor.saveAll(listOf(cookie))
+        return jar
     }
 
     @Singleton
@@ -54,6 +59,7 @@ class AppModule(private val context: Context) {
     fun provideOkHttpClient(cookieJar: ClearableCookieJar, context: Context): OkHttpClient {
         val client = OkHttpClient.Builder()
                 .cookieJar(cookieJar)
+                .addInterceptor(FuckBackEndInterceptor())
                 .addInterceptor(Handle401Interceptor(context))
                 .build()
         UploadService.HTTP_STACK = OkHttpStack(client)
