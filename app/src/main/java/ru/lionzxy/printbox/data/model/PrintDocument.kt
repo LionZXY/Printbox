@@ -14,10 +14,12 @@ class PrintDocument(
         var pdfUrl: String,
         @SerializedName("status_name")
         var statusName: String,
+        @SerializedName("status")
+        var status: Int,
         @SerializedName("color_gs")
         var colorPercent: Float,
         @SerializedName("pages_count")
         var pagesCount: Int) {
     constructor() : this(0, "", DateTime(), "",
-            "", 0.0f, 0)
+            "", 0, 0.0f, 0)
 }

@@ -15,18 +15,21 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.fragment_print_file.*
 import kotlinx.android.synthetic.main.item_file_select.*
 import ru.lionzxy.printbox.R
+import ru.lionzxy.printbox.data.model.DocumentStageEnum
 import ru.lionzxy.printbox.data.model.PrintDocument
 import ru.lionzxy.printbox.utils.IActivityResultReciever
 import ru.lionzxy.printbox.utils.toast
+import ru.lionzxy.printbox.view.main.interfaces.IRefreshReciever
+import ru.lionzxy.printbox.view.main.interfaces.IRefreshStatusReciever
 import ru.lionzxy.printbox.view.main.ui.MainActivity
 import ru.lionzxy.printbox.view.print_files.presenter.PrintFilesPresenter
 
 
-class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityResultReciever {
+class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityResultReciever, IRefreshReciever {
     @InjectPresenter
     lateinit var printFilesPresenter: PrintFilesPresenter
     lateinit var rxPermission: RxPermissions
-    val adapter by lazy { DocumentAdapter(emptyList(), { printFilesPresenter.onFileClick(it) }) }
+    val adapter by lazy { produceAdapter() }
     private lateinit var swipeHelper: SwipeOpenItemTouchHelper
     lateinit var progressDialog: ProgressDialog
 
@@ -96,9 +99,30 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
     override fun showLoading(visible: Boolean) {
         progress_bar.visibility = if (visible) View.VISIBLE else View.GONE
         files.visibility = if (visible) View.GONE else View.VISIBLE
+        if(!visible) {
+            val tmp = activity
+            if(tmp is IRefreshStatusReciever) {
+                tmp.showRefreshStatus(false)
+            }
+        }
     }
 
     override fun onError(resId: Int) {
         context?.toast(resId)
+    }
+
+    override fun update() {
+        printFilesPresenter.loadList(true)
+    }
+
+    private fun produceAdapter(): DocumentAdapter {
+        return DocumentAdapter(emptyList(), {
+            if (it.status != DocumentStageEnum.READY.id) {
+                context?.toast(R.string.files_processing)
+                return@DocumentAdapter
+            }
+
+            printFilesPresenter.onFileClick(it)
+        })
     }
 }

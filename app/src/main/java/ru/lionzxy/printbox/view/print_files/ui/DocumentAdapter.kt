@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import ru.lionzxy.printbox.R
+import ru.lionzxy.printbox.data.model.DocumentStageEnum
 import ru.lionzxy.printbox.data.model.PrintDocument
 
 class DocumentAdapter(var files: List<PrintDocument>,
@@ -24,6 +26,12 @@ class DocumentAdapter(var files: List<PrintDocument>,
         holder.nameText.text = doc.name
         holder.createdAt.text = doc.createdAt.toLocalDateTime().toString("yyyy-MM-dd HH:mm")
         holder.contentCard.setOnClickListener { clickListener.invoke(doc) }
+
+        if (doc.status == DocumentStageEnum.READY.id) {
+            holder.icon.setImageResource(R.drawable.ic_print_file)
+        } else if(doc.status == DocumentStageEnum.PROCESSING.id) {
+            holder.icon.setImageResource(R.drawable.ic_processing)
+        }
     }
 
     fun setList(files: List<PrintDocument>) {
@@ -37,4 +45,5 @@ class DocumentViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
     val nameText = rootView.findViewById<TextView>(R.id.file_name)
     val createdAt = rootView.findViewById<TextView>(R.id.file_createdat)
     val contentCard = rootView.findViewById<CardView>(R.id.content_card)
+    val icon = rootView.findViewById<ImageView>(R.id.icon_file)
 }

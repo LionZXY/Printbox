@@ -16,10 +16,11 @@ import kotlinx.android.synthetic.main.toolbar.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.User
 import ru.lionzxy.printbox.utils.IActivityResultReciever
+import ru.lionzxy.printbox.view.main.interfaces.IRefreshStatusReciever
 import ru.lionzxy.printbox.view.main.presenter.MainPresenter
 import ru.lionzxy.printbox.view.print.ui.PrintFragment
 
-class MainActivity : MvpAppCompatActivity(), IMainView {
+class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
     @InjectPresenter
     lateinit var mainPresenter: MainPresenter
     lateinit var fragment: PrintFragment
@@ -47,12 +48,19 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
         fragment = tmpFragment as PrintFragment
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         supportFragmentManager.fragments.forEach {
             if (it is IActivityResultReciever) {
                 it.onActivityResult(requestCode, resultCode, data)
+            }
+        }
+    }
+
+    override fun showRefreshStatus(visible: Boolean) {
+        supportFragmentManager.fragments.forEach {
+            if(it is IRefreshStatusReciever) {
+                it.showRefreshStatus(visible)
             }
         }
     }

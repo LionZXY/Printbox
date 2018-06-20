@@ -26,8 +26,10 @@ class PrintFilesPresenter : MvpPresenter<IPrintFilesView>() {
         App.appComponent.plus(FilesModule()).inject(this)
     }
 
-    fun loadList() {
-        viewState.showLoading(true)
+    fun loadList(silent: Boolean = false) {
+        if (!silent) {
+            viewState.showLoading(true)
+        }
         disposable.addAll(interactor.getUserFiles()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

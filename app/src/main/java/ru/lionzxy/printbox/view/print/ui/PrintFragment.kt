@@ -8,16 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
+import kotlinx.android.synthetic.main.fragment_print.*
 import kotlinx.android.synthetic.main.item_menu.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintCartStage
+import ru.lionzxy.printbox.view.main.interfaces.IRefreshReciever
+import ru.lionzxy.printbox.view.main.interfaces.IRefreshStatusReciever
 import ru.lionzxy.printbox.view.print.presenter.PrintPresenter
 import ru.lionzxy.printbox.view.print_files.ui.PrintFilesFragment
 import ru.lionzxy.printbox.view.print_history.ui.PrintHistoryFragment
 import ru.lionzxy.printbox.view.print_select.ui.PrintSelectFragment
 
-class PrintFragment : MvpAppCompatFragment(), IPrintView {
+class PrintFragment : MvpAppCompatFragment(), IPrintView, IRefreshStatusReciever {
     @InjectPresenter
     lateinit var printPresenter: PrintPresenter
     var fileFragment: PrintFilesFragment? = null
@@ -54,6 +57,16 @@ class PrintFragment : MvpAppCompatFragment(), IPrintView {
         menu_one.setOnClickListener { printPresenter.openState(PrintCartStage.SELECTION_FILE) }
         menu_two.setOnClickListener { printPresenter.openState(PrintCartStage.OPTIONS) }
         menu_three.setOnClickListener { printPresenter.openState(PrintCartStage.HISTORY) }
+        swiperefresh.setOnRefreshListener {
+            val fragm = openedFragment
+            if (fragm is IRefreshReciever) {
+                fragm.update()
+            }
+        }
+    }
+
+    override fun showRefreshStatus(visible: Boolean) {
+        swiperefresh.isRefreshing = visible
     }
 
     override fun setCartModel(cartModel: PrintCartModel) {
@@ -95,6 +108,8 @@ class PrintFragment : MvpAppCompatFragment(), IPrintView {
         }
 
         openedFragment = currentFragment
+
+        swiperefresh.isEnabled = openedFragment is IRefreshReciever
 
         currentFragment?.let {
             fragmentManager?.beginTransaction()

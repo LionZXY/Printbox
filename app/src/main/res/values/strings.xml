@@ -46,6 +46,7 @@
 
     <!-- Files -->
     <string name="files_update_error">Ошибка получения файлов</string>
+    <string name="files_processing">Вы не можете печатать файл, который обрабатывается. Дождитесь обработки</string>
     <string name="files_title">Мои файлы</string>
     <string name="files_select_button">Выберите файл</string>
     <string name="files_select_notfound">Мы не нашли у вас файловый менеджер. Пожалуйста, установите файловый менеджер, который поддерживает выбор файлов для продолжения</string>
