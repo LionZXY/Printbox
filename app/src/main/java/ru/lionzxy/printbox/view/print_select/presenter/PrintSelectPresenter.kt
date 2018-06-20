@@ -4,13 +4,16 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintCartStage
+import ru.lionzxy.printbox.data.model.PrintFinalOrder
 import ru.lionzxy.printbox.data.model.PrintOption
 import ru.lionzxy.printbox.di.print.PrintModule
 import ru.lionzxy.printbox.interactor.print.IPrintInteractor
 import ru.lionzxy.printbox.view.print_select.ui.IPrintSelectView
+import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState
@@ -19,6 +22,7 @@ class PrintSelectPresenter : MvpPresenter<IPrintSelectView>() {
     @Inject
     lateinit var interactor: IPrintInteractor
     private lateinit var printCartModel: PrintCartModel
+    private var priceSubscriber: Disposable? = null
 
     init {
         App.appComponent.plus(PrintModule()).inject(this)
@@ -35,17 +39,47 @@ class PrintSelectPresenter : MvpPresenter<IPrintSelectView>() {
                         viewState.openPrintMapSelect()
                     }
 
-                    if(printCartModel.printPlace != null && printCartModel.printOption == null) {
-                        printCartModel.printOption = printCartModel.printPlace?.optionDoublePage?.firstOrNull() ?: PrintOption()
+                    var changed = false
+                    if (printCartModel.printOrder == null) {
+                        printCartModel.printOrder = PrintFinalOrder()
+                        changed = true
+                    }
+
+                    if (printCartModel.printOrder?.duplexOption == null) {
+                        printCartModel.printOrder?.duplexOption = printCartModel.printPlace?.optionDoublePage?.firstOrNull() ?: PrintOption()
+                        changed = true
+                    }
+
+                    if (printCartModel.printOrder?.colorOption == null) {
+                        printCartModel.printOrder?.colorOption = printCartModel.printPlace?.optionColor?.firstOrNull() ?: PrintOption()
+                        changed = true
+                    }
+                    if (changed) {
                         interactor.setCart(printCartModel)
                     }
+                    loadPrice()
                 })
     }
 
+    fun loadPrice() {
+        viewState.priceLoadingShow()
+        priceSubscriber?.dispose()
+        val tmp = interactor.getPrice(printCartModel)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ viewState.setPrice((it / 100).toFloat(), printCartModel.printOrder!!.copies) }, Timber::e)
+        priceSubscriber = tmp
+        disposable.addAll(tmp)
+    }
+
     fun onSelectPrintOption(option: PrintOption) {
-        printCartModel.printOption = option
+        printCartModel.printOrder?.duplexOption = option
         interactor.setCart(printCartModel)
         viewState.openDialog(false)
+    }
+
+    fun onSelectCopiesCount(count: Int) {
+        printCartModel.printOrder?.copies = count
+        interactor.setCart(printCartModel)
     }
 
     fun onClickSelectOption() {
@@ -59,7 +93,6 @@ class PrintSelectPresenter : MvpPresenter<IPrintSelectView>() {
         model.stage = PrintCartStage.SELECTION_FILE
         interactor.setCart(model)
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

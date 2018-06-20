@@ -32,6 +32,7 @@ class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView {
         print_map.setOnClickListener { openPrintMapSelect() }
         file.setOnClickListener { printSelectPresenter.openFileChange() }
         select_twoside.setOnClickListener { printSelectPresenter.onClickSelectOption() }
+        select_count.setOnValueChangedListener { _, _, newVal -> printSelectPresenter.onSelectCopiesCount(newVal) }
     }
 
     override fun onUpdateCartModel(cartModel: PrintCartModel) {
@@ -39,8 +40,18 @@ class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView {
         file_name.text = cartModel.printDocument?.name
         file_size.text = getString(R.string.option_file_size_template, cartModel.printDocument?.pagesCount)
         cartModel.printPlace?.optionDoublePage?.firstOrNull()?.let { select_twoside.text = it.name }
-        cartModel.printOption?.let { select_twoside.text = it.name }
+        cartModel.printOrder?.duplexOption?.let { select_twoside.text = it.name }
         select_color.isEnabled = cartModel.printPlace?.optionColor?.size ?: 0 > 1
+        select_count.value = cartModel.printOrder?.copies ?: 1
+        filled_perc.text = getString(R.string.options_filled_perc, (cartModel.printDocument?.colorPercent ?: 1f) * 100)
+    }
+
+    override fun priceLoadingShow() {
+        price.setText(R.string.options_price_waiting)
+    }
+
+    override fun setPrice(totalPrice: Float, copies: Int) {
+        price.text = getString(R.string.options_price, (totalPrice / copies), copies, totalPrice)
     }
 
     override fun openDialog(visible: Boolean, items: List<PrintOption>) {

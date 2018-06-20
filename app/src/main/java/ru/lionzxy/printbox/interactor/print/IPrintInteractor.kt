@@ -13,4 +13,5 @@ interface IPrintInteractor {
 
     fun getObservableCart(): Observable<PrintCartModel>
     fun setCart(printCartModel: PrintCartModel)
+    fun getPrice(printCartModel: PrintCartModel): Single<Int>
 }

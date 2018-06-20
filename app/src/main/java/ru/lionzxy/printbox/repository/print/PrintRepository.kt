@@ -45,4 +45,16 @@ class PrintRepository(retrofit: Retrofit,
     override fun setCart(printCartModel: PrintCartModel) {
         cartStore.setCart(printCartModel)
     }
+
+    override fun getPrice(printCartModel: PrintCartModel): Single<Int> {
+        return printApi.getPrice(printCartModel.printDocument!!.id,
+                printCartModel.printDocument!!.id,
+                printCartModel.printPlace!!.id,
+                printCartModel.printOrder!!.copies,
+                printCartModel.printOrder!!.colorOption!!.id,
+                printCartModel.printOrder!!.duplexOption!!.id)
+                .map { it.first() }
+                .subscribeOn(Schedulers.io())
+                .singleOrError()
+    }
 }

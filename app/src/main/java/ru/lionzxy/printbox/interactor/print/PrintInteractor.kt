@@ -29,4 +29,8 @@ class PrintInteractor(
     override fun setCart(printCartModel: PrintCartModel) {
         printRepository.setCart(printCartModel)
     }
+
+    override fun getPrice(printCartModel: PrintCartModel): Single<Int> {
+        return printRepository.getPrice(printCartModel)
+    }
 }

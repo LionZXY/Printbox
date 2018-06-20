@@ -14,4 +14,6 @@ interface IPrintSelectView : MvpView {
     fun onUpdateCartModel(cartModel: PrintCartModel)
 
     fun openDialog(visible: Boolean, items: List<PrintOption> = emptyList())
+    fun priceLoadingShow()
+    fun setPrice(totalPrice: Float, copies: Int)
 }

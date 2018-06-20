@@ -64,7 +64,7 @@ class PrintFragment : MvpAppCompatFragment(), IPrintView {
     private fun openHeaderByState(cartModel: PrintCartModel) {
         var background = R.drawable.menu_button_disactive
         var active = false
-        if (cartModel.printOption != null) {
+        if (cartModel.printOrder != null) {
             background = R.drawable.menu_button_active
             active = true
         }

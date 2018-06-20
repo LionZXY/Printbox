@@ -222,7 +222,7 @@
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/options_price"
+        android:text="@string/options_price_waiting"
         app:layout_constraintTop_toBottomOf="@id/filled_perc" />
 
     <Button
