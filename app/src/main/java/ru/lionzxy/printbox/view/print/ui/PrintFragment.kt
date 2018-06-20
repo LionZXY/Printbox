@@ -2,11 +2,13 @@ package ru.lionzxy.printbox.view.print.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
+import kotlinx.android.synthetic.main.item_menu.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintCartStage
@@ -48,10 +50,26 @@ class PrintFragment : MvpAppCompatFragment(), IPrintView {
         if (historyFragment == null) {
             historyFragment = PrintHistoryFragment()
         }
+
+        menu_one.setOnClickListener { printPresenter.openState(PrintCartStage.SELECTION_FILE) }
+        menu_two.setOnClickListener { printPresenter.openState(PrintCartStage.OPTIONS) }
+        menu_three.setOnClickListener { printPresenter.openState(PrintCartStage.HISTORY) }
     }
 
     override fun setCartModel(cartModel: PrintCartModel) {
         openFragmentByState(cartModel)
+        openHeaderByState(cartModel)
+    }
+
+    private fun openHeaderByState(cartModel: PrintCartModel) {
+        var background = R.drawable.menu_button_disactive
+        var active = false
+        if (cartModel.printOption != null) {
+            background = R.drawable.menu_button_active
+            active = true
+        }
+        menu_two.background = ContextCompat.getDrawable(context!!, background)
+        menu_two.isClickable = active
     }
 
     private fun openFragmentByState(cartModel: PrintCartModel) {

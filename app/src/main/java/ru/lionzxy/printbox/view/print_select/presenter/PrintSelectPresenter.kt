@@ -34,6 +34,11 @@ class PrintSelectPresenter : MvpPresenter<IPrintSelectView>() {
                     if (printCartModel.printPlace == null) {
                         viewState.openPrintMapSelect()
                     }
+
+                    if(printCartModel.printPlace != null && printCartModel.printOption == null) {
+                        printCartModel.printOption = printCartModel.printPlace?.optionDoublePage?.firstOrNull() ?: PrintOption()
+                        interactor.setCart(printCartModel)
+                    }
                 })
     }
 

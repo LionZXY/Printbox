@@ -1,13 +1,14 @@
 package ru.lionzxy.printbox.view.print_select.ui
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.support.v7.app.AlertDialog
 import android.view.View
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.EXTRA_PRINTOPTION_LIST
 import ru.lionzxy.printbox.data.model.PrintOption
+import timber.log.Timber
 
 class OptionSelectionDialog : DialogFragment() {
     var items: List<PrintOption> = emptyList()
@@ -33,7 +34,7 @@ class OptionSelectionDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(context!!, R.style.AppThemeDialog)
                 .setSingleChoiceItems(items.map { it.name }.toTypedArray(), 0, { _, which ->
                     selectedElement = items[which]
                 }).setPositiveButton(android.R.string.ok, { _, _ ->

@@ -6,6 +6,7 @@
     <string name="options_filled_perc">Среднее заполнение: 11.39%</string>
     <string name="options_price">Стоимость печати: 4.99 * (x1) = 4.99 руб</string>
     <string name="options_not_balance">Пополните баланс!</string>
+    <string name="options_done">Печатать!</string>
     <string name="options_balance"><![CDATA[>>]]></string>
     <string name="options_balance_none">Недостаточно средств на счету!</string>
     <string name="options_amount">Количество:</string>

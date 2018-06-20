@@ -152,6 +152,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/no_money"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -229,12 +230,21 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_button_disactive"
+        android:background="@drawable/rounded_button_active"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:text="@string/options_not_balance"
+        android:text="@string/options_done"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@id/price" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        app:layout_constraintTop_toBottomOf="@id/ready"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        android:layout_height="45dp" />
 
 </android.support.constraint.ConstraintLayout>

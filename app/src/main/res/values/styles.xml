@@ -21,7 +21,7 @@
         <item name="android:editTextColor">@color/colorPrimary</item>
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:buttonStyle">@style/AppTheme.Button</item>
-        <item name="android:textViewStyle">@style/TextViewStyle</item>
+                                                                                                                                                                                                <item name="android:textViewStyle">@style/TextViewStyle</item>
 
         <!-- MaterialDrawer specific values -->
         <item name="material_drawer_background">@color/colorBackground</item>
@@ -34,25 +34,12 @@
         <item name="material_drawer_header_selection_text">
             @color/material_drawer_dark_primary_text
         </item>
-
-        <item name="android:alertDialogTheme">@style/AppTheme.Dialog</item>
-        <item name="android:alertDialogStyle">@style/AppTheme.Dialog</item>
+        <item name="alertDialogStyle">@style/AppThemeDialog</item>
     </style>
 
-    <style name="AppTheme.Dialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:windowBackground">@color/colorBackground</item>
-        <item name="android:colorBackground">@color/colorBackground</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
-        <item name="android:titleTextColor" tools:targetApi="m">@android:color/white</item>
-        <item name="android:fontFamily">sans-serif-thin</item>
+    <style name="AppThemeDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="multiChoiceItemLayout">@layout/item_select_dialog_multichoice</item>
+        <item name="singleChoiceItemLayout">@layout/item_select_dialog_singlechoice</item>
     </style>
 
     <style name="TextViewStyle" parent="android:Widget.TextView">
