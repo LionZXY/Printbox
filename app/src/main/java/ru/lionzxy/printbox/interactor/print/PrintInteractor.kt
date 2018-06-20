@@ -4,6 +4,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import ru.lionzxy.printbox.data.model.PrintCartModel
+import ru.lionzxy.printbox.data.model.PrintHistory
 import ru.lionzxy.printbox.data.model.PrintPlace
 import ru.lionzxy.printbox.repository.print.IPrintRepository
 
@@ -32,5 +33,9 @@ class PrintInteractor(
 
     override fun getPrice(printCartModel: PrintCartModel): Single<Int> {
         return printRepository.getPrice(printCartModel)
+    }
+
+    override fun print(printCartModel: PrintCartModel): Single<PrintHistory> {
+        return printRepository.print(printCartModel)
     }
 }

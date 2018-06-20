@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.fragment_print_select.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintOption
+import ru.lionzxy.printbox.utils.toast
 import ru.lionzxy.printbox.view.print_map.ui.PrintMapActivity
 import ru.lionzxy.printbox.view.print_select.presenter.PrintSelectPresenter
 
@@ -33,6 +34,7 @@ class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView {
         file.setOnClickListener { printSelectPresenter.openFileChange() }
         select_twoside.setOnClickListener { printSelectPresenter.onClickSelectOption() }
         select_count.setOnValueChangedListener { _, _, newVal -> printSelectPresenter.onSelectCopiesCount(newVal) }
+        ready.setOnClickListener { printSelectPresenter.onPrintClick() }
     }
 
     override fun onUpdateCartModel(cartModel: PrintCartModel) {
@@ -43,7 +45,8 @@ class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView {
         cartModel.printOrder?.duplexOption?.let { select_twoside.text = it.name }
         select_color.isEnabled = cartModel.printPlace?.optionColor?.size ?: 0 > 1
         select_count.value = cartModel.printOrder?.copies ?: 1
-        filled_perc.text = getString(R.string.options_filled_perc, (cartModel.printDocument?.colorPercent ?: 1f) * 100)
+        filled_perc.text = getString(R.string.options_filled_perc, (cartModel.printDocument?.colorPercent
+                ?: 1f) * 100)
     }
 
     override fun priceLoadingShow() {
@@ -52,6 +55,11 @@ class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView {
 
     override fun setPrice(totalPrice: Float, copies: Int) {
         price.text = getString(R.string.options_price, (totalPrice / copies), copies, totalPrice)
+    }
+
+    override fun printProgress(visible: Boolean) {
+        ready.visibility = if (visible) View.GONE else View.VISIBLE
+        progress_bar.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
     override fun openDialog(visible: Boolean, items: List<PrintOption>) {
@@ -66,6 +74,10 @@ class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView {
         })
         dialog.show(fragmentManager, OptionSelectionDialog.TAG)
         selectionDialog = dialog
+    }
+
+    override fun onError(resId: Int) {
+        context?.toast(resId)
     }
 
     override fun openPrintMapSelect() {

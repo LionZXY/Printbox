@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintFinalOrder
+import ru.lionzxy.printbox.data.model.PrintHistory
 import ru.lionzxy.printbox.data.model.PrintPlace
 
 interface IPrintRepository {
@@ -15,4 +16,6 @@ interface IPrintRepository {
     fun getObservableCart(): Observable<PrintCartModel>
     fun setCart(printCartModel: PrintCartModel)
     fun getPrice(printCartModel: PrintCartModel): Single<Int>
+
+    fun print(printCartModel: PrintCartModel): Single<PrintHistory>
 }

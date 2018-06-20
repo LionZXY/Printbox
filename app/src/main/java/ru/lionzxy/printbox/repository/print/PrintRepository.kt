@@ -8,7 +8,9 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import ru.lionzxy.printbox.data.api.PrintApi
+import ru.lionzxy.printbox.data.api.PrintOrderApi
 import ru.lionzxy.printbox.data.model.PrintCartModel
+import ru.lionzxy.printbox.data.model.PrintHistory
 import ru.lionzxy.printbox.data.model.PrintPlace
 import ru.lionzxy.printbox.data.stores.IPrintCartStore
 
@@ -56,5 +58,15 @@ class PrintRepository(retrofit: Retrofit,
                 .map { it.first() }
                 .subscribeOn(Schedulers.io())
                 .singleOrError()
+    }
+
+    override fun print(printCartModel: PrintCartModel): Single<PrintHistory> {
+        val apiPrint = PrintOrderApi(printCartModel.printDocument!!.id,
+                printCartModel.printPlace!!.id,
+                printCartModel.printOrder!!.copies,
+                printCartModel.printOrder!!.colorOption!!.id,
+                printCartModel.printOrder!!.duplexOption!!.id)
+
+        return printApi.finalPrint(apiPrint).singleOrError().subscribeOn(Schedulers.io())
     }
 }

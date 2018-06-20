@@ -78,4 +78,5 @@
     <string name="option_selection_one">Не печатать с двух сторон</string>
     <string name="option_selection_two_up">Печатать с двух сторон (Переплет сверху)</string>
     <string name="option_selection_two">Печатать с двух сторон</string>
+    <string name="option_print_error">Ошибка при запросе. Простите, отчет об ошибке отправлен разработчикам</string>
 </resources>

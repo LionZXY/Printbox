@@ -6,6 +6,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import ru.lionzxy.printbox.App
+import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintCartStage
 import ru.lionzxy.printbox.data.model.PrintFinalOrder
@@ -86,6 +87,21 @@ class PrintSelectPresenter : MvpPresenter<IPrintSelectView>() {
         printCartModel.printPlace?.optionDoublePage?.let {
             viewState.openDialog(true, it)
         }
+    }
+
+    fun onPrintClick() {
+        viewState.printProgress(true)
+        disposable.addAll(interactor.print(printCartModel)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    printCartModel.stage = PrintCartStage.HISTORY
+                    interactor.setCart(printCartModel)
+                    viewState.printProgress(false)
+                }, {
+                    Timber.e(it)
+                    viewState.onError(R.string.option_print_error)
+                    viewState.printProgress(false)
+                }))
     }
 
     fun openFileChange() {
