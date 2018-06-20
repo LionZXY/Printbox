@@ -79,4 +79,10 @@
     <string name="option_selection_two_up">Печатать с двух сторон (Переплет сверху)</string>
     <string name="option_selection_two">Печатать с двух сторон</string>
     <string name="option_print_error">Ошибка при запросе. Простите, отчет об ошибке отправлен разработчикам</string>
+
+    <!-- History -->
+    <string name="history_request_error">Ошибка при запросе. Простите, отчет об ошибке отправлен разработчикам</string>
+    <string name="history_item_price" formatted="false">%.2f руб.</string>
+    <string name="history_item_pages" formatted="false">%d стр.</string>
+    <string name="history_item_copies" formatted="false">%d экз.</string>
 </resources>

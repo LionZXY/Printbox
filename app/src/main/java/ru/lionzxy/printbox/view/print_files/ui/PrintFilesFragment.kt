@@ -47,9 +47,6 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
         files.adapter = adapter
         files.isNestedScrollingEnabled = false
         files.layoutManager = LinearLayoutManager(context)
-        swipeHelper = SwipeOpenItemTouchHelper(SwipeOpenItemTouchHelper.SimpleCallback(SwipeOpenItemTouchHelper.START
-                or SwipeOpenItemTouchHelper.END))
-        swipeHelper.attachToRecyclerView(files)
         file_add.setOnClickListener { openFilePicker() }
         rxPermission = RxPermissions(this.activity!!)
         progressDialog = ProgressDialog(this.activity!!)
@@ -93,7 +90,6 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
 
     override fun setFiles(docs: List<PrintDocument>) {
         adapter.setList(docs)
-        swipeHelper.attachToRecyclerView(files)
     }
 
     override fun showLoading(visible: Boolean) {
