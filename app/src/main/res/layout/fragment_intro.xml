@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
         android:gravity="center"
+        android:visibility="gone"
         android:theme="@style/AppTheme.Lobster"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/white"

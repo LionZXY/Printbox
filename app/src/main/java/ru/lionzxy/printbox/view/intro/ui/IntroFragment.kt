@@ -38,5 +38,8 @@ class IntroFragment : Fragment() {
 
         image.setImageResource(intro.imageRes)
         title.setText(intro.title)
+        if (intro == IntroEnum.FIRST) {
+            unedit_title.visibility = View.VISIBLE
+        }
     }
 }
