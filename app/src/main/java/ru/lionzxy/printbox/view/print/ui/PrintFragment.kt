@@ -63,6 +63,7 @@ class PrintFragment : MvpAppCompatFragment(), IPrintView, IRefreshStatusReciever
                 fragm.update()
             }
         }
+
     }
 
     override fun showRefreshStatus(visible: Boolean) {

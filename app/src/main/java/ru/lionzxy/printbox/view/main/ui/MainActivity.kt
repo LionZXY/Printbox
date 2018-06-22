@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.User
 import ru.lionzxy.printbox.utils.IActivityResultReciever
+import ru.lionzxy.printbox.utils.toast
+import ru.lionzxy.printbox.view.main.interfaces.IOnBackDelegator
 import ru.lionzxy.printbox.view.main.interfaces.IRefreshStatusReciever
 import ru.lionzxy.printbox.view.main.presenter.MainPresenter
 import ru.lionzxy.printbox.view.print.ui.PrintFragment
@@ -59,11 +61,22 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
 
     override fun showRefreshStatus(visible: Boolean) {
         supportFragmentManager.fragments.forEach {
-            if(it is IRefreshStatusReciever) {
+            if (it is IRefreshStatusReciever) {
                 it.showRefreshStatus(visible)
             }
         }
     }
+
+    override fun onBackPressed() {
+        supportFragmentManager.fragments.forEach {
+            if (it is IOnBackDelegator && it.onBack()) {
+                return
+            }
+        }
+        //backPressCounter.onNext(true)
+        toast(R.string.back_press_retry)
+    }
+
 
     override fun initDrawer(user: User) {
         val header = AccountHeaderBuilder()

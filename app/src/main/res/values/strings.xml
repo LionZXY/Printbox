@@ -18,6 +18,7 @@
     <string name="menu_two_text">Опции</string>
     <string name="menu_three_text">Посмотреть историю</string>
     <string name="order_printed">Распечатано</string>
+    <string name="back_press_retry">Нажмите еще раз для выхода из приложения</string>
 
 
     <!-- Auth Activity -->
