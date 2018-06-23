@@ -29,7 +29,7 @@ class HistoryAdapter(var history: List<PrintHistory>,
         holder.orderPrice.text = holder.itemView.context.resources.getString(R.string.history_item_price, (element.price / 100).toFloat())
         holder.orderFilename.text = element.document.name
         holder.orderFiledate.text = element.createdAt.toLocalDateTime().toString("yyyy-MM-dd HH:mm")
-        holder.orderTextStatus.text = element.statusName
+        holder.orderTextStatus.text = element.printerName
         holder.orderColor.text = element.colorOption.name
         holder.orderPages.text = holder.itemView.context.resources.getString(
                 R.string.history_item_pages, element.document.pagesCount)

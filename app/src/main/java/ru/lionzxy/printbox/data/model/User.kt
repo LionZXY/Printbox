@@ -27,7 +27,9 @@ class User(@SerializedName("pk")
            @SerializedName("last_color_option")
            var lColorOption: Int,
            @SerializedName("last_printer_option")
-           var lPrintedOption: Int) {
+           var lPrintedOption: Int,
+           @SerializedName("avatar")
+           var avatar: String? = null) {
     constructor() : this(0, 0, 0,
             0, "", "",
             "", "", 0,

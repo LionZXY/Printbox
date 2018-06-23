@@ -78,13 +78,16 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
 
 
     override fun initDrawer(user: User) {
+        var profile = ProfileDrawerItem().withName("${user.firstName} ${user.lastName}")
+                .withEmail(user.email)
+        if(user.avatar == null) {
+            profile = profile.withIcon(user.avatar!!)
+        }
         val header = AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
                 .withSelectionListEnabled(false)
-                .addProfiles(
-                        ProfileDrawerItem().withName("${user.firstName} ${user.lastName}")
-                                .withEmail(user.email))
+                .addProfiles(profile)
                 .withOnAccountHeaderListener { _, _, _ -> false }
                 .build()
 
