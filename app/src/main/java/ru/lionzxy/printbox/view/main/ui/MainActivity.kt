@@ -80,7 +80,7 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
     override fun initDrawer(user: User) {
         var profile = ProfileDrawerItem().withName("${user.firstName} ${user.lastName}")
                 .withEmail(user.email)
-        if(user.avatar == null) {
+        if(user.avatar != null) {
             profile = profile.withIcon(user.avatar!!)
         }
         val header = AccountHeaderBuilder()
