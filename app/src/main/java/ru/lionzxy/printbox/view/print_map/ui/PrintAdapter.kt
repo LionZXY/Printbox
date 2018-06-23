@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.PrintPlace
+import ru.lionzxy.printbox.data.model.PrintStateEnum
 
 const val TYPE_INACTIVE = 0
 const val TYPE_ACTIVE = 1
@@ -37,8 +38,13 @@ class PrintAdapter(private var printers: List<PrintPlace>) : RecyclerView.Adapte
         val printer = printers[position]
         holder.printName.text = printer.name
         holder.printStatusName.text = printer.statusName
-        holder.printDescription.text = printer.placeDescription + printer.description
+        holder.printDescription.text = "${printer.placeDescription} ${printer.description}"
         holder.cardView.setOnClickListener { clickListener?.invoke(printer) }
+        var resId = R.drawable.circle_red
+        if (printer.status == PrintStateEnum.READY.id) {
+            resId = R.drawable.circle_green
+        }
+        holder.printStatusImage.setImageResource(resId)
     }
 
     override fun getItemViewType(position: Int): Int {

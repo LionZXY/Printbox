@@ -36,8 +36,9 @@ class PrintSelectPresenter : MvpPresenter<IPrintSelectView>() {
                 .subscribe {
                     printCartModel = it
                     viewState.onUpdateCartModel(it)
-                    if (printCartModel.printPlace == null) {
+                    if (printCartModel.printPlace?.isEmpty() != false) {
                         viewState.openPrintMapSelect()
+                        return@subscribe
                     }
 
                     var changed = false

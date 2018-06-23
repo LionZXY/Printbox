@@ -16,7 +16,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/colorBackground"
+        app:cardBackgroundColor="@color/colorBackgroundDark"
         tools:layout_width="wrap_content">
 
         <android.support.constraint.ConstraintLayout

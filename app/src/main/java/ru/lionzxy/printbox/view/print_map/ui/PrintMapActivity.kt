@@ -8,6 +8,7 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.PagerSnapHelper
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -42,6 +43,7 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
     private var selectedPrinter: PrintPlace? = null
     private var printToMark = HashMap<PrintPlace, PlacemarkMapObject>()
     private var currentLocationMark: PlacemarkMapObject? = null
+    private var snapHelper = PagerSnapHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +76,8 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
         printers.scrollToPosition(position)
         printToMark.forEach { t, u ->
             u.setIcon(if (t == currPrinter) {
-                ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_red_48dp)
+                u.zIndex = 100f
+                ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_black_48)
             } else {
                 ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_black_36)
             })
@@ -97,6 +100,7 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
         printerAdapter.setListener { printMapPresenter.onSelectPrinter(it) }
         printers.adapter = printerAdapter
         printers.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        snapHelper.attachToRecyclerView(printers)
 
         list.forEach { pp ->
             val mark = printObjects.addPlacemark(Point(pp.latitude, pp.longitude))

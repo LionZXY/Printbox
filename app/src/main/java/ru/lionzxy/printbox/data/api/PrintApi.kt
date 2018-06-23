@@ -7,7 +7,7 @@ import ru.lionzxy.printbox.data.model.PrintPlace
 
 interface PrintApi {
     @GET("printers/")
-    fun getPrinters(): Observable<List<PrintPlace>>
+    fun getPrinters(@Query("show_all") showAll: Int = 1): Observable<List<PrintPlace>>
 
     @POST("print_operations/")
     fun finalPrint(@Body printOrderApi: PrintOrderApi): Observable<PrintHistory>

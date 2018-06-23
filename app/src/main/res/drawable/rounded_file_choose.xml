@@ -4,12 +4,11 @@
         <shape android:shape="rectangle">
             <stroke
                 android:width="2dp"
-                android:dashWidth="30px"
+                android:color="@color/colorBackgroundDark"
                 android:dashGap="10px"
-                android:color="@color/colorPrimaryDark" />
+                android:dashWidth="30px" />
 
-            <corners
-                android:radius="6dp" />
+            <corners android:radius="6dp" />
         </shape>
     </item>
 </layer-list>

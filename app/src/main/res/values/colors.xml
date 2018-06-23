@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">#8D0E3E</color>
+    <color name="colorPrimaryLight">#fb522d</color>
     <color name="colorAccent">#457D4A</color>
     <color name="colorBackground">#2E3344</color>
     <color name="colorBackgroundDark">#242836</color>
@@ -11,7 +12,6 @@
     <color name="trn_gray">#80ffffff</color>
     <color name="colorError">@android:color/holo_red_dark</color>
     <color name="colorDisactive">#244227</color>
-
 
     <color name="vk_color">#5181b8</color>
 </resources>

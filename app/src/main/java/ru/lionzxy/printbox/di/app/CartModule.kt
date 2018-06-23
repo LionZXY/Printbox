@@ -20,7 +20,9 @@ class CartModule {
 
         val jsonLastPrint = preferences.getString(PREF_LASTPRINT, "{}")
         val lastPrint = gson.fromJson(jsonLastPrint, PrintPlace::class.java)
-        printCartModel.printPlace = lastPrint
+        if (!lastPrint.isEmpty()) {
+            printCartModel.printPlace = lastPrint
+        }
 
         return PrintCartStore(printCartModel)
     }

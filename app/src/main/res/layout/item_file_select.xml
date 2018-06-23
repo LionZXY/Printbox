@@ -12,5 +12,6 @@
         android:background="@drawable/rounded_file_choose"
         android:text="@string/files_select_button"
         android:textAllCaps="false"
+        android:textSize="24sp"
         android:textColor="@color/white" />
 </FrameLayout>

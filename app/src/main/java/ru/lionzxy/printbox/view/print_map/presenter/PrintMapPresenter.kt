@@ -11,6 +11,7 @@ import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintPlace
+import ru.lionzxy.printbox.data.model.PrintStateEnum
 import ru.lionzxy.printbox.di.print.PrintModule
 import ru.lionzxy.printbox.interactor.print.IPrintInteractor
 import ru.lionzxy.printbox.view.print_map.ui.IPrintMapView
@@ -85,6 +86,10 @@ class PrintMapPresenter : MvpPresenter<IPrintMapView>() {
     }
 
     fun onSelectPrinter(printer: PrintPlace) {
+        if (printer.status != PrintStateEnum.READY.id) {
+            viewState.onError(R.string.map_select_unavailable_error)
+            return
+        }
         viewState.selectPrintPlace(printer)
         printPlaceAlreadySelect = true
     }

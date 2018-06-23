@@ -71,6 +71,7 @@ class PrintPlace(
     }
 
     fun isEmpty() = id == 0
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(name)
