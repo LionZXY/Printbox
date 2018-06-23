@@ -9,7 +9,7 @@ object Constants {
     const val BASE_URL = "https://printbox.io/"
     const val REDIR_URL = "https://printbox.io/complete/vk-oauth2/"
     const val COOKIE_SESSION = "sessionid"
-    const val BACKPRESS_TIMEOUT = 100L
+    const val BACKPRESS_TIMEOUT = 3000L
     const val PREFERENCE_FIRSTRUN = "firstrun"
     const val UPLOAD_FILE_URL = "${BuildConfig.API_URL}user_documents/"
 

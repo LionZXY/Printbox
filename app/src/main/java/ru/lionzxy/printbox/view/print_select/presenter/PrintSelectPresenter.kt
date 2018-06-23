@@ -89,6 +89,11 @@ class PrintSelectPresenter : MvpPresenter<IPrintSelectView>() {
         }
     }
 
+    fun onBack() {
+        printCartModel.stage = PrintCartStage.SELECTION_FILE
+        interactor.setCart(printCartModel)
+    }
+
     fun onPrintClick() {
         viewState.printProgress(true)
         disposable.addAll(interactor.print(printCartModel)

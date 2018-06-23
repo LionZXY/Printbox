@@ -11,11 +11,12 @@ import kotlinx.android.synthetic.main.fragment_print_history.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.PrintHistory
 import ru.lionzxy.printbox.utils.toast
+import ru.lionzxy.printbox.view.main.interfaces.IOnBackDelegator
 import ru.lionzxy.printbox.view.main.interfaces.IRefreshReciever
 import ru.lionzxy.printbox.view.main.interfaces.IRefreshStatusReciever
 import ru.lionzxy.printbox.view.print_history.presenter.PrintHistoryPresenter
 
-class PrintHistoryFragment : MvpAppCompatFragment(), IPrintHistoryView, IRefreshReciever {
+class PrintHistoryFragment : MvpAppCompatFragment(), IPrintHistoryView, IRefreshReciever, IOnBackDelegator {
     @InjectPresenter
     lateinit var printHistoryPresenter: PrintHistoryPresenter
     val adapter by lazy { produceAdapter() }
@@ -57,6 +58,11 @@ class PrintHistoryFragment : MvpAppCompatFragment(), IPrintHistoryView, IRefresh
                 tmp.showRefreshStatus(false)
             }
         }
+    }
+
+    override fun onBack(): Boolean {
+        printHistoryPresenter.onBack()
+        return true
     }
 
     private fun produceAdapter(): HistoryAdapter {

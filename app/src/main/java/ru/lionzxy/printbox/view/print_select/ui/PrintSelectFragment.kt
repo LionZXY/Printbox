@@ -12,10 +12,11 @@ import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.PrintCartModel
 import ru.lionzxy.printbox.data.model.PrintOption
 import ru.lionzxy.printbox.utils.toast
+import ru.lionzxy.printbox.view.main.interfaces.IOnBackDelegator
 import ru.lionzxy.printbox.view.print_map.ui.PrintMapActivity
 import ru.lionzxy.printbox.view.print_select.presenter.PrintSelectPresenter
 
-class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView {
+class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView, IOnBackDelegator {
     @InjectPresenter
     lateinit var printSelectPresenter: PrintSelectPresenter
     var selectionDialog: OptionSelectionDialog? = null
@@ -74,6 +75,11 @@ class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView {
         })
         dialog.show(fragmentManager, OptionSelectionDialog.TAG)
         selectionDialog = dialog
+    }
+
+    override fun onBack(): Boolean {
+        printSelectPresenter.onBack()
+        return true
     }
 
     override fun onError(resId: Int) {

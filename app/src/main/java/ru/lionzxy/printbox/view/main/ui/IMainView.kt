@@ -9,4 +9,7 @@ import ru.lionzxy.printbox.data.model.User
 interface IMainView : MvpView {
     fun showProgressBar(visible: Boolean)
     fun initDrawer(user: User)
+
+    fun backPressForce()
+    fun showOnBackToast()
 }

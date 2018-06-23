@@ -70,11 +70,10 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
     override fun onBackPressed() {
         supportFragmentManager.fragments.forEach {
             if (it is IOnBackDelegator && it.onBack()) {
-                return
+                return@onBackPressed
             }
         }
-        //backPressCounter.onNext(true)
-        toast(R.string.back_press_retry)
+        mainPresenter.onClickBack()
     }
 
 
@@ -105,6 +104,14 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
                 .withKeepStickyItemsVisible(false)
                 .withOnDrawerItemClickListener { _, _, drawerItem -> onClickDrawer(drawerItem.identifier) }
                 .build()
+    }
+
+    override fun backPressForce() {
+        super.onBackPressed()
+    }
+
+    override fun showOnBackToast() {
+        toast(R.string.back_press_retry)
     }
 
     override fun showProgressBar(visible: Boolean) {

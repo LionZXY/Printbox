@@ -10,6 +10,8 @@
     <color name="gray">#aeb4bf</color>
     <color name="trn_gray">#80ffffff</color>
     <color name="colorError">@android:color/holo_red_dark</color>
+    <color name="colorDisactive">#244227</color>
+
 
     <color name="vk_color">#5181b8</color>
 </resources>

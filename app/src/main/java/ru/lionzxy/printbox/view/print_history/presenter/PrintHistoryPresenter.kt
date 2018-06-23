@@ -6,6 +6,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.R
+import ru.lionzxy.printbox.data.model.PrintCartStage
+import ru.lionzxy.printbox.data.stores.IPrintCartStore
 import ru.lionzxy.printbox.di.history.HistoryModule
 import ru.lionzxy.printbox.interactor.history.IHistoryInteractor
 import ru.lionzxy.printbox.view.print_history.ui.IPrintHistoryView
@@ -18,6 +20,9 @@ class PrintHistoryPresenter : MvpPresenter<IPrintHistoryView>() {
 
     @Inject
     lateinit var interactor: IHistoryInteractor
+
+    @Inject
+    lateinit var printCartStore: IPrintCartStore
 
     init {
         App.appComponent.plus(HistoryModule()).inject(this)
@@ -32,7 +37,7 @@ class PrintHistoryPresenter : MvpPresenter<IPrintHistoryView>() {
         if (!silent) {
             viewState.showLoad(true)
         }
-        disposable . addAll (interactor.getHistory()
+        disposable.addAll(interactor.getHistory()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.loadHistory(it)
@@ -42,6 +47,16 @@ class PrintHistoryPresenter : MvpPresenter<IPrintHistoryView>() {
                     Timber.e(it)
                     viewState.showLoad(false)
                 }))
+    }
+
+    fun onBack() {
+        val printModel = printCartStore.getObservableCart()
+                .blockingSingle()
+        printModel.stage = PrintCartStage.SELECTION_FILE
+        if (printModel.printPlace != null) {
+            printModel.stage = PrintCartStage.OPTIONS
+        }
+        printCartStore.setCart(printModel)
     }
 
     override fun onDestroy() {
