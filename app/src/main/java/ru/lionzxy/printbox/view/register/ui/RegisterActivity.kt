@@ -96,7 +96,7 @@ class RegisterActivity : MvpAppCompatActivity(), IRegisterView {
 
     override fun buttonActive(active: Boolean) {
         buttonLogin.background = if (active) ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_active, theme)
-        else ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_disactive, theme)
+        else ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_active, theme) //TODO design fix
     }
 
     override fun onAuth() {

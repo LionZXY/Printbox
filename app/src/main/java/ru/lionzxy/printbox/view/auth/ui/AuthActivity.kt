@@ -78,7 +78,7 @@ class AuthActivity : MvpAppCompatActivity(), IAuthView {
 
     override fun buttonActive(active: Boolean) {
         buttonLogin.background = if (active) ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_active, theme)
-        else ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_disactive, theme)
+        else ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_active, theme) //TODO Design fix
     }
 
     override fun onAuth() {
