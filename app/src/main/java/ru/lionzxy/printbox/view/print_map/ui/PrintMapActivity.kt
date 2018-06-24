@@ -79,6 +79,7 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
                 u.zIndex = 100f
                 ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_black_48)
             } else {
+                u.zIndex = 0f
                 ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_black_36)
             })
         }
