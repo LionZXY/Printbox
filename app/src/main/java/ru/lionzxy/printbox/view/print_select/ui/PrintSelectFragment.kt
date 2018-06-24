@@ -44,7 +44,6 @@ class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView, IOnBackDel
         file_size.text = getString(R.string.option_file_size_template, cartModel.printDocument?.pagesCount)
         cartModel.printPlace?.optionDoublePage?.firstOrNull()?.let { select_twoside.text = it.name }
         cartModel.printOrder?.duplexOption?.let { select_twoside.text = it.name }
-        select_color.isEnabled = cartModel.printPlace?.optionColor?.size ?: 0 > 1
         select_count.value = cartModel.printOrder?.copies ?: 1
         filled_perc.text = getString(R.string.options_filled_perc, (cartModel.printDocument?.colorPercent
                 ?: 1f) * 100)
