@@ -59,16 +59,7 @@ class PrintFilesPresenter : MvpPresenter<IPrintFilesView>() {
                 interactor.uploadFile(file)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
-                            if (it.uploadInfo != null) {
-                                viewState.showProgres(true,
-                                        it.uploadInfo.uploadedBytes.toInt(),
-                                        it.uploadInfo.totalBytes.toInt())
-                            }
-                            if (it.serverResponse != null &&
-                                    it.serverResponse.httpCode == HttpURLConnection.HTTP_CREATED) {
-                                viewState.showProgres(false)
-                                loadList()
-                            }
+                            Timber.i("Add task")
                         }, {
                             viewState.onError(R.string.files_upload_failed)
                             viewState.showProgres(false)

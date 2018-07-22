@@ -14,7 +14,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "MAPKIT_API", "\"a9d4c586-90c9-4980-aaf3-e024f7e30d27\""
-        buildConfigField "String", "API_URL", '"https://printbox.io/api/"'
+        buildConfigField "String", "API_URL", '"http://dmitry.fopf-print.ru/api/"'
 
         ndk {
             abiFilters("armeabi-v7a", "x86")

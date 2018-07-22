@@ -42,4 +42,9 @@ class FilesInteractor(
                     }
                 }
     }
+
+    override fun removeUploadTask(uploadId: String): Completable {
+        //TODO
+        return Completable.complete()
+    }
 }

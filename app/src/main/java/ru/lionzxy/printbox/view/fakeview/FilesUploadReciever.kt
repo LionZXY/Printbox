@@ -11,9 +11,11 @@ import ru.lionzxy.printbox.di.files.FilesModule
 import ru.lionzxy.printbox.interactor.files.IFilesInteractor
 import ru.lionzxy.printbox.utils.toast
 import timber.log.Timber
+import javax.inject.Inject
 
 
 class FilesUploadReciever : UploadServiceBroadcastReceiver() {
+    @Inject
     lateinit var interactor: IFilesInteractor
     private val disposable = CompositeDisposable()
 

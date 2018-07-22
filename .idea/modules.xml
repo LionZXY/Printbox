@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PrintBox.iml" filepath="$PROJECT_DIR$/PrintBox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Printbox.iml" filepath="$PROJECT_DIR$/.idea/Printbox.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/PrintboxAndroid.iml" filepath="$PROJECT_DIR$/.idea/PrintboxAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
