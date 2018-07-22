@@ -3,6 +3,7 @@ package ru.lionzxy.printbox.interactor.files
 import android.net.Uri
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 import ru.lionzxy.printbox.data.model.PrintCartStage
 import ru.lionzxy.printbox.data.model.PrintDocument
 import ru.lionzxy.printbox.data.stores.UploadFileStatus
@@ -14,14 +15,19 @@ class FilesInteractor(
         val printRepository: IPrintRepository
 ) : IFilesInteractor {
     override fun getUserFiles(): Observable<List<PrintDocument>> {
-        return filesRepository.getUserFiles()
+        return filesRepository.getFileDraftUpload()
+                .toObservable()
+                .zipWith(filesRepository.getUserFiles(), BiFunction { t1: List<PrintDocument>,
+                                                                      t2: List<PrintDocument> ->
+                    t1.plus(t2)
+                })
     }
 
     override fun removeUserFile(id: Int): Completable {
         return filesRepository.removeUserFile(id)
     }
 
-    override fun uploadFile(uri: Uri): Observable<UploadFileStatus> {
+    override fun uploadFile(uri: Uri): Completable {
         return filesRepository.uploadFile(uri)
     }
 

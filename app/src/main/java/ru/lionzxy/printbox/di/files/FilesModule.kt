@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import ru.lionzxy.printbox.data.db.FileDAO
 import ru.lionzxy.printbox.data.stores.IPrintCartStore
 import ru.lionzxy.printbox.interactor.files.FilesInteractor
 import ru.lionzxy.printbox.interactor.files.IFilesInteractor
@@ -19,8 +20,8 @@ class FilesModule() {
 
     @FilesScope
     @Provides
-    fun provideRepository(retrofit: Retrofit, context: Context): IFilesRepository {
-        return FilesRepository(retrofit, context)
+    fun provideRepository(retrofit: Retrofit, context: Context, fileDAO: FileDAO): IFilesRepository {
+        return FilesRepository(retrofit, context, fileDAO)
     }
 
     @FilesScope

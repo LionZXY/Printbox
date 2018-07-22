@@ -47,9 +47,10 @@ ext {
     rxBindingVersion = '2.1.1'
     supportVersion = '27.1.1'
     crashalyticsVersion = '2.9.1'
-    constrainLayoutVersion = '1.1.0'
+    constrainLayoutVersion = '1.1.2'
     retrofitVersion = '2.4.0'
     uploadServiceVersion = "3.4.2"
+    roomVersion = "1.1.1"
     apacheConfig = "1.11"
 }
 
@@ -66,12 +67,15 @@ dependencies {
     implementation 'com.github.alex-townsend:SwipeOpenItemTouchHelper:1.4.0'
     implementation "net.gotev:uploadservice:$uploadServiceVersion"
     implementation "net.gotev:uploadservice-okhttp:$uploadServiceVersion"
+    implementation "android.arch.persistence.room:rxjava2:$roomVersion"
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
+    kapt "android.arch.persistence.room:compiler:$roomVersion"
+    implementation 'com.facebook.stetho:stetho:1.5.0'
 
     implementation 'me.relex:circleindicator:1.2.2@aar'
 
     implementation "com.arello-mobile:moxy:$moxyVersion"
     implementation "com.arello-mobile:moxy-app-compat:$moxyVersion"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     kapt "com.arello-mobile:moxy-compiler:$moxyVersion"
 
     implementation "io.reactivex.rxjava2:rxandroid:$rxjavaVersion"

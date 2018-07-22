@@ -6,8 +6,7 @@ import okhttp3.Response
 class FuckBackEndInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        var cookie = request.headers().get("cookie") ?: "a=a"
-        cookie += "; csrftoken=FUCKBACKEND"
+        val cookie = request.headers().get("cookie") ?: "a=a"
 
         val newRequest = request.newBuilder()
                 .addHeader("cookie", cookie)

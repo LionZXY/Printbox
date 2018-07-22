@@ -1,15 +1,14 @@
 package ru.lionzxy.printbox.repository.files
 
 import android.net.Uri
-import android.printservice.PrintDocument
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
-import net.gotev.uploadservice.UploadInfo
-import ru.lionzxy.printbox.data.stores.UploadFileStatus
-import java.io.File
+import ru.lionzxy.printbox.data.model.PrintDocument
 
 interface IFilesRepository {
-    fun getUserFiles(): Observable<List<ru.lionzxy.printbox.data.model.PrintDocument>>
+    fun getUserFiles(): Observable<List<PrintDocument>>
     fun removeUserFile(id: Int): Completable
-    fun uploadFile(uri: Uri): Observable<UploadFileStatus>
+    fun uploadFile(uri: Uri): Completable
+    fun getFileDraftUpload(): Flowable<List<PrintDocument>>
 }

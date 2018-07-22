@@ -49,7 +49,7 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
         files.layoutManager = LinearLayoutManager(context)
         file_add.setOnClickListener { openFilePicker() }
         rxPermission = RxPermissions(this.activity!!)
-        progressDialog = ProgressDialog(this.activity!!)
+        progressDialog = ProgressDialog(this.activity!!, R.style.AppThemeDialog)
         progressDialog.setTitle(R.string.files_upload_progress)
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
         progressDialog.setCancelable(false)

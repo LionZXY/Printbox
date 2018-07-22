@@ -1,6 +1,7 @@
 package ru.lionzxy.printbox
 
 import android.support.multidex.MultiDexApplication
+import com.facebook.stetho.Stetho
 import net.gotev.uploadservice.UploadService
 import ru.lionzxy.printbox.di.app.AppComponent
 import ru.lionzxy.printbox.di.app.AppModule
@@ -24,6 +25,7 @@ class App : MultiDexApplication() {
         UploadService.NAMESPACE = BuildConfig.APPLICATION_ID
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+            Stetho.initializeWithDefaults(this)
         } else {
             Timber.plant(Timber.DebugTree()) //TODO
         }

@@ -1,5 +1,6 @@
 package ru.lionzxy.printbox.di.app
 
+import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
@@ -20,7 +21,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.lionzxy.printbox.BuildConfig
-import ru.lionzxy.printbox.utils.Constants
+import ru.lionzxy.printbox.data.db.AppDatabase
 import ru.lionzxy.printbox.utils.auth.Handle401Interceptor
 import ru.lionzxy.printbox.utils.govnofix.FuckBackEndInterceptor
 import javax.inject.Singleton
@@ -64,6 +65,12 @@ class AppModule(private val context: Context) {
                 .build()
         UploadService.HTTP_STACK = OkHttpStack(client)
         return client
+    }
+
+    @Singleton
+    @Provides
+    fun provideDatabase(context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, "app").build()
     }
 
     @Singleton

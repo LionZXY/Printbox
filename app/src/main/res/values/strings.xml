@@ -52,7 +52,9 @@
     <string name="files_select_button">Выберите документ</string>
     <string name="files_select_notfound">Мы не нашли у вас файловый менеджер. Пожалуйста, установите файловый менеджер, который поддерживает выбор файлов для продолжения</string>
     <string name="files_upload_progress">Загрузка файла</string>
+    <string name="files_upload_canceled">Загрузка файла прервана</string>
     <string name="files_upload_progress_details">Пожалуйста, подождите</string>
+    <string name="files_upload_finished">Файл загружен успешно</string>
     <string name="files_upload_failed">Ошибка загрузки файла</string>
 
     <!-- Map -->
