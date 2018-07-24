@@ -1,7 +1,9 @@
 package ru.lionzxy.printbox.interactor.files
 
 import android.net.Uri
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import ru.lionzxy.printbox.data.model.PrintCartStage
@@ -14,13 +16,13 @@ class FilesInteractor(
         val filesRepository: IFilesRepository,
         val printRepository: IPrintRepository
 ) : IFilesInteractor {
-    override fun getUserFiles(): Observable<List<PrintDocument>> {
+    override fun getUserFiles(): Flowable<List<PrintDocument>> {
         return filesRepository.getFileDraftUpload()
-                .toObservable()
-                .zipWith(filesRepository.getUserFiles(), BiFunction { t1: List<PrintDocument>,
-                                                                      t2: List<PrintDocument> ->
-                    t1.plus(t2)
-                })
+                .flatMap { drafts ->
+                    filesRepository.getUserFiles()
+                            .map { drafts.plus(it) }
+                            .toFlowable(BackpressureStrategy.BUFFER)
+                }
     }
 
     override fun removeUserFile(id: Int): Completable {

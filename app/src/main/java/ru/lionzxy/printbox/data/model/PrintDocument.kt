@@ -37,6 +37,7 @@ class PrintDocument(
             val doc = PrintDocument()
             doc.id = -1
             doc.uploadDraftId = uploadId
+            doc.status = DocumentStageEnum.UPLOADING.id
             return doc
         }
     }

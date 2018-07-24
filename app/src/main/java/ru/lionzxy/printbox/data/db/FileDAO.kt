@@ -11,10 +11,10 @@ abstract class FileDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertOrUpdate(document: PrintDocument)
 
-    @Query("SELECT * FROM ${PrintDocument.TABLE_NAME} WHERE ${PrintDocument.TABLE_UPLOAD_ID} = :uploadId ORDER BY 'createdAt' DESC")
+    @Query("SELECT * FROM ${PrintDocument.TABLE_NAME} WHERE ${PrintDocument.TABLE_UPLOAD_ID} = :uploadId")
     abstract fun getByUploadId(uploadId: String): Single<PrintDocument>
 
-    @Query("SELECT * FROM ${PrintDocument.TABLE_NAME} WHERE ${PrintDocument.TABLE_UPLOAD_ID} != ''")
+    @Query("SELECT * FROM ${PrintDocument.TABLE_NAME} WHERE ${PrintDocument.TABLE_UPLOAD_ID} != '' ORDER BY createdAt DESC")
     abstract fun getAllActiveDraft(): Flowable<List<PrintDocument>>
 
     @Query("DELETE FROM ${PrintDocument.TABLE_NAME} WHERE ${PrintDocument.TABLE_UPLOAD_ID} == :uploadId")

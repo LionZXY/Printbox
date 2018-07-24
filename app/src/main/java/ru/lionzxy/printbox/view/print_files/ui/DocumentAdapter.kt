@@ -29,8 +29,10 @@ class DocumentAdapter(var files: List<PrintDocument>,
 
         if (doc.status == DocumentStageEnum.READY.id) {
             holder.icon.setImageResource(R.drawable.ic_print_file)
-        } else if(doc.status == DocumentStageEnum.PROCESSING.id) {
+        } else if (doc.status == DocumentStageEnum.PROCESSING.id) {
             holder.icon.setImageResource(R.drawable.ic_processing)
+        } else if (doc.status == DocumentStageEnum.UPLOADING.id) {
+            holder.icon.setImageResource(R.drawable.ic_action_upload)
         }
     }
 
