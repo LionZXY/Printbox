@@ -11,6 +11,7 @@ import net.gotev.uploadservice.UploadTask
 import net.gotev.uploadservice.http.BodyWriter
 import net.gotev.uploadservice.http.HttpConnection
 import ru.lionzxy.printbox.utils.codec.Base64InputStream
+import ru.lionzxy.printbox.utils.getFileName
 import timber.log.Timber
 
 
@@ -135,23 +136,7 @@ class JSONUploadTask : UploadTask(), HttpConnection.RequestBodyDelegate, BodyWri
     }
 
     private fun getFileName(): String {
-        val uri = parameter.uri
-        var result: String? = null
-        if (uri.scheme == "content") {
-            contentResolver.query(uri, null, null, null, null).use { cursor ->
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-                }
-            }
-        }
-        if (result == null) {
-            result = uri.path
-            val cut = result!!.lastIndexOf('/')
-            if (cut != -1) {
-                result = result!!.substring(cut + 1)
-            }
-        }
-        return result as String
+       return parameter.uri.getFileName(contentResolver)
     }
 
     override fun shouldContinueWriting(): Boolean {

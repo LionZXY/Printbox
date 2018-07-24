@@ -1,5 +1,6 @@
 package ru.lionzxy.printbox.di.files
 
+import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
@@ -20,8 +21,9 @@ class FilesModule() {
 
     @FilesScope
     @Provides
-    fun provideRepository(retrofit: Retrofit, context: Context, fileDAO: FileDAO): IFilesRepository {
-        return FilesRepository(retrofit, context, fileDAO)
+    fun provideRepository(retrofit: Retrofit, context: Context, fileDAO: FileDAO,
+                          contentResolver: ContentResolver): IFilesRepository {
+        return FilesRepository(retrofit, context, fileDAO, contentResolver)
     }
 
     @FilesScope

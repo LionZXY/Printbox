@@ -1,5 +1,6 @@
 package ru.lionzxy.printbox.repository.files
 
+import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import io.reactivex.Completable
@@ -16,9 +17,11 @@ import ru.lionzxy.printbox.data.service.JSONUploadRequest
 import ru.lionzxy.printbox.data.stores.RxServiceUploadMonitoring
 import ru.lionzxy.printbox.data.stores.UploadFileStatus
 import ru.lionzxy.printbox.utils.Constants
+import ru.lionzxy.printbox.utils.getFileName
 
 class FilesRepository(retrofit: Retrofit, private val context: Context,
-                      private val dao: FileDAO) : IFilesRepository {
+                      private val dao: FileDAO,
+                      private val contentResolver: ContentResolver) : IFilesRepository {
     private val fileApi = retrofit.create(FileApi::class.java)
 
     override fun getUserFiles(): Observable<List<PrintDocument>> {
@@ -37,12 +40,19 @@ class FilesRepository(retrofit: Retrofit, private val context: Context,
                 .subscribeOn(Schedulers.io())
     }
 
+    override fun removeUploadTask(uploadId: String): Completable {
+        return Completable.fromCallable { dao.removeFileById(uploadId) }
+                .subscribeOn(Schedulers.io())
+
+    }
+
     override fun uploadFile(uri: Uri): Completable {
         val uploadId = JSONUploadRequest(context, Constants.UPLOAD_FILE_URL)
                 .setUri(uri)
                 .setNotificationConfig(UploadNotificationConfig())
                 .startUpload()
         val printDocument = PrintDocument.getUploadObject(uploadId)
+        printDocument.name = uri.getFileName(contentResolver)
         return Completable.fromCallable { dao.insertOrUpdate(printDocument) }
                 .subscribeOn(Schedulers.io())
     }

@@ -11,4 +11,5 @@ interface IFilesRepository {
     fun removeUserFile(id: Int): Completable
     fun uploadFile(uri: Uri): Completable
     fun getFileDraftUpload(): Flowable<List<PrintDocument>>
+    fun removeUploadTask(uploadId: String): Completable
 }

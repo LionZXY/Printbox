@@ -9,8 +9,7 @@ import ru.lionzxy.printbox.di.app.DaggerAppComponent
 import timber.log.Timber
 import com.crashlytics.android.Crashlytics
 import io.fabric.sdk.android.Fabric
-
-
+import ru.lionzxy.printbox.utils.toast
 
 
 class App : MultiDexApplication() {
@@ -33,5 +32,6 @@ class App : MultiDexApplication() {
         } else {
             Timber.plant(Timber.DebugTree()) //TODO
         }
+
     }
 }

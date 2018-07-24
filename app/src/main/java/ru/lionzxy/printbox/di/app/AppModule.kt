@@ -1,6 +1,7 @@
 package ru.lionzxy.printbox.di.app
 
 import android.arch.persistence.room.Room
+import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
@@ -33,6 +34,10 @@ class AppModule(private val context: Context) {
     @Singleton
     @Provides
     fun provideContext(): Context = context
+
+    @Singleton
+    @Provides
+    fun provideContentResolver(context: Context): ContentResolver = context.contentResolver
 
     @Singleton
     @Provides

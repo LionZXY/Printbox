@@ -17,6 +17,8 @@ import javax.inject.Inject
 class FilesUploadReciever : UploadServiceBroadcastReceiver() {
     @Inject
     lateinit var interactor: IFilesInteractor
+    @Inject
+    lateinit var appContext: Context
     private val disposable = CompositeDisposable()
 
     init {
@@ -29,7 +31,7 @@ class FilesUploadReciever : UploadServiceBroadcastReceiver() {
     }
 
     override fun onError(context: Context, uploadInfo: UploadInfo, serverResponse: ServerResponse, exception: Exception) {
-        context.toast(R.string.files_upload_failed)
+        appContext.toast(R.string.files_upload_failed)
         Timber.e("Error upload file. ${uploadInfo.uploadId}. HTTP ${serverResponse.httpCode}: ${serverResponse.bodyAsString}")
         disposable.addAll(interactor.removeUploadTask(uploadInfo.uploadId)
                 .subscribe({
@@ -38,7 +40,7 @@ class FilesUploadReciever : UploadServiceBroadcastReceiver() {
     }
 
     override fun onCompleted(context: Context, uploadInfo: UploadInfo, serverResponse: ServerResponse) {
-        context.toast(R.string.files_upload_finished)
+        appContext.toast(R.string.files_upload_finished)
         Timber.i("File upload sucsf: ${uploadInfo.uploadId}. HTTP ${serverResponse.httpCode}: ${serverResponse.bodyAsString}")
         disposable.addAll(interactor.removeUploadTask(uploadInfo.uploadId)
                 .subscribe({
@@ -47,7 +49,7 @@ class FilesUploadReciever : UploadServiceBroadcastReceiver() {
     }
 
     override fun onCancelled(context: Context, uploadInfo: UploadInfo) {
-        context.toast(R.string.files_upload_canceled)
+        appContext.toast(R.string.files_upload_canceled)
         Timber.i("Task ${uploadInfo.uploadId} is canceled")
     }
 

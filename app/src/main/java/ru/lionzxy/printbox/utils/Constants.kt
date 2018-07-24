@@ -13,6 +13,6 @@ object Constants {
     const val PREFERENCE_FIRSTRUN = "firstrun"
     const val UPLOAD_FILE_URL = "${BuildConfig.API_URL}user_documents/upload_files/"
 
-    val LOGIN_PATTERN = Pattern.compile("([a-zA-Z0-9]+)")
+    val LOGIN_PATTERN = Pattern.compile("([a-zA-Z0-9@.]+)")
     const val PASSWORD_MIN_LENGHT = 8
 }
