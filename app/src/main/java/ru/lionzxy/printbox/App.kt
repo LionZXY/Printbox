@@ -7,6 +7,10 @@ import ru.lionzxy.printbox.di.app.AppComponent
 import ru.lionzxy.printbox.di.app.AppModule
 import ru.lionzxy.printbox.di.app.DaggerAppComponent
 import timber.log.Timber
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
+
+
 
 
 class App : MultiDexApplication() {
@@ -17,7 +21,7 @@ class App : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-
+        Fabric.with(this, Crashlytics())
         appComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
                 .build()

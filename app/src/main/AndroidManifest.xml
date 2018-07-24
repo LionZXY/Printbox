@@ -36,5 +36,9 @@
                 <action android:name="ru.lionzxy.printbox.uploadservice.broadcast.status" />
             </intent-filter>
         </receiver>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="0f35e1740206d64769b138154e807676c2c1b20a"
+            />
     </application>
 </manifest>
