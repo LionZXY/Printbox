@@ -74,12 +74,12 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
 
         val position = printerAdapter.setCurrentPrint(currPrinter)
         printers.scrollToPosition(position)
-        printToMark.forEach { t, u ->
-            u.setIcon(if (t == currPrinter) {
-                u.zIndex = 100f
+        for ((printPlace, mark) in printToMark) {
+            mark.setIcon(if (printPlace == currPrinter) {
+                mark.zIndex = 100f
                 ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_black_48)
             } else {
-                u.zIndex = 0f
+                mark.zIndex = 0f
                 ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_black_36)
             })
         }
