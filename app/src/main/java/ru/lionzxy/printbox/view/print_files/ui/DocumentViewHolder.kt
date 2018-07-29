@@ -39,10 +39,15 @@ class DocumentViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
         disposable?.dispose()
         if (printDocument.status != DocumentStageEnum.READY.id) {
             disposable = Observable.interval(2, TimeUnit.SECONDS)
+                    .filter { printDocument.status != DocumentStageEnum.UPLOADING.id }
                     .flatMap { interactor.getFileById(printDocument.id).toObservable() }
                     .takeUntil { it.status == DocumentStageEnum.READY.id }
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ setStatus(it) }, Timber::e)
+                    .subscribe({
+                        setStatus(it)
+                        printDocument.status = it.status
+                        printDocument.statusName = it.statusName
+                    }, Timber::e)
         }
     }
 
