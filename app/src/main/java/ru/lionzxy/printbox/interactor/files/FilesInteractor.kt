@@ -1,10 +1,7 @@
 package ru.lionzxy.printbox.interactor.files
 
 import android.net.Uri
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Observable
+import io.reactivex.*
 import io.reactivex.functions.BiFunction
 import ru.lionzxy.printbox.data.model.PrintCartStage
 import ru.lionzxy.printbox.data.model.PrintDocument
@@ -47,5 +44,9 @@ class FilesInteractor(
 
     override fun removeUploadTask(uploadId: String): Completable {
         return filesRepository.removeUploadTask(uploadId)
+    }
+
+    override fun getFileById(id: Int): Single<PrintDocument> {
+        return filesRepository.getFileById(id)
     }
 }

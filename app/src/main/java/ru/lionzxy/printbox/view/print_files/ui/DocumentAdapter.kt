@@ -13,6 +13,9 @@ import ru.lionzxy.printbox.data.model.PrintDocument
 
 class DocumentAdapter(var files: List<PrintDocument>,
                       var clickListener: (doc: PrintDocument) -> Unit) : RecyclerView.Adapter<DocumentViewHolder>() {
+    private val holders = ArrayList<DocumentViewHolder>()
+    private var isDestroy = false //На всякий случай
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DocumentViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_file, parent, false)
         return DocumentViewHolder(view)
@@ -27,13 +30,7 @@ class DocumentAdapter(var files: List<PrintDocument>,
         holder.createdAt.text = doc.createdAt.toLocalDateTime().toString("yyyy-MM-dd HH:mm")
         holder.contentCard.setOnClickListener { clickListener.invoke(doc) }
 
-        if (doc.status == DocumentStageEnum.READY.id) {
-            holder.icon.setImageResource(R.drawable.ic_print_file)
-        } else if (doc.status == DocumentStageEnum.PROCESSING.id) {
-            holder.icon.setImageResource(R.drawable.ic_processing)
-        } else if (doc.status == DocumentStageEnum.UPLOADING.id) {
-            holder.icon.setImageResource(R.drawable.ic_action_upload)
-        }
+        holder.onNewDocument(doc)
     }
 
     fun setList(files: List<PrintDocument>) {
@@ -41,11 +38,19 @@ class DocumentAdapter(var files: List<PrintDocument>,
         notifyDataSetChanged()
     }
 
-}
+    override fun onViewRecycled(holder: DocumentViewHolder) {
+        super.onViewRecycled(holder)
+        holder.onDestroy()
+    }
 
-class DocumentViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
-    val nameText = rootView.findViewById<TextView>(R.id.file_name)
-    val createdAt = rootView.findViewById<TextView>(R.id.file_createdat)
-    val contentCard = rootView.findViewById<CardView>(R.id.content_card)
-    val icon = rootView.findViewById<ImageView>(R.id.icon_file)
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        holders.forEach { it.onDestroy() }
+    }
+
+    fun onDestroy() {
+        holders.forEach { it.onDestroy() }
+        isDestroy = true
+    }
+
 }

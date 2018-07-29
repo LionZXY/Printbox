@@ -6,6 +6,7 @@ import android.net.Uri
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import net.gotev.uploadservice.UploadNotificationConfig
@@ -44,6 +45,11 @@ class FilesRepository(retrofit: Retrofit, private val context: Context,
         return Completable.fromCallable { dao.removeFileById(uploadId) }
                 .subscribeOn(Schedulers.io())
 
+    }
+
+    override fun getFileById(id: Int): Single<PrintDocument> {
+        return fileApi.getFileById(id)
+                .subscribeOn(Schedulers.io())
     }
 
     override fun uploadFile(uri: Uri): Completable {

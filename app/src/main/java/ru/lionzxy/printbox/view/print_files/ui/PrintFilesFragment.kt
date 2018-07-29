@@ -95,9 +95,9 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
     override fun showLoading(visible: Boolean) {
         progress_bar.visibility = if (visible) View.VISIBLE else View.GONE
         files.visibility = if (visible) View.GONE else View.VISIBLE
-        if(!visible) {
+        if (!visible) {
             val tmp = activity
-            if(tmp is IRefreshStatusReciever) {
+            if (tmp is IRefreshStatusReciever) {
                 tmp.showRefreshStatus(false)
             }
         }
@@ -111,14 +111,19 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
         printFilesPresenter.loadList(true)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.onDestroy()
+    }
+
     private fun produceAdapter(): DocumentAdapter {
-        return DocumentAdapter(emptyList(), {
+        return DocumentAdapter(emptyList()) {
             if (it.status != DocumentStageEnum.READY.id) {
                 context?.toast(R.string.files_processing)
                 return@DocumentAdapter
             }
 
             printFilesPresenter.onFileClick(it)
-        })
+        }
     }
 }
