@@ -43,12 +43,10 @@ class PrintFilesPresenter : MvpPresenter<IPrintFilesView>() {
     }
 
     fun onFileClick(printDocument: PrintDocument) {
-        viewState.showProgres(true)
         disposable.addAll(interactor.onFileSelect(printDocument)
                 .subscribe({
-                    viewState.showProgres(false)
+                    Timber.d("onFileClick")
                 }, {
-                    viewState.showProgres(false)
                     Timber.e(it)
                 }))
 
@@ -62,7 +60,6 @@ class PrintFilesPresenter : MvpPresenter<IPrintFilesView>() {
                             Timber.i("Add task")
                         }, {
                             viewState.onError(R.string.files_upload_failed)
-                            viewState.showProgres(false)
                             Timber.e(it)
                         })
         )

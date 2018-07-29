@@ -56,6 +56,7 @@
     <string name="files_upload_progress_details">Пожалуйста, подождите</string>
     <string name="files_upload_finished">Файл загружен успешно</string>
     <string name="files_upload_failed">Ошибка загрузки файла</string>
+    <string name="files_empty">У вас еще нет файлов. Загрузите файл, чтобы продолжить</string>
 
     <!-- Map -->
     <string name="map_location_access_fail">Мы не сможем получить доступ к локации без разрешения</string>

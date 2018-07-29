@@ -20,6 +20,15 @@
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/files_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/files_empty"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/files"
             android:layout_width="match_parent"

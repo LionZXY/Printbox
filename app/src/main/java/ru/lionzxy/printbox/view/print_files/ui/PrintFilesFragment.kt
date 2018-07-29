@@ -31,7 +31,6 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
     lateinit var rxPermission: RxPermissions
     val adapter by lazy { produceAdapter() }
     private lateinit var swipeHelper: SwipeOpenItemTouchHelper
-    lateinit var progressDialog: ProgressDialog
 
     companion object {
         val TAG = "printfiles"
@@ -49,10 +48,6 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
         files.layoutManager = LinearLayoutManager(context)
         file_add.setOnClickListener { openFilePicker() }
         rxPermission = RxPermissions(this.activity!!)
-        progressDialog = ProgressDialog(this.activity!!, R.style.AppThemeDialog)
-        progressDialog.setTitle(R.string.files_upload_progress)
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
-        progressDialog.setCancelable(false)
     }
 
     fun openFilePicker() {
@@ -68,17 +63,6 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
         }
     }
 
-    override fun showProgres(visible: Boolean, current: Int, total: Int) {
-        if (visible) {
-            progressDialog.show()
-        } else {
-            progressDialog.hide()
-        }
-
-        progressDialog.max = total
-        progressDialog.progress = current
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == MainActivity.REQUEST_FILE_CHOOSE && resultCode == Activity.RESULT_OK) {
@@ -90,11 +74,13 @@ class PrintFilesFragment : MvpAppCompatFragment(), IPrintFilesView, IActivityRes
 
     override fun setFiles(docs: List<PrintDocument>) {
         adapter.setList(docs)
+        files_empty.visibility = if(docs.isEmpty()) View.VISIBLE else View.GONE
     }
 
     override fun showLoading(visible: Boolean) {
         progress_bar.visibility = if (visible) View.VISIBLE else View.GONE
         files.visibility = if (visible) View.GONE else View.VISIBLE
+        files_empty.visibility = View.GONE
         if (!visible) {
             val tmp = activity
             if (tmp is IRefreshStatusReciever) {

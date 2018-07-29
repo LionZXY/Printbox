@@ -13,5 +13,4 @@ interface IPrintFilesView : MvpView {
     fun showLoading(visible: Boolean)
     @StateStrategyType(SkipStrategy::class)
     fun onError(@StringRes resId: Int)
-    fun showProgres(visible: Boolean, current: Int = 0, total: Int = 0)
 }
