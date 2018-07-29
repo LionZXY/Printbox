@@ -161,7 +161,7 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
 
     @SuppressLint("MissingPermission")
     private fun focusCurrentLocation() {
-        googleApi.lastLocation.addOnCompleteListener { printMapPresenter.onLastLocation(it.result) }
+        googleApi.lastLocation.addOnCompleteListener { if (it.isSuccessful) printMapPresenter.onLastLocation(it.result) }
     }
 
     override fun finishWithPrinter(printPlace: PrintPlace) {
