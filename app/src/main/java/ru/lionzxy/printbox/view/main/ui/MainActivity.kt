@@ -2,10 +2,10 @@ package ru.lionzxy.printbox.view.main.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
-import com.crashlytics.android.Crashlytics
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
@@ -21,17 +21,25 @@ import ru.lionzxy.printbox.utils.toast
 import ru.lionzxy.printbox.view.main.interfaces.IOnBackDelegator
 import ru.lionzxy.printbox.view.main.interfaces.IRefreshStatusReciever
 import ru.lionzxy.printbox.view.main.presenter.MainPresenter
+import ru.lionzxy.printbox.view.pay.ui.PayFragment
 import ru.lionzxy.printbox.view.print.ui.PrintFragment
 
 class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
     @InjectPresenter
     lateinit var mainPresenter: MainPresenter
-    lateinit var fragment: PrintFragment
     lateinit var drawer: Drawer
+
+    private val idToTag = HashMap<Long, String>()
+    private val tagToFragmentClazz = HashMap<String, Class<out Fragment>>()
+    private val tagToFragment = HashMap<String, Fragment>()
 
     companion object {
         const val REQUEST_MAP_CODE = 1
         const val REQUEST_FILE_CHOOSE = 2
+
+        const val ID_PRINTFRAGMENT = 0L
+        const val ID_PAYFRAGMENT = 1L
+        const val ID_LOGOUT = 100L
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,15 +48,30 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        var tmpFragment = supportFragmentManager.findFragmentByTag(PrintFragment.TAG)
+        addFragmentToList(ID_PRINTFRAGMENT, PrintFragment.TAG, PrintFragment::class.java)
+        addFragmentToList(ID_PAYFRAGMENT, PayFragment.TAG, PayFragment::class.java)
+    }
 
-        if (tmpFragment == null) {
-            tmpFragment = PrintFragment()
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.menu_container, tmpFragment, PrintFragment.TAG)
-                    .commit()
+    override fun openFragmentWithId(indentifier: Long) {
+        val tag = idToTag[indentifier] ?: return
+        val tmpFragment = supportFragmentManager.findFragmentByTag(tag) ?: tagToFragment[tag]
+        ?: tagToFragmentClazz[tag]!!.newInstance()
+
+        if (tmpFragment != null) {
+            var transaction = supportFragmentManager.beginTransaction()
+            var hasFragmentActive = false
+            supportFragmentManager.fragments.forEach {
+                if (it != tmpFragment) {
+                    transaction = transaction.remove(it)
+                } else hasFragmentActive = true
+            }
+            if (!hasFragmentActive) {
+                transaction = transaction.add(R.id.menu_container, tmpFragment, tag)
+            }
+            transaction.commit()
+
+            tagToFragment[tag] = tmpFragment
         }
-        fragment = tmpFragment as PrintFragment
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -81,7 +104,7 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
     override fun initDrawer(user: User) {
         var profile = ProfileDrawerItem().withName("${user.firstName} ${user.lastName}")
                 .withEmail(user.email)
-        if(user.avatar != null) {
+        if (user.avatar != null) {
             profile = profile.withIcon(user.avatar!!)
         }
         val header = AccountHeaderBuilder()
@@ -91,6 +114,16 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
                 .addProfiles(profile)
                 .withOnAccountHeaderListener { _, _, _ -> false }
                 .build()
+
+        val main = PrimaryDrawerItem()
+                .withIdentifier(0)
+                .withName(R.string.home_title) // Костыль. Вот тут очень странный баг на стороне либы. По хорошему надо зарепортить, но лень
+                .withIcon(R.drawable.ic_action_home)
+
+        val pay = PrimaryDrawerItem()
+                .withIdentifier(1)
+                .withName(R.string.pay_title) // Костыль. Вот тут очень странный баг на стороне либы. По хорошему надо зарепортить, но лень
+                .withIcon(R.drawable.ic_action_pay)
 
         val exitDrawer = PrimaryDrawerItem()
                 .withIdentifier(100)
@@ -102,11 +135,14 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
                 .withToolbar(toolbar)
                 .withAccountHeader(header)
                 .addDrawerItems(
+                        main,
+                        pay,
                         DividerDrawerItem(),
                         exitDrawer
                 )
+                .withSelectedItem(0)
                 .withKeepStickyItemsVisible(false)
-                .withOnDrawerItemClickListener { _, _, drawerItem -> onClickDrawer(drawerItem.identifier) }
+                .withOnDrawerItemClickListener { _, _, drawerItem -> mainPresenter.onClickDrawer(drawerItem.identifier) }
                 .build()
     }
 
@@ -123,10 +159,8 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
         menu_container.visibility = if (visible) View.GONE else View.VISIBLE
     }
 
-    private fun onClickDrawer(indentifier: Long): Boolean {
-        when (indentifier) {
-            100L -> mainPresenter.logout()
-        }
-        return true
+    private fun addFragmentToList(indentifier: Long, tag: String, fragmentClazz: Class<out Fragment>) {
+        idToTag[indentifier] = tag
+        tagToFragmentClazz[tag] = fragmentClazz
     }
 }

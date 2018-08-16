@@ -9,6 +9,7 @@ import ru.lionzxy.printbox.di.auth.AuthModule
 import ru.lionzxy.printbox.interactor.auth.IAuthInteractor
 import ru.lionzxy.printbox.utils.Constants
 import ru.lionzxy.printbox.view.main.ui.IMainView
+import ru.lionzxy.printbox.view.main.ui.MainActivity
 import timber.log.Timber
 import java.sql.Timestamp
 import javax.inject.Inject
@@ -27,6 +28,7 @@ class MainPresenter : MvpPresenter<IMainView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.initDrawer(interactor.getUser())
+        viewState.openFragmentWithId(MainActivity.ID_PRINTFRAGMENT)
     }
 
     fun onClickBack() {
@@ -45,6 +47,15 @@ class MainPresenter : MvpPresenter<IMainView>() {
         }
 
         viewState.backPressForce()
+    }
+
+    fun onClickDrawer(indentifier: Long): Boolean {
+        when(indentifier) {
+            MainActivity.ID_PRINTFRAGMENT -> viewState.openFragmentWithId(MainActivity.ID_PRINTFRAGMENT)
+            MainActivity.ID_PAYFRAGMENT -> viewState.openFragmentWithId(MainActivity.ID_PAYFRAGMENT)
+            MainActivity.ID_LOGOUT -> logout()
+        }
+        return true
     }
 
     fun logout() {

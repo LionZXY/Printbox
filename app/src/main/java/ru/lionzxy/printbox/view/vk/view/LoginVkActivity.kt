@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
-import android.webkit.CookieManager
-import android.webkit.CookieSyncManager
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_vkauth.*
@@ -30,6 +27,8 @@ class LoginVkActivity : MvpAppCompatActivity(), LoginVkView {
 
         clearAll()
         webView.loadUrl(Constants.VKFLOW_URL)
+        webView.settings.javaScriptEnabled = true
+        webView.webChromeClient = WebChromeClient()
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 if (url == null) {

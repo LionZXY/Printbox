@@ -12,4 +12,5 @@ interface IMainView : MvpView {
 
     fun backPressForce()
     fun showOnBackToast()
+    fun openFragmentWithId(indentifier: Long)
 }

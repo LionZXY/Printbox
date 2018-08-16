@@ -4,7 +4,10 @@ import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
+import android.webkit.CookieManager
 import android.widget.Toast
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import okhttp3.CookieJar
 import java.io.UnsupportedEncodingException
 import java.net.URL
 import java.net.URLDecoder

@@ -31,6 +31,7 @@
         <activity android:name=".view.register.ui.RegisterActivity" />
         <activity android:name=".view.vk.view.LoginVkActivity" />
         <activity android:name=".view.main.ui.MainActivity" />
+
         <receiver android:name=".view.fakeview.FilesUploadReciever" android:exported="false">
             <intent-filter>
                 <action android:name="ru.lionzxy.printbox.uploadservice.broadcast.status" />

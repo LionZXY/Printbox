@@ -64,12 +64,11 @@ class PrintFragment : MvpAppCompatFragment(), IPrintView, IRefreshStatusReciever
                 fragm.update()
             }
         }
-
     }
 
     override fun onBack(): Boolean {
         val curFragment = openedFragment
-        if(curFragment is IOnBackDelegator) {
+        if (curFragment is IOnBackDelegator) {
             return curFragment.onBack()
         }
         return false
@@ -121,10 +120,21 @@ class PrintFragment : MvpAppCompatFragment(), IPrintView, IRefreshStatusReciever
 
         swiperefresh.isEnabled = openedFragment is IRefreshReciever
 
-        currentFragment?.let {
-            fragmentManager?.beginTransaction()
-                    ?.replace(R.id.container, currentFragment, currentTag)
-                    ?.commit()
+        val fm = childFragmentManager
+        if (currentFragment == null || fm == null) {
+            return
         }
+
+        var transaction = fm.beginTransaction()
+        var hasFragmentActive = false
+        fm.fragments.forEach {
+            if (it != currentFragment) {
+                transaction = transaction.remove(it)
+            } else hasFragmentActive = true
+        }
+        if (!hasFragmentActive) {
+            transaction = transaction.add(R.id.print_container, currentFragment, currentTag)
+        }
+        transaction.commit()
     }
 }

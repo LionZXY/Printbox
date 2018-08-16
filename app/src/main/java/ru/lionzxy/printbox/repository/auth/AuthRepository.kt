@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import com.franmontiel.persistentcookiejar.ClearableCookieJar
 import com.google.gson.Gson
 import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cookie
 import okhttp3.HttpUrl
@@ -42,15 +43,22 @@ class AuthRepository(retrofit: Retrofit,
         cookieJar.saveFromResponse(url, listOf(cookie))
     }
 
-    override fun setUser(user: User): Completable {
+    override fun setLastUser(user: User): Completable {
         return Completable.fromCallable {
             preferences.edit().putString(PREF_USER, gson.toJson(user)).apply()
         }
     }
 
-    override fun getUser(): User {
+    override fun getLastUser(): User {
         val usrJson = preferences.getString(PREF_USER, "{}")
         return gson.fromJson(usrJson, User::class.java)
+    }
+
+    override fun getUserAsync(): Single<User> {
+        return authApi.currentUser()
+                .map { it.first() }
+                .doOnSuccess { setLastUser(it) }
+                .observeOn(Schedulers.io())
     }
 
     override fun logout(): Completable {
@@ -64,7 +72,7 @@ class AuthRepository(retrofit: Retrofit,
 
     private fun updateFromServerUser(): Completable {
         return authApi.currentUser().flatMapCompletable {
-            setUser(it.first())
+            setLastUser(it.first())
         }.subscribeOn(Schedulers.io())
     }
 }

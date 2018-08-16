@@ -20,7 +20,7 @@ class AuthInteractor(
     }
 
     override fun getUser(): User {
-        return authRepository.getUser()
+        return authRepository.getLastUser()
     }
 
     override fun logout(): Completable {

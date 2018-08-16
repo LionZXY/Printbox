@@ -33,7 +33,7 @@
                 <include layout="@layout/item_menu" />
 
                 <FrameLayout
-                    android:id="@+id/container"
+                    android:id="@+id/print_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

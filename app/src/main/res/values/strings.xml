@@ -78,6 +78,12 @@
     <string name="intro_five">Забери документ</string>
     <string name="intro_six">Спрашивай!</string>
 
+    <!-- Main Activity -->
+    <string name="home_title">Главная</string>
+
+    <!-- Pay and profile -->
+    <string name="pay_title">Пополнить баланс</string>
+
     <!-- Options -->
     <string name="option_file_size_template" formatted="false">%d стр.</string>
     <string name="option_selection_one">Не печатать с двух сторон</string>
