@@ -8,6 +8,7 @@ import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.di.auth.AuthModule
 import ru.lionzxy.printbox.interactor.auth.IAuthInteractor
 import ru.lionzxy.printbox.utils.Constants
+import ru.lionzxy.printbox.utils.navigation.ScreenKey
 import ru.lionzxy.printbox.view.main.ui.IMainView
 import ru.lionzxy.printbox.view.main.ui.MainActivity
 import timber.log.Timber
@@ -47,6 +48,10 @@ class MainPresenter : MvpPresenter<IMainView>() {
         }
 
         viewState.backPressForce()
+    }
+
+    fun openPrintScreen(screenKey: String) { //TODO: transfer screenkey in target fragment
+        viewState.openFragmentWithId(MainActivity.ID_PRINTFRAGMENT)
     }
 
     fun onClickDrawer(indentifier: Long): Boolean {

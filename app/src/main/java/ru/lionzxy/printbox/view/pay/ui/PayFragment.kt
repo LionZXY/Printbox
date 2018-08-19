@@ -16,18 +16,27 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import ru.lionzxy.printbox.view.main.interfaces.IOnBackDelegator
 
 
-class PayFragment : MvpAppCompatFragment(), IPayView, IOnBackDelegator {
+class PayFragment : MvpAppCompatFragment(), IPayView, IOnBackDelegator, OnRequestPayDialogResult {
     @InjectPresenter
     lateinit var payPresenter: PayPresenter
+    var finish = false
 
     companion object {
         const val TAG = "pay_fragment"
+        const val EXTRA_REQUEST_SUM = "request_sum"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_pay, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        to_main_button.setOnClickListener {
+            payPresenter.onPrintScreen()
+            finish = false
+        }
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun openUrl(url: String) {
@@ -44,28 +53,42 @@ class PayFragment : MvpAppCompatFragment(), IPayView, IOnBackDelegator {
         }
         webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                progress_bar.isIndeterminate = false
-                progress_bar.progress = newProgress
-                progress_bar.max = 100
-
-                if (newProgress == 100) {
-                    progress_bar.visibility = View.GONE
-                }
+                showLoading(newProgress < 100)
             }
         }
     }
 
     override fun onFirstLoad() {
-        payPresenter.requestAndOpenLink(11) //TODO
+        val sum = arguments?.getInt(EXTRA_REQUEST_SUM, 0) ?: 0
+        if (sum > 0) {
+            payPresenter.requestAndOpenLink(sum)
+            return
+        }
+
+        RequestPayDialog().setOnRequestPayDialogResult(this)
+                .show(activity!!.supportFragmentManager, RequestPayDialog.TAG)
     }
 
     override fun showLoading(visible: Boolean) {
+        if (finish) return
         progress_bar.visibility = if (visible) View.VISIBLE else View.GONE
+        finish_pay.visibility = View.GONE
         webView.visibility = if (visible) View.GONE else View.VISIBLE
     }
 
     override fun onFinish(currentBalance: Double) {
+        finish = true
+        progress_bar.visibility = View.GONE
+        webView.visibility = View.GONE
+        finish_pay.visibility = View.VISIBLE
+    }
 
+    override fun onCancel() {
+        payPresenter.onPrintScreen()
+    }
+
+    override fun onResult(balance: Int) {
+        payPresenter.requestAndOpenLink(balance)
     }
 
     override fun onBack(): Boolean {

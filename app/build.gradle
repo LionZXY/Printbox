@@ -119,4 +119,5 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
         transitive = true
     }
+    implementation 'ru.terrakok.cicerone:cicerone:3.0.0'
 }

@@ -1,5 +1,6 @@
 package ru.lionzxy.printbox.view.main.ui
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -17,6 +18,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.User
 import ru.lionzxy.printbox.utils.IActivityResultReciever
+import ru.lionzxy.printbox.utils.navigation.MainScreenNavigator
+import ru.lionzxy.printbox.utils.navigation.PrintBoxRouter
 import ru.lionzxy.printbox.utils.toast
 import ru.lionzxy.printbox.view.main.interfaces.IOnBackDelegator
 import ru.lionzxy.printbox.view.main.interfaces.IRefreshStatusReciever
@@ -52,12 +55,29 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
         addFragmentToList(ID_PAYFRAGMENT, PayFragment.TAG, PayFragment::class.java)
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent == null || !intent.hasExtra(MainScreenNavigator.EXTRA_SCREENKEY)) {
+            return
+        }
+
+        val screenKey = intent.getStringExtra(MainScreenNavigator.EXTRA_SCREENKEY)
+        if (screenKey.startsWith(PrintBoxRouter.MAIN_PRINT)) {
+            mainPresenter.openPrintScreen(screenKey)
+            return
+        }
+    }
+
     override fun openFragmentWithId(indentifier: Long) {
+        drawer.closeDrawer()
+        if (drawer.currentSelection != indentifier) {
+            drawer.setSelection(indentifier, false)
+        }
         val tag = idToTag[indentifier] ?: return
         val tmpFragment = supportFragmentManager.findFragmentByTag(tag) ?: tagToFragment[tag]
         ?: tagToFragmentClazz[tag]!!.newInstance()
 
-        if (tmpFragment != null) {
+        if (tmpFragment != null && !tmpFragment.isAdded) {
             var transaction = supportFragmentManager.beginTransaction()
             var hasFragmentActive = false
             supportFragmentManager.fragments.forEach {

@@ -83,6 +83,13 @@
 
     <!-- Pay and profile -->
     <string name="pay_title">Пополнить баланс</string>
+    <string name="pay_finish">Оплата прошла успешно!</string>
+    <string name="pay_total" formatted="false">Текущий баланс: %.2f руб</string>
+    <string name="pay_exit">На главную</string>
+    <string name="pay_request_title">Пополнить баланс</string>
+    <string name="pay_default">50</string>
+    <string name="pay_large_than">Сумма должна быть больше 10</string>
+    <string name="pay_request_not_empty">Сумма не может быть пустой или невалидной!</string>
 
     <!-- Options -->
     <string name="option_file_size_template" formatted="false">%d стр.</string>

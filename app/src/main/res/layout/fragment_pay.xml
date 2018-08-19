@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <WebView
         android:id="@+id/webView"
+        android:background="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -14,4 +17,42 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/finish_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_green"
+            android:padding="8dp"
+            android:src="@drawable/ic_action_done" />
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pay_finish" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pay_total" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/to_main_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            app:backgroundTint="@color/colorBackgroundDark"
+            android:text="@string/pay_exit"
+            android:textAllCaps="false" />
+    </LinearLayout>
 </FrameLayout>

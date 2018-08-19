@@ -13,6 +13,7 @@ import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.di.pay.PayModule
 import ru.lionzxy.printbox.interactor.pay.IPayInteractor
 import ru.lionzxy.printbox.utils.Constants
+import ru.lionzxy.printbox.utils.navigation.PrintBoxRouter
 import ru.lionzxy.printbox.view.pay.ui.IPayView
 import timber.log.Timber
 import javax.inject.Inject
@@ -24,6 +25,8 @@ class PayPresenter : MvpPresenter<IPayView>() {
     lateinit var cookieJar: ClearableCookieJar
     @Inject
     lateinit var interactor: IPayInteractor
+    @Inject
+    lateinit var router: PrintBoxRouter
 
     init {
         App.appComponent.plus(PayModule()).inject(this)
@@ -56,10 +59,23 @@ class PayPresenter : MvpPresenter<IPayView>() {
         jar.saveInCookieManager(cookieManager)
     }
 
+    fun onPrintScreen() {
+        router.openMainScreen(PrintBoxRouter.MAIN_PRINT)
+    }
+
     fun processURL(url: String) {
         if (url.startsWith(Constants.PAY_FINISH_URL)
                 || url.startsWith(Constants.PAY_FINISH_URL_ALTERNATIVE)) {
-
+            viewState.showLoading(true)
+            disposable.addAll(interactor.getCurrentBalance()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        viewState.showLoading(false)
+                        viewState.onFinish(it)
+                    }, {
+                        viewState.showLoading(false)
+                        Timber.e(it)
+                    }))
         }
     }
 
