@@ -60,7 +60,7 @@ class PayFragment : MvpAppCompatFragment(), IPayView, IOnBackDelegator, OnReques
 
     override fun onFirstLoad() {
         val sum = arguments?.getInt(EXTRA_REQUEST_SUM, 0) ?: 0
-        if (sum > 0) {
+        if (sum > 10) {
             payPresenter.requestAndOpenLink(sum)
             return
         }
@@ -81,6 +81,7 @@ class PayFragment : MvpAppCompatFragment(), IPayView, IOnBackDelegator, OnReques
         progress_bar.visibility = View.GONE
         webView.visibility = View.GONE
         finish_pay.visibility = View.VISIBLE
+        finish_pay_total.text = getString(R.string.pay_total, currentBalance)
     }
 
     override fun onCancel() {

@@ -23,6 +23,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.lionzxy.printbox.BuildConfig
 import ru.lionzxy.printbox.data.db.AppDatabase
+import ru.lionzxy.printbox.data.stores.BalanceStore
+import ru.lionzxy.printbox.data.stores.IBalanceStore
 import ru.lionzxy.printbox.utils.auth.Handle401Interceptor
 import ru.lionzxy.printbox.utils.govnofix.FuckBackEndInterceptor
 import javax.inject.Singleton
@@ -43,6 +45,11 @@ class AppModule(private val context: Context) {
     @Provides
     fun provideSharedPreference(context: Context): SharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context)
+
+    @Singleton
+    @Provides
+    fun provideBalanceStore(preferences: SharedPreferences): IBalanceStore
+            = BalanceStore(preferences)
 
     @Singleton
     @Provides

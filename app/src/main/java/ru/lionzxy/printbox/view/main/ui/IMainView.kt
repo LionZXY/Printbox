@@ -1,5 +1,6 @@
 package ru.lionzxy.printbox.view.main.ui
 
+import android.os.Bundle
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
@@ -12,5 +13,5 @@ interface IMainView : MvpView {
 
     fun backPressForce()
     fun showOnBackToast()
-    fun openFragmentWithId(indentifier: Long)
+    fun openFragmentWithId(indentifier: Long, data: Bundle? = null)
 }

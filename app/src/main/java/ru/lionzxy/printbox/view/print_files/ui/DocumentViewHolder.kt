@@ -47,6 +47,9 @@ class DocumentViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
                         setStatus(it)
                         printDocument.status = it.status
                         printDocument.statusName = it.statusName
+                        printDocument.colorPercent = it.colorPercent
+                        printDocument.pagesCount = it.pagesCount
+                        printDocument.pdfUrl = it.pdfUrl
                     }, Timber::e)
         }
     }

@@ -1,5 +1,6 @@
 package ru.lionzxy.printbox.view.main.presenter
 
+import android.os.Bundle
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -8,6 +9,7 @@ import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.di.auth.AuthModule
 import ru.lionzxy.printbox.interactor.auth.IAuthInteractor
 import ru.lionzxy.printbox.utils.Constants
+import ru.lionzxy.printbox.utils.navigation.PrintBoxRouter
 import ru.lionzxy.printbox.utils.navigation.ScreenKey
 import ru.lionzxy.printbox.view.main.ui.IMainView
 import ru.lionzxy.printbox.view.main.ui.MainActivity
@@ -50,12 +52,20 @@ class MainPresenter : MvpPresenter<IMainView>() {
         viewState.backPressForce()
     }
 
-    fun openPrintScreen(screenKey: String) { //TODO: transfer screenkey in target fragment
-        viewState.openFragmentWithId(MainActivity.ID_PRINTFRAGMENT)
+    fun openScreen(screenKey: String, data: Bundle?) { //TODO: transfer screenkey in target fragment
+        if (screenKey.startsWith(PrintBoxRouter.MAIN_PRINT)) {
+            viewState.openFragmentWithId(MainActivity.ID_PRINTFRAGMENT, data)
+            return
+        }
+
+        if (screenKey.startsWith(PrintBoxRouter.MAIN_PAY)) {
+            viewState.openFragmentWithId(MainActivity.ID_PAYFRAGMENT, data)
+            return
+        }
     }
 
     fun onClickDrawer(indentifier: Long): Boolean {
-        when(indentifier) {
+        when (indentifier) {
             MainActivity.ID_PRINTFRAGMENT -> viewState.openFragmentWithId(MainActivity.ID_PRINTFRAGMENT)
             MainActivity.ID_PAYFRAGMENT -> viewState.openFragmentWithId(MainActivity.ID_PAYFRAGMENT)
             MainActivity.ID_LOGOUT -> logout()

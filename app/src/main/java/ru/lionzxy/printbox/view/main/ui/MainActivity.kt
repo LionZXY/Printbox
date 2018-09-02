@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -62,13 +64,14 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
         }
 
         val screenKey = intent.getStringExtra(MainScreenNavigator.EXTRA_SCREENKEY)
-        if (screenKey.startsWith(PrintBoxRouter.MAIN_PRINT)) {
-            mainPresenter.openPrintScreen(screenKey)
+        val data = if (intent.hasExtra(MainScreenNavigator.EXTRA_DATA)) intent.getBundleExtra(MainScreenNavigator.EXTRA_DATA) else null
+        if (screenKey.startsWith(PrintBoxRouter.MAIN)) {
+            mainPresenter.openScreen(screenKey, data)
             return
         }
     }
 
-    override fun openFragmentWithId(indentifier: Long) {
+    override fun openFragmentWithId(indentifier: Long, data: Bundle?) {
         drawer.closeDrawer()
         if (drawer.currentSelection != indentifier) {
             drawer.setSelection(indentifier, false)
@@ -91,6 +94,9 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
             transaction.commit()
 
             tagToFragment[tag] = tmpFragment
+        }
+        if (data != null) {
+            tmpFragment.arguments = data
         }
     }
 
@@ -177,6 +183,19 @@ class MainActivity : MvpAppCompatActivity(), IMainView, IRefreshStatusReciever {
     override fun showProgressBar(visible: Boolean) {
         progress_bar.visibility = if (visible) View.VISIBLE else View.GONE
         menu_container.visibility = if (visible) View.GONE else View.VISIBLE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.main_toolbar, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.findItem(R.id.menu_balance)?.actionView?.setOnClickListener {
+            mainPresenter.openScreen(PrintBoxRouter.MAIN_PAY, null)
+        }
+        return super.onPrepareOptionsMenu(menu)
     }
 
     private fun addFragmentToList(indentifier: Long, tag: String, fragmentClazz: Class<out Fragment>) {

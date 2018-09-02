@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import ru.lionzxy.printbox.data.stores.IBalanceStore
 import ru.lionzxy.printbox.di.auth.AuthScope
 import ru.lionzxy.printbox.interactor.pay.PayInteractor
 import ru.lionzxy.printbox.interactor.pay.IPayInteractor
@@ -19,8 +20,8 @@ class PayModule {
 
     @PayScope
     @Provides
-    fun provideRepository(retrofit: Retrofit): IPayRepository {
-        return PayRepository(retrofit)
+    fun provideRepository(retrofit: Retrofit, balanceStore: IBalanceStore): IPayRepository {
+        return PayRepository(retrofit, balanceStore)
     }
 
     @PayScope
@@ -32,8 +33,9 @@ class PayModule {
     @PayScope
     @Provides
     fun provideAuthRepository(retrofit: Retrofit,
-                          preferences: SharedPreferences, gson: Gson,
-                          cookieJar: ClearableCookieJar): IAuthRepository {
-        return AuthRepository(retrofit, preferences, gson, cookieJar)
+                              preferences: SharedPreferences, gson: Gson,
+                              cookieJar: ClearableCookieJar,
+                              balanceStore: IBalanceStore): IAuthRepository {
+        return AuthRepository(retrofit, preferences, gson, cookieJar, balanceStore)
     }
 }

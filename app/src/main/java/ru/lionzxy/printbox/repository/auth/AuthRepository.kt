@@ -11,14 +11,17 @@ import okhttp3.HttpUrl
 import retrofit2.Retrofit
 import ru.lionzxy.printbox.data.api.AuthApi
 import ru.lionzxy.printbox.data.model.User
+import ru.lionzxy.printbox.data.stores.IBalanceStore
 import ru.lionzxy.printbox.utils.Constants
 
 private const val PREF_USER = "user"
+const val PREF_BALANCE = "balance"
 
 class AuthRepository(retrofit: Retrofit,
                      private val preferences: SharedPreferences,
                      private val gson: Gson,
-                     private val cookieJar: ClearableCookieJar) : IAuthRepository {
+                     private val cookieJar: ClearableCookieJar,
+                     private val balanceStore: IBalanceStore) : IAuthRepository {
     val authApi = retrofit.create(AuthApi::class.java)
 
     override fun login(login: String, password: String): Completable {
@@ -45,7 +48,9 @@ class AuthRepository(retrofit: Retrofit,
 
     override fun setLastUser(user: User): Completable {
         return Completable.fromCallable {
-            preferences.edit().putString(PREF_USER, gson.toJson(user)).apply()
+            preferences.edit().putString(PREF_USER, gson.toJson(user))
+                    .putInt(PREF_BALANCE, user.balance).apply()
+            balanceStore.setBalance(user.balance.toDouble() / 100)
         }
     }
 
@@ -57,8 +62,8 @@ class AuthRepository(retrofit: Retrofit,
     override fun getUserAsync(): Single<User> {
         return authApi.currentUser()
                 .map { it.first() }
-                .doOnSuccess { setLastUser(it) }
-                .observeOn(Schedulers.io())
+                .flatMap { setLastUser(it).toSingleDefault(it) }
+                .subscribeOn(Schedulers.io())
     }
 
     override fun logout(): Completable {

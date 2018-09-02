@@ -3,19 +3,12 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="print_twoside">Печать с двух сторон</string>
     <string name="print_color">Цвет печати: Ч/Б</string>
-    <string name="options_filled_perc" formatted="false">Среднее заполнение: %.1f%%</string>
-    <string name="options_price" formatted="false">Стоимость печати: %.2f * (x%d) = %.2f руб</string>
-    <string name="options_price_waiting">Вычисление стоимости печати…</string>
-    <string name="options_not_balance">Пополните баланс!</string>
-    <string name="options_done">Печатать!</string>
-    <string name="options_balance"><![CDATA[>>]]></string>
-    <string name="options_balance_none">Недостаточно средств на счету!</string>
-    <string name="options_amount">Количество:</string>
     <string name="menu_one">1</string>
     <string name="menu_two">2</string>
     <string name="menu_three">3</string>
     <string name="menu_one_text">Выбери файл</string>
     <string name="menu_two_text">Опции</string>
+    <string name="menu_balance">Current balance</string>
     <string name="menu_three_text">Посмотреть историю</string>
     <string name="order_printed">Распечатано</string>
     <string name="back_press_retry">Нажмите еще раз для выхода из приложения</string>
@@ -91,12 +84,23 @@
     <string name="pay_large_than">Сумма должна быть больше 10</string>
     <string name="pay_request_not_empty">Сумма не может быть пустой или невалидной!</string>
 
+    <string name="view_balance">%.2f руб</string>
+
     <!-- Options -->
     <string name="option_file_size_template" formatted="false">%d стр.</string>
     <string name="option_selection_one">Не печатать с двух сторон</string>
     <string name="option_selection_two_up">Печатать с двух сторон (Переплет сверху)</string>
     <string name="option_selection_two">Печатать с двух сторон</string>
+    <string name="option_balance_hint">Минимальная сумма - 10 руб</string>
     <string name="option_print_error">Ошибка при запросе. Простите, отчет об ошибке отправлен разработчикам</string>
+    <string name="options_filled_perc" formatted="false">Среднее заполнение: %.1f%%</string>
+    <string name="options_price" formatted="false">Стоимость печати: %.2f * (x%d) = %.2f руб</string>
+    <string name="options_price_waiting">Вычисление стоимости печати…</string>
+    <string name="options_not_balance">Пополните баланс!</string>
+    <string name="options_done">Печатать!</string>
+    <string name="options_balance"><![CDATA[>>]]></string>
+    <string name="options_balance_none">Недостаточно средств на счету!</string>
+    <string name="options_amount">Количество:</string>
 
     <!-- History -->
     <string name="history_request_error">Ошибка при запросе. Простите, отчет об ошибке отправлен разработчикам</string>

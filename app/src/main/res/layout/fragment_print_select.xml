@@ -182,6 +182,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
+            android:hint="@string/option_balance_hint"
             android:background="@drawable/rounded_edittext_left"
             android:inputType="numberDecimal"
             android:maxLines="1"
@@ -197,6 +198,7 @@
             app:layout_constraintTop_toBottomOf="@id/text_balance_out" />
 
         <TextView
+            android:id="@+id/nomoney_pay_request"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:background="@drawable/rounded_edittext_right"

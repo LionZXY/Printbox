@@ -2,6 +2,7 @@ package ru.lionzxy.printbox.utils.navigation
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.support.annotation.StringDef
 import ru.lionzxy.printbox.view.main.ui.MainActivity
 import ru.terrakok.cicerone.Navigator
@@ -17,10 +18,11 @@ class PrintBoxRouter : Router() {
     companion object {
         const val MAIN = "main"
         const val MAIN_PRINT = "${MAIN}_print"
+        const val MAIN_PAY = "${MAIN}_pay"
         const val MAIN_FILE = "${MAIN_PRINT}_file"
     }
 
-    fun openMainScreen(@ScreenKey screenKey: String) {
-        replaceScreen(screenKey)
+    fun openMainScreen(@ScreenKey screenKey: String, data: Bundle? = null) {
+        replaceScreen(screenKey, data)
     }
 }

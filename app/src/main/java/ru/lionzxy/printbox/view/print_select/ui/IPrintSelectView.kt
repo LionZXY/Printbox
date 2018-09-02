@@ -20,4 +20,6 @@ interface IPrintSelectView : MvpView {
 
     fun printProgress(visible: Boolean)
     fun onError(@StringRes resId: Int)
+
+    fun onNoMoney(visible: Boolean)
 }

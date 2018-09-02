@@ -35,7 +35,9 @@ class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView, IOnBackDel
         file.setOnClickListener { printSelectPresenter.openFileChange() }
         select_twoside.setOnClickListener { printSelectPresenter.onClickSelectOption() }
         select_count.setOnValueChangedListener { _, _, newVal -> printSelectPresenter.onSelectCopiesCount(newVal) }
-        ready.setOnClickListener { printSelectPresenter.onPrintClick() }
+        nomoney_pay_request.setOnClickListener {
+            printSelectPresenter.onRequestPay(balance_add.text.toString().toIntOrNull() ?: 0)
+        }
     }
 
     override fun onUpdateCartModel(cartModel: PrintCartModel) {
@@ -69,11 +71,22 @@ class PrintSelectFragment : MvpAppCompatFragment(), IPrintSelectView, IOnBackDel
             return
         }
 
-        val dialog = OptionSelectionDialog.createOptionDialog(items, {
+        val dialog = OptionSelectionDialog.createOptionDialog(items) {
             printSelectPresenter.onSelectPrintOption(it)
-        })
+        }
         dialog.show(fragmentManager, OptionSelectionDialog.TAG)
         selectionDialog = dialog
+    }
+
+    override fun onNoMoney(visible: Boolean) {
+        no_money.visibility = if (visible) View.VISIBLE else View.GONE
+        if (visible) {
+            ready.setBackgroundResource(R.drawable.rounded_button_disactive)
+            ready.setOnClickListener(null)
+        } else {
+            ready.setBackgroundResource(R.drawable.rounded_button_active)
+            ready.setOnClickListener { printSelectPresenter.onPrintClick() }
+        }
     }
 
     override fun onBack(): Boolean {

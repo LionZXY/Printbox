@@ -1,10 +1,12 @@
 package ru.lionzxy.printbox.view.print_select.presenter
 
+import android.os.Bundle
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.BiFunction
 import ru.lionzxy.printbox.App
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.data.model.PrintCartModel
@@ -13,15 +15,21 @@ import ru.lionzxy.printbox.data.model.PrintFinalOrder
 import ru.lionzxy.printbox.data.model.PrintOption
 import ru.lionzxy.printbox.di.print.PrintModule
 import ru.lionzxy.printbox.interactor.print.IPrintInteractor
+import ru.lionzxy.printbox.utils.navigation.MainScreenNavigator
+import ru.lionzxy.printbox.utils.navigation.PrintBoxRouter
+import ru.lionzxy.printbox.view.pay.ui.PayFragment
 import ru.lionzxy.printbox.view.print_select.ui.IPrintSelectView
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @InjectViewState
 class PrintSelectPresenter : MvpPresenter<IPrintSelectView>() {
     private val disposable = CompositeDisposable()
     @Inject
     lateinit var interactor: IPrintInteractor
+    @Inject
+    lateinit var router: PrintBoxRouter
     private lateinit var printCartModel: PrintCartModel
     private var priceSubscriber: Disposable? = null
 
@@ -68,7 +76,11 @@ class PrintSelectPresenter : MvpPresenter<IPrintSelectView>() {
         priceSubscriber?.dispose()
         val tmp = interactor.getPrice(printCartModel)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ viewState.setPrice((it / 100).toFloat(), printCartModel.printOrder!!.copies) }, Timber::e)
+                .map { (it / 100).toFloat() }
+                .doOnSuccess { viewState.setPrice(it, printCartModel.printOrder!!.copies) }
+                .toObservable()
+                .zipWith(interactor.getBalanceObservable(), BiFunction<Float, Double, Boolean> { price, currentValue -> price < currentValue })
+                .subscribe({ viewState.onNoMoney(!it) }, Timber::e)
         priceSubscriber = tmp
         disposable.addAll(tmp)
     }
@@ -88,6 +100,13 @@ class PrintSelectPresenter : MvpPresenter<IPrintSelectView>() {
         printCartModel.printPlace?.optionDoublePage?.let {
             viewState.openDialog(true, it)
         }
+    }
+
+    fun onRequestPay(price: Int) {
+        val data = Bundle().apply {
+            putInt(PayFragment.EXTRA_REQUEST_SUM, price)
+        }
+        router.openMainScreen(PrintBoxRouter.MAIN_PAY, data)
     }
 
     fun onBack() {
