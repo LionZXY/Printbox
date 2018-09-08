@@ -25,8 +25,9 @@ import ru.lionzxy.printbox.BuildConfig
 import ru.lionzxy.printbox.data.db.AppDatabase
 import ru.lionzxy.printbox.data.stores.BalanceStore
 import ru.lionzxy.printbox.data.stores.IBalanceStore
-import ru.lionzxy.printbox.utils.auth.Handle401Interceptor
+import ru.lionzxy.printbox.utils.network.Handle401Interceptor
 import ru.lionzxy.printbox.utils.govnofix.FuckBackEndInterceptor
+import ru.lionzxy.printbox.utils.network.NetworkCodeToExceptionInterceptor
 import javax.inject.Singleton
 
 
@@ -48,8 +49,7 @@ class AppModule(private val context: Context) {
 
     @Singleton
     @Provides
-    fun provideBalanceStore(preferences: SharedPreferences): IBalanceStore
-            = BalanceStore(preferences)
+    fun provideBalanceStore(preferences: SharedPreferences): IBalanceStore = BalanceStore(preferences)
 
     @Singleton
     @Provides
@@ -69,11 +69,12 @@ class AppModule(private val context: Context) {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(cookieJar: ClearableCookieJar, context: Context): OkHttpClient {
+    fun provideOkHttpClient(cookieJar: ClearableCookieJar, context: Context, gson: Gson): OkHttpClient {
         val client = OkHttpClient.Builder()
                 .cookieJar(cookieJar)
                 .addInterceptor(FuckBackEndInterceptor())
                 .addInterceptor(Handle401Interceptor(context))
+                .addInterceptor(NetworkCodeToExceptionInterceptor(gson, context))
                 .build()
         UploadService.HTTP_STACK = OkHttpStack(client)
         return client

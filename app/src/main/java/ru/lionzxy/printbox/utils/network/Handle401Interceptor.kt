@@ -1,4 +1,4 @@
-package ru.lionzxy.printbox.utils.auth
+package ru.lionzxy.printbox.utils.network
 
 import android.content.Context
 import android.content.Intent
