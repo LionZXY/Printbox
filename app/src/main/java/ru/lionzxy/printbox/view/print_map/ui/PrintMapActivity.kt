@@ -126,7 +126,7 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
         if (visible) {
             next.setOnClickListener { printMapPresenter.onNext(selectedPrinter) }
         } else {
-            next.setOnClickListener(null)
+            next.setOnClickListener { onError(R.string.printer_not_choise) }
         }
     }
 

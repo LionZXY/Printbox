@@ -12,6 +12,7 @@
     <string name="menu_three_text">Посмотреть историю</string>
     <string name="order_printed">Распечатано</string>
     <string name="back_press_retry">Нажмите еще раз для выхода из приложения</string>
+    <string name="printer_not_choise">Принтер не выбран</string>
 
 
     <!-- Auth Activity -->
