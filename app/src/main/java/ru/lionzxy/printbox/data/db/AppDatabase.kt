@@ -5,7 +5,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import ru.lionzxy.printbox.data.model.PrintDocument
 
-@Database(entities = [(PrintDocument::class)], version = 5)
+@Database(entities = [(PrintDocument::class)], version = 6)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getFileDao(): FileDAO

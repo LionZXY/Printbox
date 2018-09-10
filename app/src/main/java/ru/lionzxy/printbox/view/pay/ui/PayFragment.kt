@@ -71,6 +71,9 @@ class PayFragment : MvpAppCompatFragment(), IPayView, IOnBackDelegator, OnReques
 
     override fun showLoading(visible: Boolean) {
         if (finish) return
+        if (progress_bar == null) {
+            return //TODO: Костыль
+        }
         progress_bar.visibility = if (visible) View.VISIBLE else View.GONE
         finish_pay.visibility = View.GONE
         webView.visibility = if (visible) View.GONE else View.VISIBLE

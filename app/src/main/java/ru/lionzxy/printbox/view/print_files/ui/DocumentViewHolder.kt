@@ -41,17 +41,25 @@ class DocumentViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
             disposable = Observable.interval(2, TimeUnit.SECONDS)
                     .filter { printDocument.status != DocumentStageEnum.UPLOADING.id }
                     .flatMap { interactor.getFileById(printDocument.id).toObservable() }
-                    .takeUntil { it.status == DocumentStageEnum.READY.id }
                     .observeOn(AndroidSchedulers.mainThread())
+                    .takeUntil {
+                        Timber.i("Test1:" + it.status.toString())
+                        it.status == DocumentStageEnum.READY.id
+                    }
                     .subscribe({
+                        Timber.i("Test2:" + it.status.toString())
                         setStatus(it)
-                        printDocument.status = it.status
-                        printDocument.statusName = it.statusName
-                        printDocument.colorPercent = it.colorPercent
-                        printDocument.pagesCount = it.pagesCount
-                        printDocument.pdfUrl = it.pdfUrl
+                        setNewDoc(printDocument, it)
                     }, Timber::e)
         }
+    }
+
+    private fun setNewDoc(oldDoc: PrintDocument, newDoc: PrintDocument) {
+        oldDoc.status = newDoc.status
+        oldDoc.statusName = newDoc.statusName
+        oldDoc.colorPercent = newDoc.colorPercent
+        oldDoc.pagesCount = newDoc.pagesCount
+        oldDoc.pdfUrl = newDoc.pdfUrl
     }
 
     private fun setStatus(doc: PrintDocument) {

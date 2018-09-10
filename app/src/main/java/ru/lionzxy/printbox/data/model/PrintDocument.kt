@@ -14,7 +14,7 @@ class PrintDocument(
         @SerializedName("created_at")
         var createdAt: DateTime,
         @SerializedName("pdf_url")
-        var pdfUrl: String,
+        var pdfUrl: String?,
         @SerializedName("status_name")
         var statusName: String,
         @SerializedName("status")
