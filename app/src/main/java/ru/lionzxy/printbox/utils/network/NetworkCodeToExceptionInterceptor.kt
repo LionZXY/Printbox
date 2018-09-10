@@ -2,6 +2,8 @@ package ru.lionzxy.printbox.utils.network
 
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.preference.PreferenceManager
 import com.google.gson.Gson
 import okhttp3.Interceptor
@@ -14,6 +16,7 @@ import timber.log.Timber
 import java.net.HttpURLConnection
 
 class NetworkCodeToExceptionInterceptor(val gson: Gson, val context: Context) : Interceptor {
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalResponse = chain.proceed(chain.request())
@@ -27,10 +30,11 @@ class NetworkCodeToExceptionInterceptor(val gson: Gson, val context: Context) : 
             }
             details.exceptionCode = originalResponse.code()
 
-            if (!details.details.isNullOrEmpty()) {
-                context.toast(details.details!!)
+            if (!details.details.isNullOrEmpty()) { //TODO: Костыль
+                handler.post {
+                    context.toast(details.details!!)
+                }
             }
-            throw details
         }
         return originalResponse
     }
