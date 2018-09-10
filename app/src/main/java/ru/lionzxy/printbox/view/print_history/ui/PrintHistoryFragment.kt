@@ -66,8 +66,6 @@ class PrintHistoryFragment : MvpAppCompatFragment(), IPrintHistoryView, IRefresh
     }
 
     private fun produceAdapter(): HistoryAdapter {
-        return HistoryAdapter(emptyList(), {
-            context?.toast("Что лучше делать на клик? Есть вариант кинуть пользователя на экран повторения заказа. Можно еще перед этим диалог показывать. Типо вы точно хотите поторить заказ.")
-        })
+        return HistoryAdapter(emptyList()) {}
     }
 }

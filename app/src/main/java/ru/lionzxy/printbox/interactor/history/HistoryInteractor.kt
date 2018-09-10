@@ -10,4 +10,8 @@ class HistoryInteractor(
     override fun getHistory(): Single<List<PrintHistory>> {
         return historyRepository.getHistory()
     }
+
+    override fun getHistoryById(id: Int): Single<PrintHistory> {
+        return historyRepository.getHistoryById(id)
+    }
 }

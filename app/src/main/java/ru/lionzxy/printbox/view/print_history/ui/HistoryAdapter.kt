@@ -21,42 +21,13 @@ class HistoryAdapter(var history: List<PrintHistory>,
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         val element = history[position]
-        if (element.status == PrintHistoryStageEnum.DONE.id) {
-            holder.orderStatus.setBackgroundResource(R.drawable.circle_green)
-        } else {
-            holder.orderStatus.setBackgroundResource(R.drawable.circle_red)
-        }
-        holder.orderPrice.text = holder.itemView.context.resources.getString(R.string.history_item_price, (element.price.toDouble() / 100).toFloat())
-        holder.orderFilename.text = element.document.name
-        holder.orderFiledate.text = element.createdAt.toLocalDateTime().toString("yyyy-MM-dd HH:mm")
-        holder.orderTextStatus.text = element.printerName
-        holder.orderColor.text = element.colorOption.name
-        holder.orderPages.text = holder.itemView.context.resources.getString(
-                R.string.history_item_pages, element.document.pagesCount)
-        holder.orderCopies.text = holder.itemView.context.resources.getString(
-                R.string.history_item_copies, element.countTotal)
-        holder.orderDuplex.text = element.duplexOption.name
+        holder.onNewHistory(element)
         holder.cardView.setOnClickListener { clickListener.invoke(element) }
-
     }
 
     fun setList(history: List<PrintHistory>) {
         this.history = history
         notifyDataSetChanged()
     }
-
-}
-
-class HistoryViewHolder(rootView: View) : RecyclerView.ViewHolder(rootView) {
-    val orderStatus = rootView.findViewById<View>(R.id.order_status)
-    val orderPrice = rootView.findViewById<TextView>(R.id.order_price)
-    val orderFilename = rootView.findViewById<TextView>(R.id.order_filename)
-    val orderFiledate = rootView.findViewById<TextView>(R.id.order_filedate)
-    val orderTextStatus = rootView.findViewById<TextView>(R.id.order_text_status)
-    val orderColor = rootView.findViewById<TextView>(R.id.order_color)
-    val orderPages = rootView.findViewById<TextView>(R.id.order_pages)
-    val orderCopies = rootView.findViewById<TextView>(R.id.order_copy)
-    val orderDuplex = rootView.findViewById<TextView>(R.id.order_type)
-    val cardView = rootView.findViewById<CardView>(R.id.cardview)
 
 }

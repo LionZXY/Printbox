@@ -15,4 +15,8 @@ class HistoryRepository(retrofit: Retrofit) : IHistoryRepository {
                 .map { it.results }
     }
 
+    override fun getHistoryById(id: Int): Single<PrintHistory> {
+        return historyApi.getHistoryByid(id)
+                .subscribeOn(Schedulers.io())
+    }
 }

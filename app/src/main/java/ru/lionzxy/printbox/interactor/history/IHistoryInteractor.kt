@@ -6,4 +6,5 @@ import ru.lionzxy.printbox.data.model.PrintHistory
 
 interface IHistoryInteractor {
     fun getHistory(): Single<List<PrintHistory>>
+    fun getHistoryById(id: Int): Single<PrintHistory>
 }
