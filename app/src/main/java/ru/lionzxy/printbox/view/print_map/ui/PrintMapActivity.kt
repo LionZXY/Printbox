@@ -74,7 +74,7 @@ class PrintMapActivity : MvpAppCompatActivity(), IPrintMapView {
         printers.scrollToPosition(position)
         printToMark.forEach { t, u ->
             u.setIcon(if (t == currPrinter) {
-                ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_red_48dp)
+                ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_red_48)
             } else {
                 ImageProvider.fromResource(this@PrintMapActivity, R.drawable.baseline_location_on_black_36)
             })
