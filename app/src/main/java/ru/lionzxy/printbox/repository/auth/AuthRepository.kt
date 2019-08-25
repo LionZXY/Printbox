@@ -26,8 +26,8 @@ class AuthRepository(retrofit: Retrofit,
                 .subscribeOn(Schedulers.io())
     }
 
-    override fun register(login: String, email: String, password: String, passwordRepeat: String): Completable {
-        return authApi.register(login, email, password, passwordRepeat)
+    override fun register(email: String, password: String): Completable {
+        return authApi.register(email, password)
                 .andThen(updateFromServerUser())
                 .subscribeOn(Schedulers.io())
     }

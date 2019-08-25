@@ -8,6 +8,7 @@ import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.jakewharton.rxbinding2.widget.RxTextView
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_register.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.utils.Constants
@@ -27,41 +28,24 @@ import ru.lionzxy.printbox.view.vk.view.LoginVkActivity
 class RegisterActivity : MvpAppCompatActivity(), IRegisterView {
     @InjectPresenter
     lateinit var registerPresenter: RegisterPresenter
+    private val disposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.activity_register)
 
         buttonLogin.setOnClickListener {
-            registerPresenter.onClickRegister(editTextLogin.text.toString(),
-                    editTextPassword.text.toString(),
-                    editTextEmail.text.toString(),
-                    editTextPasswordRepeat.text.toString())
+            registerPresenter.onClickRegister(editTextPassword.text.toString(),
+                    editTextEmail.text.toString())
         }
-        RxTextView.textChanges(editTextLogin).subscribe {
+        disposable.add(RxTextView.textChanges(editTextPassword).subscribe {
             registerPresenter.onChangeLoginPasswordEmail(it.toString(),
-                    editTextPassword.text.toString(),
-                    editTextEmail.text.toString(),
-                    editTextPasswordRepeat.text.toString())
-        }
-        RxTextView.textChanges(editTextPassword).subscribe {
-            registerPresenter.onChangeLoginPasswordEmail(editTextLogin.text.toString(),
-                    it.toString(),
-                    editTextEmail.text.toString(),
-                    editTextPasswordRepeat.text.toString())
-        }
-        RxTextView.textChanges(editTextEmail).subscribe {
-            registerPresenter.onChangeLoginPasswordEmail(editTextLogin.text.toString(),
-                    editTextPassword.text.toString(),
-                    it.toString(),
-                    editTextPasswordRepeat.text.toString())
-        }
-        RxTextView.textChanges(editTextPasswordRepeat).subscribe {
-            registerPresenter.onChangeLoginPasswordEmail(editTextLogin.text.toString(),
-                    editTextPassword.text.toString(),
-                    editTextEmail.text.toString(),
+                    editTextEmail.text.toString())
+        })
+        disposable.add(RxTextView.textChanges(editTextEmail).subscribe {
+            registerPresenter.onChangeLoginPasswordEmail(editTextPassword.text.toString(),
                     it.toString())
-        }
+        })
         authbutton.setOnClickListener {
             startActivity(Intent(this@RegisterActivity, AuthActivity::class.java))
         }
@@ -75,11 +59,6 @@ class RegisterActivity : MvpAppCompatActivity(), IRegisterView {
 
     override fun onError(resId: Int) {
         toast(resId)
-    }
-
-    override fun showLoginError(resError: Int) {
-        errorLoginText.visibility = View.VISIBLE
-        errorLoginText.text = getString(resError)
     }
 
     override fun showPasswordError(resError: Int) {
@@ -96,26 +75,18 @@ class RegisterActivity : MvpAppCompatActivity(), IRegisterView {
         errorEmailText.visibility = View.GONE
     }
 
-    override fun hideLoginError() {
-        errorLoginText.visibility = View.GONE
-    }
-
     override fun hidePasswordError() {
         errorPasswordText.visibility = View.GONE
-    }
-
-    override fun showSecondPasswordError(resError: Int) {
-        errorPasswordTextRepeat.visibility = View.VISIBLE
-        errorPasswordTextRepeat.text = getText(resError)
-    }
-
-    override fun hideSecondPasswordError() {
-        errorPasswordTextRepeat.visibility = View.GONE
     }
 
     override fun buttonActive(active: Boolean) {
         buttonLogin.background = if (active) ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_active, theme)
         else ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_disactive, theme)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose();
     }
 
     override fun onAuth() {

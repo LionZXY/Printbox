@@ -25,21 +25,19 @@ class RegisterPresenter : MvpPresenter<IRegisterView>() {
     @Inject
     lateinit var authInteractor: IAuthInteractor
     private val disposable = CompositeDisposable()
-    private var hasLoginError = false
     private var hasPasswordError = false
-    private var hasSecondPasswordError = false
     private var hasEmailError = false
 
     init {
         App.appComponent.plus(AuthModule()).inject(this)
     }
 
-    fun onClickRegister(login: String, password: String, email: String, passwordRepeat: String) {
-        if (!validateLoginAndPassword(login, password, email, passwordRepeat)) {
+    fun onClickRegister(password: String, email: String) {
+        if (!validateLoginAndPassword(password, email)) {
             return
         }
         viewState.onLoading(true)
-        disposable.addAll(authInteractor.register(login, email, password, passwordRepeat)
+        disposable.addAll(authInteractor.register(email, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewState.onAuth()
@@ -50,20 +48,10 @@ class RegisterPresenter : MvpPresenter<IRegisterView>() {
                 }))
     }
 
-    fun onChangeLoginPasswordEmail(login: String, password: String, email: String, passwordRepeat: String) {
-        onChangeLogin(login)
+    fun onChangeLoginPasswordEmail(password: String, email: String) {
         onChangePassword(password)
         onChangeEmail(email)
-        onChangeRepeatePassword(password, passwordRepeat)
-        viewState.buttonActive(validateLoginAndPassword(login, password, email, passwordRepeat, true))
-    }
-
-    private fun onChangeLogin(login: String) {
-        if (!hasLoginError) {
-            return
-        }
-
-        validateLogin(login)
+        viewState.buttonActive(validateLoginAndPassword(password, email, true))
     }
 
     private fun onChangePassword(password: String) {
@@ -80,60 +68,6 @@ class RegisterPresenter : MvpPresenter<IRegisterView>() {
         }
 
         validateEmail(email)
-    }
-
-    private fun onChangeRepeatePassword(password: String, passwordRepeat: String) {
-        if (!hasSecondPasswordError) {
-            return
-        }
-
-        validateRepeatPassword(password, passwordRepeat)
-    }
-
-    private fun validateRepeatPassword(password: String, passwordRepeat: String, silent: Boolean = false): Boolean {
-        if (passwordRepeat.isEmpty()) {
-            if (!silent) {
-                hasSecondPasswordError = true
-                viewState.showSecondPasswordError(R.string.auth_activity_password_empty)
-            }
-            return false
-        }
-        if (password != passwordRepeat) {
-            if (!silent) {
-                hasSecondPasswordError = true
-                viewState.showSecondPasswordError(R.string.auth_activity_password_match_repeat)
-            }
-            return false
-        }
-        if (!silent) {
-            viewState.hideSecondPasswordError()
-        }
-        return true
-    }
-
-    private fun validateLogin(login: String, silent: Boolean = false): Boolean {
-
-        if (login.isEmpty()) {
-            if (!silent) {
-                hasLoginError = true
-                viewState.showLoginError(R.string.auth_activity_login_empty)
-            }
-            return false
-        }
-        if (!Constants.LOGIN_PATTERN.matcher(login).matches()) {
-            if (!silent) {
-                hasLoginError = true
-                viewState.showLoginError(R.string.auth_activity_login_matcher)
-            }
-            return false
-        }
-
-        if (!silent) {
-            viewState.hideLoginError()
-        }
-
-        hasLoginError = false
-        return true
     }
 
     private fun validatePassword(password: String, silent: Boolean = false): Boolean {
@@ -180,10 +114,8 @@ class RegisterPresenter : MvpPresenter<IRegisterView>() {
         return true
     }
 
-    private fun validateLoginAndPassword(login: String, password: String, email: String, passwordRepeat: String, silent: Boolean = false): Boolean {
-        var valid = validateLogin(login, silent)
-        valid = validatePassword(password, silent) && valid
-        valid = validateRepeatPassword(password, passwordRepeat, silent) && valid
+    private fun validateLoginAndPassword(password: String, email: String, silent: Boolean = false): Boolean {
+        val valid =  validatePassword(password, silent)
         return validateEmail(email, silent) && valid
     }
 
