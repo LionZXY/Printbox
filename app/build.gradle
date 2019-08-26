@@ -92,7 +92,7 @@ dependencies {
     implementation "com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:1.6.0"
 
     implementation 'com.shawnlin:number-picker:2.4.6'
-    implementation("com.mikepenz:materialdrawer:6.0.7@aar") {
+    implementation("com.mikepenz:materialdrawer:6.0.9@aar") {
         transitive = true
     }
     implementation 'com.yandex.android:mapkit:3.0.0'

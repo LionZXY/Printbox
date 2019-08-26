@@ -16,6 +16,6 @@ interface AuthApi {
     fun register(@Field("login") email: String,
                  @Field("password") password: String): Completable
 
-    @GET("user/")
-    fun currentUser(): Single<List<User>>
+    @GET("users/profile/")
+    fun currentUser(): Single<User>
 }
