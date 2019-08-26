@@ -8,6 +8,7 @@ import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.jakewharton.rxbinding2.widget.RxTextView
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_auth.*
 import ru.lionzxy.printbox.R
 import ru.lionzxy.printbox.utils.Constants
@@ -26,6 +27,7 @@ import ru.lionzxy.printbox.view.vk.view.LoginVkActivity
 class AuthActivity : MvpAppCompatActivity(), IAuthView {
     @InjectPresenter
     lateinit var authPresenter: AuthPresenter
+    private val disposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +37,14 @@ class AuthActivity : MvpAppCompatActivity(), IAuthView {
             authPresenter.onClickLogin(editTextLogin.text.toString(),
                     editTextPassword.text.toString())
         }
-        RxTextView.textChanges(editTextLogin).subscribe {
+        disposable.add(RxTextView.textChanges(editTextLogin).subscribe {
             authPresenter.onChangeLoginOrPassword(it.toString(),
                     editTextPassword.text.toString())
-        }
-        RxTextView.textChanges(editTextPassword).subscribe {
+        })
+        disposable.add(RxTextView.textChanges(editTextPassword).subscribe {
             authPresenter.onChangeLoginOrPassword(editTextLogin.text.toString(),
                     it.toString())
-        }
+        })
         registerbutton.setOnClickListener {
             startActivity(Intent(this@AuthActivity, RegisterActivity::class.java))
         }
@@ -79,6 +81,11 @@ class AuthActivity : MvpAppCompatActivity(), IAuthView {
     override fun buttonActive(active: Boolean) {
         buttonLogin.background = if (active) ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_active, theme)
         else ResourcesCompat.getDrawable(resources, R.drawable.rounded_button_active, theme) //TODO Design fix
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
     }
 
     override fun onAuth() {

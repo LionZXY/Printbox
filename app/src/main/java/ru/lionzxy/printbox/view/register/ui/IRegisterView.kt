@@ -18,11 +18,9 @@ interface IRegisterView : MvpView {
     fun onError(resId: Int)
 
     fun showPasswordError(resError: Int)
-    fun showSecondPasswordError(resError: Int)
     fun showEmailError(resError: Int)
     fun hidePasswordError()
     fun hideEmailError()
-    fun hideSecondPasswordError()
     fun buttonActive(active: Boolean)
 
     fun onAuth()

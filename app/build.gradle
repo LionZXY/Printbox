@@ -5,12 +5,11 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 27
-
+    compileSdkVersion 28
     defaultConfig {
         applicationId "ru.lionzxy.printbox"
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -58,7 +57,7 @@ ext {
     moxyVersion = '1.5.3'
     rxjavaVersion = '2.0.2'
     rxBindingVersion = '2.1.1'
-    supportVersion = '27.1.1'
+    supportVersion = '28.0.0'
     crashalyticsVersion = '2.9.1'
     constrainLayoutVersion = '1.1.2'
     retrofitVersion = '2.4.0'

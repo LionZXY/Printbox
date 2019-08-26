@@ -79,13 +79,6 @@ class AuthPresenter : MvpPresenter<IAuthView>() {
             }
             return false
         }
-        if (!Constants.LOGIN_PATTERN.matcher(login).matches()) {
-            if (!silent) {
-                hasLoginError = true
-                viewState.showLoginError(R.string.auth_activity_login_matcher)
-            }
-            return false
-        }
 
         if (!silent) {
             viewState.hideLoginError()

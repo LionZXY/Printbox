@@ -9,17 +9,18 @@ import ru.lionzxy.printbox.data.model.User
 
 interface AuthApi {
 
-    @POST("v1/user/login/")
+    @POST("/api/v1/user/login/")
     @FormUrlEncoded
     fun login(@Field("login") login: String, @Field("password") password: String): Completable
 
-    @POST("v1/user/register/")
+    @POST("/api/v1/user/register/")
     @FormUrlEncoded
-    fun register(@Field("login") login: String, @Field("password") password: String): Completable
+    fun register(@Field("login") email: String,
+                 @Field("password") password: String): Completable
 
     @POST("orders/robokassa_pay/")
     fun requestOrder(@Body orderPayRequest: OrderPayRequest): Single<OrderPay>
 
-    @GET("user/")
-    fun currentUser(): Single<List<User>>
+    @GET("users/profile/")
+    fun currentUser(): Single<User>
 }

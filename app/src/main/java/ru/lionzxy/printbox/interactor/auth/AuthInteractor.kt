@@ -11,7 +11,7 @@ class AuthInteractor(
         return authRepository.login(login, password)
     }
 
-    override fun register(email: String, password: String, passwordRepeat: String): Completable {
+    override fun register(email: String, password: String): Completable {
         return authRepository.register(email, password)
     }
 

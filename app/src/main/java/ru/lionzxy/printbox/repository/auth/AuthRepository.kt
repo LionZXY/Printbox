@@ -77,7 +77,7 @@ class AuthRepository(retrofit: Retrofit,
 
     private fun updateFromServerUser(): Completable {
         return authApi.currentUser().flatMapCompletable {
-            setLastUser(it.first())
+            setUser(it)
         }.subscribeOn(Schedulers.io())
     }
 }
